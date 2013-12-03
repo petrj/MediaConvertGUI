@@ -1004,7 +1004,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="MediaConvertGUI.ProgressWin" design-size="450 275">
+  <widget class="Gtk.Window" id="MediaConvertGUI.ProgressWin" design-size="458 275">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Progess</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1213,7 +1213,22 @@
             <signal name="Clicked" handler="OnButtonAbortClicked" />
           </widget>
           <packing>
-            <property name="X">366</property>
+            <property name="X">310</property>
+            <property name="Y">210</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="buttonClose">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextAndIcon</property>
+            <property name="Icon">stock:gtk-close Menu</property>
+            <property name="Label" translatable="yes">Close</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnButtonCloseClicked" />
+          </widget>
+          <packing>
+            <property name="X">380</property>
             <property name="Y">210</property>
           </packing>
         </child>

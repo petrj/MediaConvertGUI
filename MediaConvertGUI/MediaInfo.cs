@@ -377,27 +377,29 @@ namespace MediaConvertGUI
 		/// </param>
 		public void OpenFromFile(string fileName)
 		{
-			_fileName = fileName;
-			var fi = new System.IO.FileInfo(fileName);
-			_fileSize = fi.Length;
-
-			var raw = String.Empty;
-			Tracks.Clear();
-
-			var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput("mediainfo","-f --Output=XML \"" + fileName + "\"");
-			RawMediaInfoOutput = mediaInfoXML;			
-
-			var xmlDoc = new System.Xml.XmlDocument();
-			xmlDoc.LoadXml(mediaInfoXML);			        		
-       		 
-			 var nodes =  xmlDoc.SelectNodes("Mediainfo/File/track");
-			foreach (XmlNode node in nodes)
+			if (File.Exists(fileName))
 			{
-				var track = new TrackInfo();
-				track.ParseFromXmlNode(node);
-				Tracks.Add(track);
-			}
+				_fileName = fileName;
+				var fi = new System.IO.FileInfo(fileName);
+				_fileSize = fi.Length;
 
+				var raw = String.Empty;
+				Tracks.Clear();
+
+				var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput("mediainfo","-f --Output=XML \"" + fileName + "\"");
+				RawMediaInfoOutput = mediaInfoXML;			
+
+				var xmlDoc = new System.Xml.XmlDocument();
+				xmlDoc.LoadXml(mediaInfoXML);			        		
+	       		 
+				 var nodes =  xmlDoc.SelectNodes("Mediainfo/File/track");
+				foreach (XmlNode node in nodes)
+				{
+					var track = new TrackInfo();
+					track.ParseFromXmlNode(node);
+					Tracks.Add(track);
+				}
+			}
 		
 		}
 

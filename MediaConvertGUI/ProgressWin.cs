@@ -10,7 +10,7 @@ namespace MediaConvertGUI
 				base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
-			this.Shown += delegate { AbortRequest = false; };
+			this.Shown += delegate { AbortRequest = false; buttonClose.Sensitive = false; buttonAbort.Sensitive = true; };
 		}
 
 		public double CurrentFilePercents
@@ -83,6 +83,12 @@ namespace MediaConvertGUI
 			labelStart.Text = startTime.ToString("HH:mm:ss");
 			labelFinish.Text = finishTime.ToString("HH:mm:ss");
 
+			if (total==100)
+			{
+				buttonClose.Sensitive = true; 
+				buttonAbort.Sensitive = false;
+			}
+
 		}	
 
 		protected void OnButtonAbortClicked (object sender, EventArgs e)
@@ -92,6 +98,12 @@ namespace MediaConvertGUI
 				AbortRequest = true;
 			}
 		}
+
+		protected void OnButtonCloseClicked (object sender, EventArgs e)
+		{
+			Hide();
+		}
+
 	}
 }
 
