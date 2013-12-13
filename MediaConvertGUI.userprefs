@@ -1,16 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/WidgetAudioTracks.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/ProgressWin.cs">
     <Files>
       <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="53" Column="5" />
-      <File FileName="MediaConvertGUI/Main.cs" Line="37" Column="1" />
+      <File FileName="MediaConvertGUI/Main.cs" Line="29" Column="5" />
       <File FileName="MediaConvertGUI/MainWindow.cs" Line="264" Column="6" />
-      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="108" Column="47" />
+      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="399" Column="35" />
       <File FileName="MediaConvertGUI/SupportMethods.cs" Line="13" Column="3" />
-      <File FileName="MediaConvertGUI/ProgressWin.cs" Line="13" Column="53" />
+      <File FileName="MediaConvertGUI/ProgressWin.cs" Line="107" Column="3" />
       <File FileName="MediaConvertGUI/WidgetGeneralMediaInfo.cs" Line="12" Column="31" />
       <File FileName="MediaConvertGUI/WidgetTargetAudioTrack.cs" Line="82" Column="53" />
-      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="16" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

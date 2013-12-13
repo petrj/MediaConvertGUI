@@ -33,6 +33,8 @@ public partial class MainWindow
 	private global::Gtk.Label GtkLabelTargetAudoTracks;
 	private global::Gtk.Button buttonGoConvert;
 	private global::Gtk.Button buttonRemove;
+	private global::Gtk.Button buttonAddFolder;
+	private global::Gtk.Button buttonRemoveAll;
 	
 	protected virtual void Build ()
 	{
@@ -53,7 +55,7 @@ public partial class MainWindow
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameFileList = new global::Gtk.Frame ();
 		this.frameFileList.WidthRequest = 640;
-		this.frameFileList.HeightRequest = 100;
+		this.frameFileList.HeightRequest = 120;
 		this.frameFileList.Name = "frameFileList";
 		this.frameFileList.ShadowType = ((global::Gtk.ShadowType)(0));
 		// Container child frameFileList.Gtk.Container+ContainerChild
@@ -80,19 +82,19 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameFileList);
 		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameFileList]));
 		w5.X = 5;
-		w5.Y = 5;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameGeneral = new global::Gtk.Frame ();
+		this.frameGeneral.WidthRequest = 725;
+		this.frameGeneral.HeightRequest = 50;
 		this.frameGeneral.Name = "frameGeneral";
-		this.frameGeneral.ShadowType = ((global::Gtk.ShadowType)(0));
 		// Container child frameGeneral.Gtk.Container+ContainerChild
 		this.GtkAlignment1 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 		this.GtkAlignment1.WidthRequest = 600;
-		this.GtkAlignment1.HeightRequest = 40;
 		this.GtkAlignment1.Name = "GtkAlignment1";
 		this.GtkAlignment1.LeftPadding = ((uint)(12));
 		// Container child GtkAlignment1.Gtk.Container+ContainerChild
 		this.widgetGenera = new global::MediaConvertGUI.WidgetGeneralMediaInfo ();
+		this.widgetGenera.WidthRequest = 730;
 		this.widgetGenera.HeightRequest = 100;
 		this.widgetGenera.Events = ((global::Gdk.EventMask)(256));
 		this.widgetGenera.Name = "widgetGenera";
@@ -106,7 +108,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameGeneral);
 		global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameGeneral]));
 		w8.X = 5;
-		w8.Y = 110;
+		w8.Y = 130;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameVideo = new global::Gtk.Frame ();
 		this.frameVideo.WidthRequest = 350;
@@ -131,7 +133,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameVideo);
 		global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideo]));
 		w11.X = 5;
-		w11.Y = 170;
+		w11.Y = 190;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameAudioTracks = new global::Gtk.Frame ();
 		this.frameAudioTracks.WidthRequest = 350;
@@ -156,7 +158,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameAudioTracks);
 		global::Gtk.Fixed.FixedChild w14 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameAudioTracks]));
 		w14.X = 7;
-		w14.Y = 460;
+		w14.Y = 480;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetVideo = new global::Gtk.Frame ();
 		this.frameTargetVideo.WidthRequest = 350;
@@ -181,7 +183,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameTargetVideo);
 		global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetVideo]));
 		w17.X = 380;
-		w17.Y = 170;
+		w17.Y = 190;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonAdd = new global::Gtk.Button ();
 		this.buttonAdd.WidthRequest = 35;
@@ -206,7 +208,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.buttonAdd);
 		global::Gtk.Fixed.FixedChild w26 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAdd]));
 		w26.X = 650;
-		w26.Y = 18;
+		w26.Y = 15;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetAudio = new global::Gtk.Frame ();
 		this.frameTargetAudio.WidthRequest = 350;
@@ -230,7 +232,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameTargetAudio);
 		global::Gtk.Fixed.FixedChild w29 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
 		w29.X = 380;
-		w29.Y = 460;
+		w29.Y = 480;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonGoConvert = new global::Gtk.Button ();
 		this.buttonGoConvert.WidthRequest = 720;
@@ -241,7 +243,7 @@ public partial class MainWindow
 		this.@fixed.Add (this.buttonGoConvert);
 		global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonGoConvert]));
 		w30.X = 10;
-		w30.Y = 680;
+		w30.Y = 700;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonRemove = new global::Gtk.Button ();
 		this.buttonRemove.WidthRequest = 35;
@@ -265,19 +267,75 @@ public partial class MainWindow
 		this.buttonRemove.Add (w31);
 		this.@fixed.Add (this.buttonRemove);
 		global::Gtk.Fixed.FixedChild w39 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemove]));
-		w39.X = 690;
-		w39.Y = 18;
+		w39.X = 650;
+		w39.Y = 55;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.buttonAddFolder = new global::Gtk.Button ();
+		this.buttonAddFolder.WidthRequest = 45;
+		this.buttonAddFolder.HeightRequest = 35;
+		this.buttonAddFolder.CanFocus = true;
+		this.buttonAddFolder.Name = "buttonAddFolder";
+		this.buttonAddFolder.UseUnderline = true;
+		// Container child buttonAddFolder.Gtk.Container+ContainerChild
+		global::Gtk.Alignment w40 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+		// Container child GtkAlignment.Gtk.Container+ContainerChild
+		global::Gtk.HBox w41 = new global::Gtk.HBox ();
+		w41.Spacing = 2;
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Image w42 = new global::Gtk.Image ();
+		w42.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
+		w41.Add (w42);
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Label w44 = new global::Gtk.Label ();
+		w44.LabelProp = global::Mono.Unix.Catalog.GetString ("Dir");
+		w44.UseUnderline = true;
+		w41.Add (w44);
+		w40.Add (w41);
+		this.buttonAddFolder.Add (w40);
+		this.@fixed.Add (this.buttonAddFolder);
+		global::Gtk.Fixed.FixedChild w48 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAddFolder]));
+		w48.X = 690;
+		w48.Y = 15;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.buttonRemoveAll = new global::Gtk.Button ();
+		this.buttonRemoveAll.WidthRequest = 45;
+		this.buttonRemoveAll.HeightRequest = 35;
+		this.buttonRemoveAll.CanFocus = true;
+		this.buttonRemoveAll.Name = "buttonRemoveAll";
+		this.buttonRemoveAll.UseUnderline = true;
+		// Container child buttonRemoveAll.Gtk.Container+ContainerChild
+		global::Gtk.Alignment w49 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+		// Container child GtkAlignment.Gtk.Container+ContainerChild
+		global::Gtk.HBox w50 = new global::Gtk.HBox ();
+		w50.Spacing = 2;
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Image w51 = new global::Gtk.Image ();
+		w51.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.Menu);
+		w50.Add (w51);
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Label w53 = new global::Gtk.Label ();
+		w53.LabelProp = global::Mono.Unix.Catalog.GetString ("All");
+		w53.UseUnderline = true;
+		w50.Add (w53);
+		w49.Add (w50);
+		this.buttonRemoveAll.Add (w49);
+		this.@fixed.Add (this.buttonRemoveAll);
+		global::Gtk.Fixed.FixedChild w57 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemoveAll]));
+		w57.X = 690;
+		w57.Y = 55;
 		this.Add (this.@fixed);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
 		this.DefaultWidth = 744;
-		this.DefaultHeight = 748;
+		this.DefaultHeight = 750;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.tree.CursorChanged += new global::System.EventHandler (this.OnTreeCursorChanged);
 		this.buttonAdd.Clicked += new global::System.EventHandler (this.OnButtonAddClicked);
 		this.buttonGoConvert.Clicked += new global::System.EventHandler (this.OnButtonGoConvertClicked);
 		this.buttonRemove.Clicked += new global::System.EventHandler (this.OnButtonRemoveClicked);
+		this.buttonAddFolder.Clicked += new global::System.EventHandler (this.OnButtonAddFolderClicked);
+		this.buttonRemoveAll.Clicked += new global::System.EventHandler (this.OnButtonRemoveAllClicked);
 	}
 }

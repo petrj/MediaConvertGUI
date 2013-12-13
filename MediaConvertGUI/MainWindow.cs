@@ -441,6 +441,37 @@ public partial class MainWindow: Gtk.Window
 		FillTree();
 	}
 
+
+	protected void OnButtonAddFolderClicked (object sender, EventArgs e)
+	{
+		// creating supported extensions dictionary
+		var supportedExtensions = new Dictionary<string,string>();
+		foreach (var val in Enum.GetNames(typeof(VideoContainerEnum))) 
+				supportedExtensions.Add("." + val.ToUpper(),null);
+
+		var dirName = Dialogs.OpenDirectoryDialog("Open all files in directory:");
+		if (dirName != null)
+		{
+			foreach (var fName in Directory.GetFiles(dirName))
+			{
+				if (File.Exists(fName))
+				{
+					var ext = System.IO.Path.GetExtension(fName).ToUpper();
+					if (supportedExtensions.ContainsKey(ext))
+					{
+						AddMediaInfo(fName);
+					}
+				}
+			}
+		}
+	}
+
+	protected void OnButtonRemoveAllClicked (object sender, EventArgs e)
+	{
+		MoviesInfo.Clear();
+		FillTree();
+	}
+
 	#endregion
 
 }

@@ -17,8 +17,14 @@ namespace MediaConvertGUI
 		{
 			set
 			{
+				try
+				{
 				progressCurrentFile.Fraction = value/(double)100;
 				labelCurrentFilePercents.Text = Convert.ToInt32(value).ToString()+" %";
+				} catch (Exception ex)
+				{
+					labelCurrentFilePercents.Text = "";
+				}
 			}
 		}
 

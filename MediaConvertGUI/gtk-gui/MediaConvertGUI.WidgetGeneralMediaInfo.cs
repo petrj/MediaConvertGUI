@@ -31,7 +31,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelBitRateInfo);
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelBitRateInfo]));
 			w1.X = 5;
-			w1.Y = 15;
+			w1.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelBitRate = new global::Gtk.Label ();
 			this.labelBitRate.Name = "labelBitRate";
@@ -39,7 +39,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelBitRate);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelBitRate]));
 			w2.X = 110;
-			w2.Y = 15;
+			w2.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelDurationInfo = new global::Gtk.Label ();
 			this.labelDurationInfo.Name = "labelDurationInfo";
@@ -47,7 +47,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelDurationInfo);
 			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelDurationInfo]));
 			w3.X = 213;
-			w3.Y = 16;
+			w3.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelDuration = new global::Gtk.Label ();
 			this.labelDuration.Name = "labelDuration";
@@ -55,7 +55,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelDuration);
 			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelDuration]));
 			w4.X = 280;
-			w4.Y = 15;
+			w4.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelSizeInfo = new global::Gtk.Label ();
 			this.labelSizeInfo.Name = "labelSizeInfo";
@@ -63,7 +63,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelSizeInfo);
 			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSizeInfo]));
 			w5.X = 380;
-			w5.Y = 15;
+			w5.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelSize = new global::Gtk.Label ();
 			this.labelSize.Name = "labelSize";
@@ -71,7 +71,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelSize);
 			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSize]));
 			w6.X = 420;
-			w6.Y = 15;
+			w6.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelTargetContLabel = new global::Gtk.Label ();
 			this.labelTargetContLabel.Name = "labelTargetContLabel";
@@ -79,7 +79,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelTargetContLabel);
 			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelTargetContLabel]));
 			w7.X = 520;
-			w7.Y = 15;
+			w7.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboContainer = global::Gtk.ComboBox.NewText ();
 			this.comboContainer.WidthRequest = 70;
@@ -87,7 +87,6 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.comboContainer);
 			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
 			w8.X = 635;
-			w8.Y = 10;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
