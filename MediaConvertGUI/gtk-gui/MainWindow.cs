@@ -376,11 +376,6 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.tree.CursorChanged += new global::System.EventHandler (this.OnTreeCursorChanged);
-		this.buttonAdd.Clicked += new global::System.EventHandler (this.OnButtonAddClicked);
-		this.buttonGoConvert.Clicked += new global::System.EventHandler (this.OnButtonGoConvertClicked);
-		this.buttonRemove.Clicked += new global::System.EventHandler (this.OnButtonRemoveClicked);
-		this.buttonAddFolder.Clicked += new global::System.EventHandler (this.OnButtonAddFolderClicked);
-		this.buttonRemoveAll.Clicked += new global::System.EventHandler (this.OnButtonRemoveAllClicked);
 		this.buttonApply.Clicked += new global::System.EventHandler (this.OnButtonApplyClicked);
 	}
 }

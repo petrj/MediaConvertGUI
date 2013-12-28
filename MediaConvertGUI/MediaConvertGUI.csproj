@@ -84,6 +84,7 @@
     <Compile Include="ProgressWin.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.ProgressWin.cs" />
     <Compile Include="EventLock.cs" />
+    <Compile Include="MediaInfoScheme.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

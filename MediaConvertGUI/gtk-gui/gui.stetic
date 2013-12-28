@@ -222,7 +222,6 @@
             <property name="Icon">stock:gtk-add Menu</property>
             <property name="Label" translatable="yes" />
             <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonAddClicked" />
           </widget>
           <packing>
             <property name="X">650</property>
@@ -241,7 +240,6 @@
             <property name="Icon">stock:gtk-media-play Menu</property>
             <property name="Label" translatable="yes">Go</property>
             <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonGoConvertClicked" />
           </widget>
           <packing>
             <property name="X">10</property>
@@ -258,7 +256,6 @@
             <property name="Icon">stock:gtk-remove Menu</property>
             <property name="Label" translatable="yes" />
             <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonRemoveClicked" />
           </widget>
           <packing>
             <property name="X">650</property>
@@ -275,7 +272,6 @@
             <property name="Icon">stock:gtk-add Menu</property>
             <property name="Label" translatable="yes">Dir</property>
             <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonAddFolderClicked" />
           </widget>
           <packing>
             <property name="X">690</property>
@@ -292,7 +288,6 @@
             <property name="Icon">stock:gtk-remove Menu</property>
             <property name="Label" translatable="yes">All</property>
             <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonRemoveAllClicked" />
           </widget>
           <packing>
             <property name="X">690</property>
@@ -719,16 +714,6 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="labelTargetContLabel">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Target container</property>
-          </widget>
-          <packing>
-            <property name="X">375</property>
-            <property name="Y">5</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.ComboBox" id="comboContainer">
             <property name="MemberName" />
             <property name="WidthRequest">70</property>
@@ -737,6 +722,37 @@
           </widget>
           <packing>
             <property name="X">505</property>
+            <property name="Y">30</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.ComboBox" id="comboScheme">
+            <property name="MemberName" />
+            <property name="IsTextCombo">True</property>
+            <property name="Items" translatable="yes" />
+          </widget>
+          <packing>
+            <property name="X">505</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="labelTargetContLabel">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Target container</property>
+          </widget>
+          <packing>
+            <property name="X">375</property>
+            <property name="Y">35</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="labelScheme">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Scheme</property>
+          </widget>
+          <packing>
+            <property name="X">375</property>
+            <property name="Y">5</property>
           </packing>
         </child>
       </widget>

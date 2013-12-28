@@ -168,6 +168,21 @@ namespace MediaConvertGUI
 		public string FileName { get; set; }
 		public long FileSize { get; set; }
 
+		public Dictionary<string,MediaInfoScheme> Schemes = new Dictionary<string,MediaInfoScheme> ();
+		private string _selectedScheme = "none";
+
+		public string SelectedScheme
+		{
+			get 
+			{
+				return _selectedScheme;
+			}
+			set 
+			{
+				_selectedScheme = value;
+			}
+		}
+
 		public List<TrackInfo> Tracks  { get; set; }
 
 		private TrackInfo _firstVideoTrack = null;
@@ -335,9 +350,19 @@ namespace MediaConvertGUI
 			Tracks = new List<TrackInfo>();
 			TargetVideoCodec = VideoCodecEnum.xvid;
 			TargetContainer = VideoContainerEnum.avi;
+			LoadSchemes();
 		}
 
 		#region methods
+
+		private void LoadSchemes()
+		{
+			Schemes.Clear();
+
+			Schemes.Add( "Flash video", new MediaInfoScheme(VideoContainerEnum.flv, VideoCodecEnum.flv,AudioCodecEnum.MP3) );
+			Schemes.Add( "Ogg video", new MediaInfoScheme(VideoContainerEnum.ogg, VideoCodecEnum.theora,AudioCodecEnum.vorbis) );
+			Schemes.Add( "WebM video", new MediaInfoScheme(VideoContainerEnum.webm, VideoCodecEnum.vp8,AudioCodecEnum.vorbis) );
+		}
 
 		public void Clear()
 		{
@@ -375,6 +400,7 @@ namespace MediaConvertGUI
 			mInfo.TargetContainer = TargetContainer;
 			mInfo.FileName = FileName;
 			mInfo.FileSize = FileSize;
+			mInfo.SelectedScheme = SelectedScheme;
 		}
 
 		public void ClearTracks()

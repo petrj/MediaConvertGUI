@@ -6,6 +6,8 @@ namespace MediaConvertGUI
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class WidgetGeneralMediaInfo : Gtk.Bin
 	{
+		private EventLock _eventLock = new EventLock();
+
 		public MediaInfo _sourceMovieInfo;
 		public MediaInfo _targetMovieInfo;
 
@@ -30,14 +32,35 @@ namespace MediaConvertGUI
 			this.Build ();
 			_sourceMovieInfo = new MediaInfo();
 			_targetMovieInfo = new MediaInfo();
+
 			comboContainer.Changed+= OnAnyValueChanged;
+			comboScheme.Changed+=OnSchemeComboValueChanged;		
+		}
+
+		protected void OnSchemeComboValueChanged (object sender, EventArgs e)
+		{
+			if (_eventLock.Lock())
+			{
+				_targetMovieInfo.SelectedScheme = comboScheme.ActiveText;
+
+				OnSchemeChanged(EventArgs.Empty);
+
+				_eventLock.Unlock();
+
+				Fill();
+			}
 		}
 
 		protected void OnAnyValueChanged (object sender, EventArgs e)
 		{
-			if (TargetMovieInfo != null)
+			if (_eventLock.Lock())
 			{
-				_targetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
+				if (TargetMovieInfo != null)
+				{
+					_targetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
+				}
+
+				_eventLock.Unlock();
 			}
 		}
 
@@ -51,26 +74,49 @@ namespace MediaConvertGUI
 
 		public void Fill()
 		{
-			if (SourceMovieInfo != null && SourceMovieInfo.FirstVideoTrack != null)
+			if (_eventLock.Lock())
 			{
-				labelDuration.Text = SourceMovieInfo.HuamReadableDuration;
-				labelSize.Text = SourceMovieInfo.HumanReadableSize;
-				labelBitRate.Text = SourceMovieInfo.HumanReadableOverAllBitRate;
-			} else
-			{			
-				labelDuration.Text = String.Empty;
-				labelSize.Text =  String.Empty;
-				labelBitRate.Text = String.Empty;
-			}
+				if (SourceMovieInfo != null && SourceMovieInfo.FirstVideoTrack != null)
+				{
+					labelDuration.Text = SourceMovieInfo.HuamReadableDuration;
+					labelSize.Text = SourceMovieInfo.HumanReadableSize;
+					labelBitRate.Text = SourceMovieInfo.HumanReadableOverAllBitRate;
+				} else
+				{			
+					labelDuration.Text = String.Empty;
+					labelSize.Text =  String.Empty;
+					labelBitRate.Text = String.Empty;
+				}
 
-			if (TargetMovieInfo!= null)
-			{
-				SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),true,(int)TargetMovieInfo.TargetContainer);
-			} else
-			{
-				SupportMethods.FillComboBox(comboContainer,new List<string>() {},false,null);
+				if (TargetMovieInfo!= null)
+				{
+					SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),true,(int)TargetMovieInfo.TargetContainer);
+
+					var schemeStrings = new List<string>();
+					schemeStrings.Add("none");
+					foreach (var scheme in TargetMovieInfo.Schemes.Keys)
+					{
+						schemeStrings.Add(scheme);
+					}
+					SupportMethods.FillComboBox(comboScheme,schemeStrings,true,TargetMovieInfo.SelectedScheme);
+				} else
+				{
+					SupportMethods.ClearCombo(comboContainer);
+					SupportMethods.ClearCombo(comboScheme);
+				}
+
+				_eventLock.Unlock();
 			}
 		}
+
+	  public delegate void  ChangedSchemeEventHandler(object sender, EventArgs e);
+	  public event ChangedSchemeEventHandler SchemeChanged;
+
+	  protected virtual void OnSchemeChanged(EventArgs e) 
+      {
+         if (SchemeChanged != null)
+            SchemeChanged(this, e);
+      }
 	}
 }
 

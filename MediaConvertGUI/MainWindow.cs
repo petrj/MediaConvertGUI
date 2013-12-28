@@ -12,6 +12,7 @@ public partial class MainWindow: Gtk.Window
 {	
 	public Dictionary<MediaInfo,MediaInfo> MoviesInfo = new Dictionary<MediaInfo,MediaInfo>();
 
+
 	#region private fields
 
 	private TreeViewData _fileTreeViewData;
@@ -41,6 +42,16 @@ public partial class MainWindow: Gtk.Window
 		_proressWindow.Hide();
 
 		tree.Selection.Mode = SelectionMode.Multiple;
+
+		widgetGenera.SchemeChanged += OnSchemeChanged;
+
+		buttonAdd.Clicked+=OnButtonAddClicked;
+		buttonAddFolder.Clicked+=OnButtonAddFolderClicked;
+		buttonRemove.Clicked+=OnButtonRemoveClicked;
+		buttonRemoveAll.Clicked+=OnButtonRemoveAllClicked;
+
+		buttonApply.Clicked+=OnButtonApplyClicked;
+		buttonGoConvert.Clicked+=OnButtonGoConvertClicked;
 
 		FillTree();
 	}
@@ -155,6 +166,8 @@ public partial class MainWindow: Gtk.Window
 	#endregion
 
 	#region methods
+
+
 
 	private void CreateGridColumns()
 	{
@@ -430,6 +443,30 @@ public partial class MainWindow: Gtk.Window
      
 	#region events
 
+	protected void OnSchemeChanged(object sender, EventArgs e)
+	{
+
+		if (widgetGenera.TargetMovieInfo == null || 
+		    widgetTargetAudioTracks.Info == null || 
+		    widgetTargetMovieTrack.MovieInfo == null)
+			return;	
+
+		var selectedScheme = widgetGenera.TargetMovieInfo.SelectedScheme;
+		if (widgetGenera.TargetMovieInfo.SelectedScheme != "none" && widgetGenera.TargetMovieInfo.Schemes.ContainsKey(widgetGenera.TargetMovieInfo.SelectedScheme))
+		{
+			var scheme = widgetGenera.TargetMovieInfo.Schemes[widgetGenera.TargetMovieInfo.SelectedScheme];
+			widgetGenera.TargetMovieInfo.TargetContainer = scheme.Container;
+			widgetTargetMovieTrack.MovieInfo.TargetVideoCodec = scheme.VideoCodec;
+			widgetGenera.TargetMovieInfo.SelectedScheme = widgetGenera.TargetMovieInfo.SelectedScheme;
+			if (widgetTargetAudioTracks.Info.FirstAudioTrack != null)
+			{
+				widgetTargetAudioTracks.Info.FirstAudioTrack.TargetAudioCodec = scheme.AudioCodec;
+			}
+
+			OnButtonApplyClicked(this,null);
+		}
+	}
+
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();
@@ -518,21 +555,24 @@ public partial class MainWindow: Gtk.Window
 		if (selectedMovies.Count == 0)
 			return;
 
-		if (Dialogs.ConfirmDialog("Save changes ?  "+System.Environment.NewLine+String.Format("(selected files: {0})",selectedMovies.Count.ToString())))
-		{
+		//if (Dialogs.ConfirmDialog("Save changes ?  "+System.Environment.NewLine+String.Format("(selected files: {0})",selectedMovies.Count.ToString())))
+		//{
 			foreach (KeyValuePair<int,MediaInfo> m in selectedMovies)
 			{
 				MoviesInfo[m.Value].TargetVideoCodec = widgetTargetMovieTrack.MovieInfo.TargetVideoCodec;
 
 				if (widgetGenera.TargetMovieInfo != null)
+				{
 					MoviesInfo[m.Value].TargetContainer = widgetGenera.TargetMovieInfo.TargetContainer;
+					MoviesInfo[m.Value].SelectedScheme = widgetGenera.TargetMovieInfo.SelectedScheme;
+				}
 
 
 				MoviesInfo[m.Value].ClearTracks();
 				widgetTargetMovieTrack.MovieInfo.AppendTracksTo(MoviesInfo[m.Value],"Video");
 				widgetTargetAudioTracks.Info.AppendTracksTo(MoviesInfo[m.Value],"Audio");
 			}
-		}
+		//}
 
 		FillTree();
 
