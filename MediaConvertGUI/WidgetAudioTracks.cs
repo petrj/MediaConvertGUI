@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Gtk;
 
 namespace MediaConvertGUI
@@ -6,26 +7,23 @@ namespace MediaConvertGUI
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class WidgetAudioTracks : Gtk.Bin
 	{
-		public MediaInfo _movieInfo;
+		private MediaInfo _info;
+		private bool _editable = false;
+		private EventLock _eventLock = new EventLock();
 
-		public MediaInfo MovieInfo 
+		public MediaInfo Info 
 		{ 
 			get
 			{
-				return _movieInfo;
-			}
-			set
-			{
-				_movieInfo = value;
-				Fill();
-			}
+				return _info;
+			}		
 		}
-
-		private bool _editable = false;
 
 		public WidgetAudioTracks ()
 		{
 			this.Build ();
+
+			_info = new MediaInfo();
 
 			comboChannels.AppendText("-");
 			comboChannels.AppendText("1");
@@ -39,7 +37,7 @@ namespace MediaConvertGUI
 			get
 			{
 				return _editable;
-			}
+		 	}
 			set
 			{
 				_editable = value;
@@ -51,31 +49,98 @@ namespace MediaConvertGUI
 			}
 		}
 
-		private void Fill()
+		public void SelectFirstAudioTrack()
 		{
-			if (MovieInfo != null && MovieInfo.AudioTracks.Count>0)
+			if (_info!=null && 
+			    _info.AudioTracks != null &&
+			    _info.AudioTracks.Count>0   )
 			{
-				foreach (var kvp in MovieInfo.AudioTracks)
-				{
-					var track = kvp.Value;
-					comboTracks.AppendText("Track #"+kvp.Key.ToString());
-				}
 				comboTracks.Active = 0;
-			} else
-			{
-				comboTracks.Model = new ListStore(typeof(string));
-				OnComboTracksChanged(this,null);
+				Fill();
 			}
+		}
+
+		public void Fill()
+		{
+			if (_eventLock.Lock())
+			{
+				var activeTrack = SelectedTrack;						
+				var activeTrackAsString = String.Empty;
+
+				// filling tracks combo
+				var trackStrings = new List<string>();
+				if (Info != null && Info.AudioTracks.Count>0)
+				{	 
+					foreach (var kvp in Info.AudioTracks)
+					{
+						trackStrings.Add(kvp.Key.ToString());
+						if ( (activeTrack == kvp.Value)) activeTrackAsString = kvp.Key.ToString();
+					}
+				}
+				SupportMethods.FillComboBox(comboTracks, trackStrings,true, activeTrackAsString);
+
+				// filling selected track
+				if (activeTrack!= null)
+				{
+					// channels 
+					var channelsStrings = new List<string>(){"1","2"};
+					var activeChannelAsString = "";
+
+					if ( (activeTrack.Channels == 1) || (activeTrack.Channels == 2))
+					{
+						activeChannelAsString = activeTrack.Channels.ToString();
+					} 
+					SupportMethods.FillComboBox(comboChannels, channelsStrings, Editable, activeChannelAsString);
+
+					// codec
+					if (Editable)
+					{
+						frameAudioOptions.Visible = activeTrack.TargetAudioCodec != AudioCodecEnum.none;
+						SupportMethods.FillComboBox(comboCodec,typeof(AudioCodecEnum),true,(int)activeTrack.TargetAudioCodec);
+					} else
+					{
+						frameAudioOptions.Visible = true;
+						SupportMethods.FillComboBox(comboCodec,new List<string>(){activeTrack.Codec},false,activeTrack.Codec);
+					}
+
+					entryBitrate.Text = activeTrack.BitrateKbps.ToString();
+					labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
+					entrySampleRate.Text = activeTrack.SamplingRateHz.ToString();
+
+				} else
+				{
+					SupportMethods.ClearCombo(comboChannels);
+					SupportMethods.ClearCombo(comboCodec);
+
+					frameAudioOptions.Visible = false;
+
+					entryBitrate.Text = String.Empty;
+					labelTrackSze.Text = String.Empty;
+					entrySampleRate.Text = "";
+				}
+
+				_eventLock.Unlock();
+			} 
+		}
+
+		public void FillFrom(MediaInfo mInfo)
+		{
+			if (mInfo != null)
+			{
+				mInfo.Copyto(_info,false);
+			}
+			Fill();
+			SelectFirstAudioTrack();
 		}
 
 		public TrackInfo SelectedTrack
 		{
 			get
 			{
-				if (MovieInfo == null)
+				if (Info == null)
 					return null;
 
-				var tracks = MovieInfo.AudioTracks;
+				var tracks = Info.AudioTracks;
 				TrackInfo activeTrack = null;
 				if (tracks.Count>0 && comboTracks.Active+1<=tracks.Count && tracks.ContainsKey(comboTracks.Active+1))
 				{
@@ -86,56 +151,60 @@ namespace MediaConvertGUI
 			}
 		}
 
-		protected void OnComboTracksChanged (object sender, EventArgs e)
+		public AudioCodecEnum SelectedAudioCodec
 		{
-			var activeTrack = SelectedTrack;
-						
-			if (activeTrack!= null)
+			get
 			{
-				if ( (activeTrack.Channels == 1) || (activeTrack.Channels == 2))
+				var res = AudioCodecEnum.none;
+
+				if ( (comboCodec.Active > 0) && (comboCodec.Active < (Enum.GetNames((typeof(AudioCodecEnum))).Length)))
 				{
-					comboChannels.Active = activeTrack.Channels;
-				} else
-				{
-					comboChannels.Active = 0;
+					return (AudioCodecEnum)comboCodec.Active;
 				}
 
-				comboCodec.Model = new ListStore(typeof(string));
-
-				entryBitrate.Text = activeTrack.BitrateKbps.ToString();
-				labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
-				entrySampleRate.Text = activeTrack.SamplingRateHz.ToString();
-
-				comboCodec.AppendText(activeTrack.Codec);
-				comboCodec.Active = 0;
-
-			} else
-			{
-				entryBitrate.Text = String.Empty;
-				labelTrackSze.Text = String.Empty;
-				comboCodec.Active = -1;
-				entrySampleRate.Text = "";
+				return res;
 			}
-		}	
 
-		protected void OnEntryBitrateChanged (object sender, EventArgs e)
+		}
+
+		private void OnAnyValuechanged()
 		{
-			if (Editable)
-			{
+			if (_eventLock.Lock() && Editable)
+			{			
 				var activeTrack = SelectedTrack;
 						
 				if (activeTrack!= null)
 				{
+					activeTrack.TargetAudioCodec = SelectedAudioCodec;
+
 					int bitrate;
 					if (int.TryParse(entryBitrate.Text,out bitrate))
 					{
 						activeTrack.Bitrate = bitrate*1024;
 						activeTrack.ReComputeStreamSizeByBitrate();
-						labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
 					}
-				}			
-			}
+				}
+
+				_eventLock.Unlock();
+			};
+
+			Fill();
 		}
+
+		protected void OnComboTracksChanged (object sender, EventArgs e)
+		{
+			Fill();
+		}	
+
+		protected void OnComboCodecChanged (object sender, EventArgs e)
+		{
+			OnAnyValuechanged();
+		}
+
+		protected void OnEntryBitrateChanged (object sender, EventArgs e)
+		{
+			OnAnyValuechanged();
+		}		
 
 	}
 }

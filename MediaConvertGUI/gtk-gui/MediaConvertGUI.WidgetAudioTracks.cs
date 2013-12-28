@@ -7,17 +7,21 @@ namespace MediaConvertGUI
 		private global::Gtk.Fixed @fixed;
 		private global::Gtk.Label labelTrackInfo;
 		private global::Gtk.ComboBox comboTracks;
-		private global::Gtk.Label labelBitrate;
-		private global::Gtk.Entry entryBitrate;
 		private global::Gtk.Label labelCodecInfo;
-		private global::Gtk.Label labelChannels;
-		private global::Gtk.ComboBox comboChannels;
-		private global::Gtk.Label labelTrackSizeInfo;
-		private global::Gtk.Label labelTrackSze;
 		private global::Gtk.ComboBox comboCodec;
+		private global::Gtk.Frame frameAudioOptions;
+		private global::Gtk.Alignment GtkAlignment;
+		private global::Gtk.Fixed fixedAudioOptions;
 		private global::Gtk.Label labelSampleRateInfo;
+		private global::Gtk.Label labelTrackSizeInfo;
+		private global::Gtk.ComboBox comboChannels;
+		private global::Gtk.Entry entryBitrate;
 		private global::Gtk.Entry entrySampleRate;
 		private global::Gtk.Label labelKhz;
+		private global::Gtk.Label labelTrackSze;
+		private global::Gtk.Label labelChannels;
+		private global::Gtk.Label labelBitrate;
+		private global::Gtk.Label GtkLabel;
 		
 		protected virtual void Build ()
 		{
@@ -42,106 +46,124 @@ namespace MediaConvertGUI
 			this.comboTracks.Name = "comboTracks";
 			this.@fixed.Add (this.comboTracks);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboTracks]));
-			w2.X = 50;
+			w2.X = 130;
 			w2.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelBitrate = new global::Gtk.Label ();
-			this.labelBitrate.Name = "labelBitrate";
-			this.labelBitrate.LabelProp = global::Mono.Unix.Catalog.GetString ("Bitrate");
-			this.@fixed.Add (this.labelBitrate);
-			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelBitrate]));
-			w3.X = 20;
-			w3.Y = 45;
+			this.labelCodecInfo = new global::Gtk.Label ();
+			this.labelCodecInfo.Name = "labelCodecInfo";
+			this.labelCodecInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Codec");
+			this.@fixed.Add (this.labelCodecInfo);
+			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelCodecInfo]));
+			w3.X = 5;
+			w3.Y = 40;
 			// Container child fixed.Gtk.Fixed+FixedChild
+			this.comboCodec = global::Gtk.ComboBox.NewText ();
+			this.comboCodec.Name = "comboCodec";
+			this.@fixed.Add (this.comboCodec);
+			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));
+			w4.X = 130;
+			w4.Y = 35;
+			// Container child fixed.Gtk.Fixed+FixedChild
+			this.frameAudioOptions = new global::Gtk.Frame ();
+			this.frameAudioOptions.Name = "frameAudioOptions";
+			this.frameAudioOptions.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frameAudioOptions.Gtk.Container+ContainerChild
+			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment.Name = "GtkAlignment";
+			this.GtkAlignment.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			this.fixedAudioOptions = new global::Gtk.Fixed ();
+			this.fixedAudioOptions.Name = "fixedAudioOptions";
+			this.fixedAudioOptions.HasWindow = false;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
+			this.labelSampleRateInfo = new global::Gtk.Label ();
+			this.labelSampleRateInfo.Name = "labelSampleRateInfo";
+			this.labelSampleRateInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Sample rate");
+			this.fixedAudioOptions.Add (this.labelSampleRateInfo);
+			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelSampleRateInfo]));
+			w5.Y = 65;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
+			this.labelTrackSizeInfo = new global::Gtk.Label ();
+			this.labelTrackSizeInfo.Name = "labelTrackSizeInfo";
+			this.labelTrackSizeInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Track size");
+			this.fixedAudioOptions.Add (this.labelTrackSizeInfo);
+			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelTrackSizeInfo]));
+			w6.Y = 95;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
+			this.comboChannels = global::Gtk.ComboBox.NewText ();
+			this.comboChannels.Name = "comboChannels";
+			this.fixedAudioOptions.Add (this.comboChannels);
+			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.comboChannels]));
+			w7.X = 110;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
 			this.entryBitrate = new global::Gtk.Entry ();
 			this.entryBitrate.WidthRequest = 60;
 			this.entryBitrate.CanFocus = true;
 			this.entryBitrate.Name = "entryBitrate";
 			this.entryBitrate.IsEditable = true;
 			this.entryBitrate.InvisibleChar = '●';
-			this.@fixed.Add (this.entryBitrate);
-			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.entryBitrate]));
-			w4.X = 120;
-			w4.Y = 40;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelCodecInfo = new global::Gtk.Label ();
-			this.labelCodecInfo.Name = "labelCodecInfo";
-			this.labelCodecInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Codec");
-			this.@fixed.Add (this.labelCodecInfo);
-			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelCodecInfo]));
-			w5.X = 20;
-			w5.Y = 105;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelChannels = new global::Gtk.Label ();
-			this.labelChannels.Name = "labelChannels";
-			this.labelChannels.LabelProp = global::Mono.Unix.Catalog.GetString ("Channels");
-			this.@fixed.Add (this.labelChannels);
-			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelChannels]));
-			w6.X = 20;
-			w6.Y = 75;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.comboChannels = global::Gtk.ComboBox.NewText ();
-			this.comboChannels.Name = "comboChannels";
-			this.@fixed.Add (this.comboChannels);
-			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboChannels]));
-			w7.X = 120;
-			w7.Y = 70;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelTrackSizeInfo = new global::Gtk.Label ();
-			this.labelTrackSizeInfo.Name = "labelTrackSizeInfo";
-			this.labelTrackSizeInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Track size");
-			this.@fixed.Add (this.labelTrackSizeInfo);
-			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelTrackSizeInfo]));
-			w8.X = 20;
-			w8.Y = 165;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelTrackSze = new global::Gtk.Label ();
-			this.labelTrackSze.Name = "labelTrackSze";
-			this.labelTrackSze.LabelProp = global::Mono.Unix.Catalog.GetString ("0 MB");
-			this.@fixed.Add (this.labelTrackSze);
-			global::Gtk.Fixed.FixedChild w9 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelTrackSze]));
-			w9.X = 120;
-			w9.Y = 165;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.comboCodec = global::Gtk.ComboBox.NewText ();
-			this.comboCodec.Name = "comboCodec";
-			this.@fixed.Add (this.comboCodec);
-			global::Gtk.Fixed.FixedChild w10 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));
-			w10.X = 120;
-			w10.Y = 100;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelSampleRateInfo = new global::Gtk.Label ();
-			this.labelSampleRateInfo.Name = "labelSampleRateInfo";
-			this.labelSampleRateInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Sample rate");
-			this.@fixed.Add (this.labelSampleRateInfo);
-			global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSampleRateInfo]));
-			w11.X = 20;
-			w11.Y = 135;
-			// Container child fixed.Gtk.Fixed+FixedChild
+			this.fixedAudioOptions.Add (this.entryBitrate);
+			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.entryBitrate]));
+			w8.X = 110;
+			w8.Y = 30;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
 			this.entrySampleRate = new global::Gtk.Entry ();
 			this.entrySampleRate.WidthRequest = 60;
 			this.entrySampleRate.CanFocus = true;
 			this.entrySampleRate.Name = "entrySampleRate";
 			this.entrySampleRate.IsEditable = true;
 			this.entrySampleRate.InvisibleChar = '●';
-			this.@fixed.Add (this.entrySampleRate);
-			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.entrySampleRate]));
-			w12.X = 120;
-			w12.Y = 130;
-			// Container child fixed.Gtk.Fixed+FixedChild
+			this.fixedAudioOptions.Add (this.entrySampleRate);
+			global::Gtk.Fixed.FixedChild w9 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.entrySampleRate]));
+			w9.X = 110;
+			w9.Y = 60;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
 			this.labelKhz = new global::Gtk.Label ();
 			this.labelKhz.Name = "labelKhz";
 			this.labelKhz.LabelProp = global::Mono.Unix.Catalog.GetString ("Khz");
-			this.@fixed.Add (this.labelKhz);
-			global::Gtk.Fixed.FixedChild w13 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelKhz]));
-			w13.X = 185;
-			w13.Y = 135;
+			this.fixedAudioOptions.Add (this.labelKhz);
+			global::Gtk.Fixed.FixedChild w10 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelKhz]));
+			w10.X = 180;
+			w10.Y = 65;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
+			this.labelTrackSze = new global::Gtk.Label ();
+			this.labelTrackSze.Name = "labelTrackSze";
+			this.labelTrackSze.LabelProp = global::Mono.Unix.Catalog.GetString ("0 MB");
+			this.fixedAudioOptions.Add (this.labelTrackSze);
+			global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelTrackSze]));
+			w11.X = 110;
+			w11.Y = 95;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
+			this.labelChannels = new global::Gtk.Label ();
+			this.labelChannels.Name = "labelChannels";
+			this.labelChannels.LabelProp = global::Mono.Unix.Catalog.GetString ("Channels");
+			this.fixedAudioOptions.Add (this.labelChannels);
+			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelChannels]));
+			w12.Y = 5;
+			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
+			this.labelBitrate = new global::Gtk.Label ();
+			this.labelBitrate.Name = "labelBitrate";
+			this.labelBitrate.LabelProp = global::Mono.Unix.Catalog.GetString ("Bitrate");
+			this.fixedAudioOptions.Add (this.labelBitrate);
+			global::Gtk.Fixed.FixedChild w13 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelBitrate]));
+			w13.Y = 35;
+			this.GtkAlignment.Add (this.fixedAudioOptions);
+			this.frameAudioOptions.Add (this.GtkAlignment);
+			this.GtkLabel = new global::Gtk.Label ();
+			this.GtkLabel.Name = "GtkLabel";
+			this.GtkLabel.UseMarkup = true;
+			this.frameAudioOptions.LabelWidget = this.GtkLabel;
+			this.@fixed.Add (this.frameAudioOptions);
+			global::Gtk.Fixed.FixedChild w16 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameAudioOptions]));
+			w16.X = 5;
+			w16.Y = 65;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
 			this.comboTracks.Changed += new global::System.EventHandler (this.OnComboTracksChanged);
+			this.comboCodec.Changed += new global::System.EventHandler (this.OnComboCodecChanged);
 			this.entryBitrate.Changed += new global::System.EventHandler (this.OnEntryBitrateChanged);
 		}
 	}

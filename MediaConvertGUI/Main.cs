@@ -17,10 +17,17 @@ namespace MediaConvertGUI
 				{
 					foreach (var arg in args)
 					{
+						if (Directory.Exists(arg))
+						{
+							foreach (var fName in Directory.GetFiles(arg)) 
+							{
+								win.AddMediaInfo(fName);
+							}
+						} else
 						if (File.Exists(arg))
 						{
 							win.AddMediaInfo(arg);
-						}
+						};
 					}
 				}
 

@@ -11,6 +11,13 @@ namespace MediaConvertGUI
 	public static class SupportMethods
 	{
 		#region filling Combo
+
+		public static void ClearCombo(Gtk.ComboBox combo)
+		{
+			// clear combo
+			combo.Model = new ListStore(typeof(string));
+			combo.Active = -1;
+		}		
 			
 		/// <summary>
 		/// Fills the combo box.
@@ -211,7 +218,6 @@ namespace MediaConvertGUI
 				(widget as Gtk.ComboBoxEntry).Entry.ModifyBase(StateType.Normal, entryBackgroundColor);
 			}
 		}
-
 
 		public static bool IsNumeric(this string s)
 	    {

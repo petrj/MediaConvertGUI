@@ -165,8 +165,8 @@ namespace MediaConvertGUI
 
 		#region fileds && properties
 
-		private string _fileName;
-		private long _fileSize = 0;
+		public string FileName { get; set; }
+		public long FileSize { get; set; }
 
 		public List<TrackInfo> Tracks  { get; set; }
 
@@ -182,7 +182,7 @@ namespace MediaConvertGUI
 				{
 					if (track.TrackType == "Video")
 					{
-						_firstVideoTrack = track;
+						//_firstVideoTrack = track;
 						return track;
 					}
 				}
@@ -203,7 +203,7 @@ namespace MediaConvertGUI
 				{
 					if (track.TrackType == "Audio")
 					{
-						_firstAudioTrack = track;
+						//_firstAudioTrack = track;
 						return track;
 					}
 				}
@@ -231,12 +231,17 @@ namespace MediaConvertGUI
 			}
 		}
 
+		#region properties-getters
+			
 		public decimal OverAllBitRate
 		{
 			get
 			{
+				if (DurationMS == 0)
+					return 0;
+
 				decimal totalSeconds = Math.Round(DurationMS/(decimal)1000);
-				decimal sizekBits = _fileSize*8/(decimal)1000.00;
+				decimal sizekBits = FileSize*8/(decimal)1000.00;
 
 				return sizekBits / totalSeconds;
 			}
@@ -250,6 +255,7 @@ namespace MediaConvertGUI
 			}
 		}
 
+		// duration detected from tracks
 		public decimal DurationMS
 		{
 			get
@@ -289,9 +295,11 @@ namespace MediaConvertGUI
 		{
 			get
 			{
-				return ShowHumanReadableSize(_fileSize);
+				return ShowHumanReadableSize(FileSize);
 			}
 		}
+
+		#endregion
 
 		public static string ShowHumanReadableSize(long sizeInBytes)
 		{
@@ -314,18 +322,6 @@ namespace MediaConvertGUI
 
 		public string RawMediaInfoOutput { get; set; }
 
-		public string FileName
-		{
-			get
-			{
-				return _fileName;
-			}
-			set		
-			{
-				OpenFromFile(value);
-			}
-		}
-
 		public VideoCodecEnum TargetVideoCodec { get; set; }
 		public VideoContainerEnum TargetContainer { get; set; }
 
@@ -343,17 +339,18 @@ namespace MediaConvertGUI
 
 		#region methods
 
-		public void Copyto(MediaInfo mInfo)
+		public void Clear()
 		{
-			Copyto(mInfo,false);
+			TargetVideoCodec = VideoCodecEnum.xvid;
+			TargetContainer = VideoContainerEnum.avi;
+			Tracks.Clear();
 		}
 
-		public void Copyto(MediaInfo mInfo, bool onlyVideoTrack)
+		public void AppendTracksTo(MediaInfo mInfo,string onlyType="")
 		{
-			mInfo.Tracks.Clear();
 			foreach(var track in Tracks)
 			{
-				if (track.TrackType =="Video")
+				if ((onlyType=="") || ((track.TrackType ==onlyType)) )				
 				{
 					var tr = new TrackInfo();
 					track.CopyTo(tr);
@@ -362,11 +359,27 @@ namespace MediaConvertGUI
 			}
 		}
 
+		public void Copyto(MediaInfo mInfo,bool videoOnly)
+		{
+			mInfo.ClearTracks();
+			foreach(var track in Tracks)
+			{
+				if ((videoOnly==false) || ((track.TrackType =="Video")) )				
+				{
+					var tr = new TrackInfo();
+					track.CopyTo(tr);
+					mInfo.Tracks.Add(tr);
+				}
+			}
+			mInfo.TargetVideoCodec = TargetVideoCodec;
+			mInfo.TargetContainer = TargetContainer;
+			mInfo.FileName = FileName;
+			mInfo.FileSize = FileSize;
+		}
+
 		public void ClearTracks()
 		{
 			Tracks.Clear();
-			_firstVideoTrack = null;
-			_firstAudioTrack = null;
 		}
 
 		/// <summary>
@@ -379,9 +392,9 @@ namespace MediaConvertGUI
 		{
 			if (File.Exists(fileName))
 			{
-				_fileName = fileName;
+				FileName = fileName;
 				var fi = new System.IO.FileInfo(fileName);
-				_fileSize = fi.Length;
+				FileSize = fi.Length;
 
 				var raw = String.Empty;
 				Tracks.Clear();
@@ -510,7 +523,6 @@ namespace MediaConvertGUI
 
 		public void CopyTo(TrackInfo track)
 		{
-			track.TargetAudioCodec = AudioCodecEnum.none;
 			track.Aspect = Aspect;
 			track.Bitrate = Bitrate;
 			track.Codec = Codec;
@@ -518,13 +530,37 @@ namespace MediaConvertGUI
 			track.TrackType = TrackType;
 			track.FrameRate = FrameRate;
 			track.SamplingRateHz = SamplingRateHz;
+			track.StreamSize = StreamSize;
 
 			track.Width = RealWidth;
 			track.PixelAspect = 1;
 
 			track.Height = Height;
 			track.DurationMS = DurationMS;
+			track.TargetAudioCodec = TargetAudioCodec;
 		}
+
+		public void Clear()
+		{
+			Codec = String.Empty;
+
+			Aspect = "0x0";
+			Bitrate = 0;
+
+			Channels = 0;
+			TrackType = String.Empty;
+			FrameRate = 0;
+			SamplingRateHz = 0;
+
+			Width = RealWidth;
+			PixelAspect = 1;
+
+			Height = Height;
+			DurationMS = DurationMS;
+
+
+			TargetAudioCodec = AudioCodecEnum.none;
+		}	
 
 		public void ParseFromXmlNode(XmlNode node)
 		{

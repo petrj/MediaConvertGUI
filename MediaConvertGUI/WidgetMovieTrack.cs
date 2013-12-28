@@ -7,9 +7,9 @@ namespace MediaConvertGUI
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class WidgetMovieTrack : Gtk.Bin
 	{
-		public MediaInfo _movieInfo;
+		private MediaInfo _movieInfo;
 		private bool _editable = false;
-		private bool _disableChangeEvent = false;
+		private EventLock _eventLock = new EventLock();
 
 		#region properties
 
@@ -18,13 +18,6 @@ namespace MediaConvertGUI
 			get
 			{
 				return _movieInfo;
-			}
-			set
-			{
-				_movieInfo = value;
-
-				Fill();
-				OnComboCodecChanged(this,null);
 			}
 		}
 
@@ -85,11 +78,22 @@ namespace MediaConvertGUI
 		{
 			this.Build ();
 			Editable = false;
+			_movieInfo = new MediaInfo();
 		}
 
-		private void Fill()
+		public void FillFrom(MediaInfo mInfo)
 		{
-			_disableChangeEvent = true;
+			if (mInfo != null)
+			{
+				mInfo.Copyto(_movieInfo,false);
+			}
+			Fill();
+		}
+
+		public void Fill()
+		{
+			if (_eventLock.Lock())
+			{
 				var defaultAspects = new List<string>{"16:9","4:3"};
 				var frameRates = new List<string>{"23.976","25"};
 
@@ -118,6 +122,11 @@ namespace MediaConvertGUI
 					{
 						SupportMethods.FillComboBox(comboCodec,new List<string>() {m.Codec}, Editable,m.Codec);
 					}
+
+					frameVideooptions.Visible = 
+						(MovieInfo != null) && 
+						(MovieInfo.FirstVideoTrack!=null) && 
+						( ((Editable) && (comboCodec.Active > 0)) || !Editable );
 					
 					m.ReComputeStreamSizeByBitrate();
 					labelTrackSize.Text = m.HumanReadableStreamSize;
@@ -128,56 +137,64 @@ namespace MediaConvertGUI
 					entryHeight.Text = String.Empty;
 					entryPixelAspect.Text = String.Empty;
 
-					comboCodec.Model = new ListStore(typeof(string));
-					comboCodec.Active = 0;
-					labelTrackSize.Text = String.Empty;
+					if (MovieInfo!=null) 
+					{
+						SupportMethods.FillComboBox(comboCodec,new List<string>() {String.Empty}, false,String.Empty);	
+					} else
+					{
+						comboCodec.Model = new ListStore(typeof(string));
+						comboCodec.Active = 0;
+						labelTrackSize.Text = String.Empty;
+					}
 
 					SupportMethods.FillComboBoxEntry(comboBitRate,MediaInfo.DefaultVideoBitRates,0,false);
 					SupportMethods.FillComboBoxEntry(comboAspect,defaultAspects,"",false,false);
-					SupportMethods.FillComboBoxEntry(comboFrameRate,frameRates,"",false,false);
+					SupportMethods.FillComboBoxEntry(comboFrameRate,frameRates,"",false,false);				 
 				}
-			_disableChangeEvent = false;
+				_eventLock.Unlock();
+			}
 		}
 
 		#region events
 
 		protected void OnComboBitRateChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent) OnAnyValueChanged();
+			OnAnyValueChanged();
 		}		
 
 		protected void OnEntryWidthChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent && 
-			    checkKeep.Active && 
+			if (checkKeep.Active && 
 			    MovieInfo.FirstVideoTrack != null && 
 			    SupportMethods.IsNumeric(entryWidth.Text))
 			{
-				_disableChangeEvent = true;
+				if (_eventLock.Lock())
+				{
 
-				var width = SupportMethods.ToDecimal(entryWidth.Text);
+					var width = SupportMethods.ToDecimal(entryWidth.Text);
 
-				var aspectRatio = MovieInfo.FirstVideoTrack.AspectAsNumber;
-				if (aspectRatio != -1)
-				{	
-					entryHeight.Text = Convert.ToInt32( width / aspectRatio ).ToString();
+					var aspectRatio = MovieInfo.FirstVideoTrack.AspectAsNumber;
+					if (aspectRatio != -1)
+					{	
+						entryHeight.Text = Convert.ToInt32( width / aspectRatio ).ToString();
+					}
+					_eventLock.Unlock();
+
+					OnAnyValueChanged();
 				}
-				OnAnyValueChanged();	
-
-				_disableChangeEvent = false;
 			}
 		}		
 
 		protected void OnEntryHeightChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent && 
-			    checkKeep.Active && 
+			if (checkKeep.Active && 
 			    MovieInfo != null && 
 			    MovieInfo.FirstVideoTrack != null && 
 			    SupportMethods.IsNumeric(entryHeight.Text))
-				{
-					_disableChangeEvent = true;
+			{
 
+				if (_eventLock.Lock())
+				{
 					var height = SupportMethods.ToDecimal(entryHeight.Text);
 					var aspectRatio = MovieInfo.FirstVideoTrack.AspectAsNumber;
 					if (aspectRatio != -1)
@@ -185,26 +202,28 @@ namespace MediaConvertGUI
 						entryWidth.Text = Convert.ToInt32( height * aspectRatio ).ToString();						
 					}	
 
-					_disableChangeEvent = false;
-				
-					OnAnyValueChanged();	
+					_eventLock.Unlock();					
+					OnAnyValueChanged();
 				}
+			}
 		}
 
 		protected void OnComboAspectChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent) OnAnyValueChanged();
+			OnAnyValueChanged();
 		}
 
 		protected void OnComboFrameRateChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent) OnAnyValueChanged();
+			OnAnyValueChanged();
 		}
 
 		private void OnAnyValueChanged()
 		{
 			if (Editable && MovieInfo != null && MovieInfo.FirstVideoTrack != null)
 			{
+				if (_eventLock.Lock())
+				{
 					var m = MovieInfo.FirstVideoTrack;
 
 					m.Bitrate = BitRateTypedValue*1024;
@@ -221,45 +240,39 @@ namespace MediaConvertGUI
 					m.FrameRate = SupportMethods.ToDecimal(comboFrameRate.ActiveText);
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;
-					
 
-					Fill();			
+					comboCodec.TooltipText = String.Empty;
+					if (comboCodec.Active > 0)
+					{
+						VideoCodecEnum selcodec;
+						if (Enum.TryParse(comboCodec.ActiveText,out selcodec))
+						{
+							if (MediaInfo.DefaultVideoCodecsDescriptions.ContainsKey(selcodec))
+							{
+								comboCodec.TooltipText = MediaInfo.DefaultVideoCodecsDescriptions[selcodec];
+							}
+						}
+					}
+
+					_eventLock.Unlock();
+				}
+				Fill();
 			}
 		}		
 
 		protected void OnComboCodecChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent) 
-			{
-				frameVideooptions.Visible = (comboCodec.Active > 0) || (!Editable);
-
-
-				comboCodec.TooltipText = String.Empty;
-				if (comboCodec.Active > 0)
-				{
-					VideoCodecEnum selcodec;
-					if (Enum.TryParse(comboCodec.ActiveText,out selcodec))
-					{
-						if (MediaInfo.DefaultVideoCodecsDescriptions.ContainsKey(selcodec))
-						{
-							comboCodec.TooltipText = MediaInfo.DefaultVideoCodecsDescriptions[selcodec];
-						}
-					}
-				}
-
-				OnAnyValueChanged();
-			}
+			OnAnyValueChanged();
 		}
-
 
 		protected void OnComboExtChanged (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent) OnAnyValueChanged();
+			OnAnyValueChanged();
 		}
 
 		protected void OnCheckKeepToggled (object sender, EventArgs e)
 		{
-			if (!_disableChangeEvent) OnAnyValueChanged();
+			OnAnyValueChanged();
 		}
 
 		protected void OnButtonCodecsInfoClicked (object sender, EventArgs e)

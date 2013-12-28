@@ -15,11 +15,6 @@ namespace MediaConvertGUI
 			{
 				return _sourceMovieInfo;
 			}
-			set
-			{
-				_sourceMovieInfo = value;
-				Fill();
-			}
 		}
 
 		public MediaInfo TargetMovieInfo 
@@ -28,16 +23,13 @@ namespace MediaConvertGUI
 			{
 				return _targetMovieInfo;
 			}
-			set
-			{
-				_targetMovieInfo = value;
-				Fill();
-			}
 		}
 
 		public WidgetGeneralMediaInfo ()
 		{
 			this.Build ();
+			_sourceMovieInfo = new MediaInfo();
+			_targetMovieInfo = new MediaInfo();
 			comboContainer.Changed+= OnAnyValueChanged;
 		}
 
@@ -45,11 +37,19 @@ namespace MediaConvertGUI
 		{
 			if (TargetMovieInfo != null)
 			{
-				TargetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
+				_targetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
 			}
 		}
 
-		private void Fill()
+		public void FillFrom(MediaInfo sourceInfo, MediaInfo targetInfo)
+		{
+			if (sourceInfo != null) sourceInfo.Copyto(_sourceMovieInfo,false);
+			if (targetInfo != null) targetInfo.Copyto(_targetMovieInfo,false);
+
+			Fill();
+		}
+
+		public void Fill()
 		{
 			if (SourceMovieInfo != null && SourceMovieInfo.FirstVideoTrack != null)
 			{

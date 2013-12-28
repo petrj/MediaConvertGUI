@@ -55,7 +55,7 @@ namespace MediaConvertGUI
 			this.comboCodec.Name = "comboCodec";
 			this.@fixed.Add (this.comboCodec);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));
-			w2.X = 60;
+			w2.X = 130;
 			w2.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.frameVideooptions = new global::Gtk.Frame ();
@@ -246,8 +246,6 @@ namespace MediaConvertGUI
 			this.Hide ();
 			this.comboCodec.Changed += new global::System.EventHandler (this.OnComboCodecChanged);
 			this.comboBitRate.Changed += new global::System.EventHandler (this.OnComboBitRateChanged);
-			this.comboAspect.Changed += new global::System.EventHandler (this.OnComboAspectChanged);
-			this.checkKeep.Toggled += new global::System.EventHandler (this.OnCheckKeepToggled);
 			this.entryWidth.Changed += new global::System.EventHandler (this.OnEntryWidthChanged);
 			this.entryHeight.Changed += new global::System.EventHandler (this.OnEntryHeightChanged);
 			this.comboFrameRate.Changed += new global::System.EventHandler (this.OnComboFrameRateChanged);

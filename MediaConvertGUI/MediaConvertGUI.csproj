@@ -20,7 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
-    <Commandlineparameters>/temp/reklama.m2t</Commandlineparameters>
+    <Commandlineparameters>/temp</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -81,10 +81,9 @@
     <Compile Include="Dialogs.cs" />
     <Compile Include="WidgetAudioTracks.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.WidgetAudioTracks.cs" />
-    <Compile Include="WidgetTargetAudioTrack.cs" />
-    <Compile Include="gtk-gui\MediaConvertGUI.WidgetTargetAudioTrack.cs" />
     <Compile Include="ProgressWin.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.ProgressWin.cs" />
+    <Compile Include="EventLock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

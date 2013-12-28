@@ -18,9 +18,8 @@ public partial class MainWindow: Gtk.Window
 
 	private Thread _processthread;
 	private DateTime _processStartedAt;
-	private bool _processAbortRequest = false;
 	private string _outputFile = String.Empty;
-
+	private bool _processAbortRequest = false;
 	private MediaInfo _currentConvertingMovie;
 	private int _currentPass = 1;
 	private int _currentFileListCount = 0;
@@ -40,6 +39,8 @@ public partial class MainWindow: Gtk.Window
 
 		_proressWindow = new ProgressWin();
 		_proressWindow.Hide();
+
+		tree.Selection.Mode = SelectionMode.Multiple;
 
 		FillTree();
 	}
@@ -74,6 +75,34 @@ public partial class MainWindow: Gtk.Window
 		return selected;
 	}
 
+	private Dictionary<int,MediaInfo> GetSelectedMediaFilesWithIndices()
+	{
+		var selected = new Dictionary<int,MediaInfo>();
+
+		foreach(Gtk.TreePath selectedItem in _fileTreeViewData.Tree.Selection.GetSelectedRows())
+		{
+			var indicies = selectedItem.Indices;
+			if (indicies.Length>0)
+			{
+				var selectedIndex = indicies[0];
+				if (MoviesInfo.Count>selectedIndex)
+				{
+					var index = 0;
+					foreach (var key in MoviesInfo.Keys)
+					{
+						if (index == selectedIndex)
+						{
+							selected.Add(index,key);
+						}
+						index++;
+					}
+				}
+			}
+		}
+
+		return selected;
+	}
+
 	public MediaInfo FirstSelectedMediaFile
 	{
 		get
@@ -94,7 +123,7 @@ public partial class MainWindow: Gtk.Window
 		SelectRows(new List<int>() { rowIndex });
 	}
 
-	public void SelectRows(List<int> rows)
+	public void SelectRows(IEnumerable<int> rows)
 	{
 		if (rows == null)
 			return;
@@ -132,7 +161,10 @@ public partial class MainWindow: Gtk.Window
 		_fileTreeViewData.Data.Clear();
 		_fileTreeViewData.Columns.Clear();
 
-		_fileTreeViewData.AppendStringColumn("File Name", null, false);        
+		_fileTreeViewData.AppendStringColumn("File Name", null, false); 
+		_fileTreeViewData.AppendStringColumn("Target Codec", null, false);
+		_fileTreeViewData.AppendStringColumn("Container", null, false);
+		_fileTreeViewData.AppendStringColumn("Audio", null, false);
 		_fileTreeViewData.CreateTreeViewColumns();
 		
 	}
@@ -144,7 +176,11 @@ public partial class MainWindow: Gtk.Window
 		foreach(var info in MoviesInfo.Keys)
 		{
 			var name = info.FileName; 
-			_fileTreeViewData.AppendData(new List<object>{name});	
+			var codec = MoviesInfo[info].TargetVideoCodec.ToString();
+			var cont = MoviesInfo[info].TargetContainer.ToString();
+			var audio = MoviesInfo[info].FirstAudioTrack != null ?MoviesInfo[info].FirstAudioTrack.TargetAudioCodec.ToString() : "none";
+				MoviesInfo[info].TargetContainer.ToString();
+			_fileTreeViewData.AppendData(new List<object>{name,codec,cont,audio});
 		}
   	   
 		tree.Model = _fileTreeViewData.CreateTreeViewListStore();
@@ -160,24 +196,31 @@ public partial class MainWindow: Gtk.Window
 
 	public void AddMediaInfo(string fName)
 	{
-		var movie = new MediaInfo();
-		movie.OpenFromFile(fName);
+		var sourceMovie = new MediaInfo();
+		sourceMovie.OpenFromFile(fName);
 
-		var targetMovie = new MediaInfo();
-		movie.Copyto(targetMovie,true);
+		if (sourceMovie.AudioTracks.Count>1 || sourceMovie.FirstVideoTrack!=null)
+		{
 
-		// target audio track
-		var audioTrack = new TrackInfo();
-		audioTrack.TrackType = "Audio";
-		audioTrack.Channels = 2;
-		audioTrack.Bitrate = 192000;
-		audioTrack.SamplingRateHz = 44100;
-		audioTrack.DurationMS = movie.DurationMS;
-		targetMovie.Tracks.Add(audioTrack);
+			var targetMovie = new MediaInfo();
+			sourceMovie.Copyto(targetMovie,true);
 
-		MoviesInfo.Add(movie, targetMovie);
+			// tawidgetGenerarack
+			if (sourceMovie.AudioTracks.Count>0)
+			{
+				var audioTrack = new TrackInfo();
+	                audioTrack.TrackType = "Audio";
+	                audioTrack.Channels = 2;
+	                audioTrack.Bitrate = 192000;
+	                audioTrack.SamplingRateHz = 44100;
+	                audioTrack.DurationMS = sourceMovie.DurationMS;
+	                targetMovie.Tracks.Add(audioTrack);
+			}
 
-		FillTree();
+			MoviesInfo.Add(sourceMovie, targetMovie);
+
+			FillTree();
+		}	
 	}
 
 	#endregion
@@ -206,15 +249,15 @@ public partial class MainWindow: Gtk.Window
 					using (var sr = new StreamReader(fs)) 
 					{					    
 						string line;
-					    while ((line = sr.ReadLine()) != null) 
-					    {
-							if (line != null && line.Length>11 && line.StartsWith("frame="))
-							{
-								var lastFrameAsString = line.Substring(6,5).Trim();
-								if (SupportMethods.IsNumeric(lastFrameAsString))
-									lastFrame = Convert.ToInt32(lastFrameAsString);
-							}
-					    }
+										 while ((line = sr.ReadLine()) != null)
+                                         {
+                                                        if (line != null && line.Length>11 && line.StartsWith("frame="))
+                                                        {
+                                                                var lastFrameAsString = line.Substring(6,5).Trim();
+                                                                if (SupportMethods.IsNumeric(lastFrameAsString))
+                                                                        lastFrame = Convert.ToInt32(lastFrameAsString);
+                                                        }
+                                         }
 					}
 				}
 			}
@@ -223,92 +266,92 @@ public partial class MainWindow: Gtk.Window
 	}
 
 	public void ShowProgess()
-	{
-			_proressWindow.Show();
-			_proressWindow.SetPercents(0,0,0,_processStartedAt);
+        {
+                        _proressWindow.Show();
+                        _proressWindow.SetPercents(0,0,0,_processStartedAt);
 
-			while (_processthread != null && _processthread.IsAlive) 
-			{					
-				if (_proressWindow.AbortRequest)
-				{
-					SupportMethods.ExecuteAndReturnOutput("killall","ffmpeg");
-					_processAbortRequest = true;
-				}
+                        while (_processthread != null && _processthread.IsAlive)
+                        {                                        
+                                if (_proressWindow.AbortRequest)
+                                {
+                                        SupportMethods.ExecuteAndReturnOutput("killall","ffmpeg");
+                                        _processAbortRequest = true;
+                                }
 
-				var percentsCurrentFilePass = 0d;
-				var percentsCurrentFile = 0d;
-				var percentsTotal = 0d;
+                                var percentsCurrentFilePass = 0d;
+                                var percentsCurrentFile = 0d;
+                                var percentsTotal = 0d;
 
 
-				var fName = String.Empty;
-				var passAsString = String.Empty;
-				var totalFilesAsString = String.Empty;
+                                var fName = String.Empty;
+                                var passAsString = String.Empty;
+                                var totalFilesAsString = String.Empty;
 
-				if (_currentConvertingMovie != null)
-				{
-					fName = System.IO.Path.GetFileName(_currentConvertingMovie.FileName);
+                                if (_currentConvertingMovie != null)
+                                {
+                                        fName = System.IO.Path.GetFileName(_currentConvertingMovie.FileName);
 
-					var frames = Convert.ToDouble(_currentConvertingMovie.DurationMS/1000m*_currentConvertingMovie.FirstVideoTrack.FrameRate);
+                                        var frames = Convert.ToDouble(_currentConvertingMovie.DurationMS/1000m*_currentConvertingMovie.FirstVideoTrack.FrameRate);
 
-					// detecting progress from text file
-					var lastFrame = GetLastFrameFromConvertLogFile(_outputFile);
-					if  ( (frames>0) && (lastFrame != -1))
-					{
-						percentsCurrentFilePass = Convert.ToInt32(lastFrame / (frames/(double)100));
-					}
+                                        // detecting progress from text file
+                                        var lastFrame = GetLastFrameFromConvertLogFile(_outputFile);
+                                        if ( (frames>0) && (lastFrame != -1))
+                                        {
+                                                percentsCurrentFilePass = Convert.ToInt32(lastFrame / (frames/(double)100));
+                                        }
 
-					// computing current file progress
-					if (_currentPass>0)
-					{	
-						var correctedFrame = lastFrame;
-						if (correctedFrame<0) correctedFrame = 0;
+                                        // computing current file progress
+                                        if (_currentPass>0)
+                                        {        
+                                                var correctedFrame = lastFrame;
+                                                if (correctedFrame<0) correctedFrame = 0;
 
-						passAsString = "Pass: " + _currentPass.ToString();
+                                                passAsString = "Pass: " + _currentPass.ToString();
 
-						var actualFrame = (_currentPass-1)*frames + correctedFrame;
-						percentsCurrentFile = actualFrame/(frames*2/100d);				
-					}
+                                                var actualFrame = (_currentPass-1)*frames + correctedFrame;
+                                                percentsCurrentFile = actualFrame/(frames*2/100d);                                
+                                        }
 
-				}
+                                }
 
-				if (_currentFileListNumber>=0 && _currentFileListCount>0)
-				{
-					percentsTotal = Convert.ToDouble(_currentFileListNumber/(Convert.ToDouble(_currentFileListCount)/100d));
+                                if (_currentFileListNumber>=0 && _currentFileListCount>0)
+                                {
+                                        percentsTotal = Convert.ToDouble(_currentFileListNumber/(Convert.ToDouble(_currentFileListCount)/100d));
 
-					totalFilesAsString = (_currentFileListNumber+1).ToString()+"/"+(_currentFileListCount).ToString();
+                                        totalFilesAsString = (_currentFileListNumber+1).ToString()+"/"+(_currentFileListCount).ToString();
 
-					// adding actual file progress fraction
-					if (percentsCurrentFile>0)
-					{
-						var onePart=1d/(double)_currentFileListCount;
-						percentsTotal = percentsTotal + percentsCurrentFile*onePart;
-					}
+                                        // adding actual file progress fraction
+                                        if (percentsCurrentFile>0)
+                                        {
+                                                var onePart=1d/(double)_currentFileListCount;
+                                                percentsTotal = percentsTotal + percentsCurrentFile*onePart;
+                                        }
 
-				}
+                                }
 
-				_proressWindow.SetPercents(Math.Round (percentsTotal,2),
-			                           Math.Round (percentsCurrentFile,2),
-			                           Math.Round (percentsCurrentFilePass,2),
-			                           _processStartedAt,
-			                           fName,
-			                           passAsString,
-			                           totalFilesAsString);
-				/*
-				_proressWindow.CurrentFilePassPercents = percentsCurrentFilePass;
-				_proressWindow.CurrentFilePercents = percentsCurrentFile;
-				_proressWindow.TotalPercents = percentsTotal;
-				*/
+                                _proressWindow.SetPercents(Math.Round (percentsTotal,2),
+                         Math.Round (percentsCurrentFile,2),
+                         Math.Round (percentsCurrentFilePass,2),
+                         _processStartedAt,
+                         fName,
+                         passAsString,
+                         totalFilesAsString);
+                                /*
+                                _proressWindow.CurrentFilePassPercents = percentsCurrentFilePass;
+                                _proressWindow.CurrentFilePercents = percentsCurrentFile;
+                                _proressWindow.TotalPercents = percentsTotal;
+                                */
 
-				while (GLib.MainContext.Iteration ());
-				Thread.Sleep(500);
-			}
+                                while (GLib.MainContext.Iteration ());
+                                Thread.Sleep(500);
+                        }
 
-			_proressWindow.SetPercents(100,
-			                           100,
-			                           100,
-			                           _processStartedAt);
+                        _proressWindow.SetPercents(100,
+                         100,
+                         100,
+                         _processStartedAt);
 
-	}
+        }
 
 	#endregion
 
@@ -404,21 +447,17 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnTreeCursorChanged (object sender, EventArgs e)
 	{
-		var mediaFile = FirstSelectedMediaFile;
+		var source = FirstSelectedMediaFile;
 
-		widgetmovietrack.MovieInfo = mediaFile;
+		widgetSourceMovieTrack.FillFrom(source);
+		widgetSourceAudioTracks.FillFrom(source);
 
-		widgetGenera.SourceMovieInfo = mediaFile;
+		MediaInfo target;
+		target = source !=null && MoviesInfo.ContainsKey(source) ? MoviesInfo[source] : null;
+		widgetTargetMovieTrack.FillFrom(target);
+		widgetTargetAudioTracks.FillFrom(target);
 
-		widgetaudiotracks.MovieInfo = mediaFile;
-
-		MediaInfo target = null;
-		if (mediaFile != null) target = MoviesInfo[mediaFile];
-
-		widgetGenera.TargetMovieInfo = target;
-
-		widgetTargetMovieTrack.MovieInfo = target;
-		widgetTargetAudioTrack.MovieInfo = target;
+		widgetGenera.FillFrom(source,target);
 	}
 
 	protected void OnButtonGoConvertClicked (object sender, EventArgs e)
@@ -470,6 +509,36 @@ public partial class MainWindow: Gtk.Window
 	{
 		MoviesInfo.Clear();
 		FillTree();
+	}
+
+
+	protected void OnButtonApplyClicked (object sender, EventArgs e)
+	{
+		var selectedMovies = GetSelectedMediaFilesWithIndices();
+		if (selectedMovies.Count == 0)
+			return;
+
+		if (Dialogs.ConfirmDialog("Save changes ?  "+System.Environment.NewLine+String.Format("(selected files: {0})",selectedMovies.Count.ToString())))
+		{
+			foreach (KeyValuePair<int,MediaInfo> m in selectedMovies)
+			{
+				MoviesInfo[m.Value].TargetVideoCodec = widgetTargetMovieTrack.MovieInfo.TargetVideoCodec;
+
+				if (widgetGenera.TargetMovieInfo != null)
+					MoviesInfo[m.Value].TargetContainer = widgetGenera.TargetMovieInfo.TargetContainer;
+
+
+				MoviesInfo[m.Value].ClearTracks();
+				widgetTargetMovieTrack.MovieInfo.AppendTracksTo(MoviesInfo[m.Value],"Video");
+				widgetTargetAudioTracks.Info.AppendTracksTo(MoviesInfo[m.Value],"Audio");
+			}
+		}
+
+		FillTree();
+
+		SelectRows(selectedMovies.Keys);
+		OnTreeCursorChanged(this,null);
+
 	}
 
 	#endregion
