@@ -154,6 +154,17 @@ namespace MediaConvertGUI
 			{30000m,"HD DVD (30 Mb)"}
 		};
 
+		public static Dictionary<decimal,string> DefaultSamplingRates = new Dictionary<decimal, string>()
+		{
+
+			{08000m,"Telephone (8 kHz)"},
+			{11025m,"1/4 Audio-CD (11 kHz)"},
+			{22050m,"1/2 Audio-CD (22 kHz)"},
+			{44100m,"Audio-CD (44 kHz)"},
+			{48000m,"TV (48 kHz)"},		
+			{96000m,"DVD-Audio (96 kHz)"}
+		};
+
 		public static Dictionary<decimal,string> DefaultAudioBitRates = new Dictionary<decimal, string>()
 		{
 			{32m,"32"},
@@ -371,7 +382,7 @@ namespace MediaConvertGUI
 			Tracks.Clear();
 		}
 
-		public void AppendTracksTo(MediaInfo mInfo,string onlyType="")
+		public void AppendTracksTo(MediaInfo mInfo,decimal durationMS, string onlyType="")
 		{
 			foreach(var track in Tracks)
 			{
@@ -379,6 +390,7 @@ namespace MediaConvertGUI
 				{
 					var tr = new TrackInfo();
 					track.CopyTo(tr);
+					tr.DurationMS = durationMS;
 					mInfo.Tracks.Add(tr);
 				}
 			}

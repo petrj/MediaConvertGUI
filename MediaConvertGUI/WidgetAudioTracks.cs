@@ -25,11 +25,12 @@ namespace MediaConvertGUI
 
 			_info = new MediaInfo();
 
-			comboChannels.AppendText("-");
-			comboChannels.AppendText("1");
-			comboChannels.AppendText("2");
-
 			Editable = false;
+
+			comboChannels.Changed+= delegate { OnAnyValuechanged(); };
+			comboBitrate.Changed+= delegate { OnAnyValuechanged(); };
+			comboSampleRate.Changed+= delegate { OnAnyValuechanged(); };
+
 		}
 
 		public bool Editable 
@@ -42,10 +43,10 @@ namespace MediaConvertGUI
 			{
 				_editable = value;
 
-				SupportMethods.SetAvailability(entryBitrate as Gtk.Widget,_editable);
 				SupportMethods.SetAvailability(comboCodec as Gtk.Widget,_editable);
+				SupportMethods.SetAvailability(comboBitrate as Gtk.Widget,_editable);
+				SupportMethods.SetAvailability(comboSampleRate as Gtk.Widget,_editable);
 				SupportMethods.SetAvailability(comboChannels as Gtk.Widget,_editable);
-				SupportMethods.SetAvailability(entrySampleRate as Gtk.Widget,_editable);
 			}
 		}
 
@@ -103,20 +104,22 @@ namespace MediaConvertGUI
 						SupportMethods.FillComboBox(comboCodec,new List<string>(){activeTrack.Codec},false,activeTrack.Codec);
 					}
 
-					entryBitrate.Text = activeTrack.BitrateKbps.ToString();
-					labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
-					entrySampleRate.Text = activeTrack.SamplingRateHz.ToString();
+					SupportMethods.FillComboBoxEntry(comboSampleRate,MediaInfo.DefaultSamplingRates,activeTrack.SamplingRateHz,Editable);
+					SupportMethods.FillComboBoxEntry(comboBitrate,MediaInfo.DefaultAudioBitRates,activeTrack.BitrateKbps,Editable);
 
+
+					labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
 				} else
 				{
 					SupportMethods.ClearCombo(comboChannels);
 					SupportMethods.ClearCombo(comboCodec);
 
+					SupportMethods.ClearCombo(comboBitrate);					
+					SupportMethods.ClearCombo(comboSampleRate);
+
 					frameAudioOptions.Visible = false;
 
-					entryBitrate.Text = String.Empty;
 					labelTrackSze.Text = String.Empty;
-					entrySampleRate.Text = "";
 				}
 
 				_eventLock.Unlock();
@@ -167,6 +170,30 @@ namespace MediaConvertGUI
 
 		}
 
+		public decimal BitRateTypedValue
+		{
+			get
+			{
+				var res = 0m;
+
+				if (SupportMethods.IsNumeric( comboBitrate.Entry.Text))
+				{
+					res = SupportMethods.ToDecimal(comboBitrate.Entry.Text);
+				} else
+				{
+					foreach (var  kvp in MediaInfo.DefaultAudioBitRates)
+					{
+						if (kvp.Value == comboBitrate.Entry.Text)
+						{
+							res = kvp.Key;
+						}
+					}
+				}
+			
+				return res;
+			}
+		}
+
 		private void OnAnyValuechanged()
 		{
 			if (_eventLock.Lock() && Editable)
@@ -177,12 +204,13 @@ namespace MediaConvertGUI
 				{
 					activeTrack.TargetAudioCodec = SelectedAudioCodec;
 
-					int bitrate;
-					if (int.TryParse(entryBitrate.Text,out bitrate))
-					{
-						activeTrack.Bitrate = bitrate*1024;
-						activeTrack.ReComputeStreamSizeByBitrate();
-					}
+					activeTrack.Bitrate = BitRateTypedValue*1024;
+					activeTrack.ReComputeStreamSizeByBitrate();
+
+					activeTrack.Channels = Convert.ToInt32(comboChannels.ActiveText);
+
+					var samplingRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboSampleRate.ActiveText,MediaInfo.DefaultSamplingRates);
+					activeTrack.SamplingRateHz = samplingRateTypedValue;
 				}
 
 				_eventLock.Unlock();
@@ -205,6 +233,11 @@ namespace MediaConvertGUI
 		{
 			OnAnyValuechanged();
 		}		
+
+		protected void OnEntrySampleRateChanged (object sender, EventArgs e)
+		{
+			OnAnyValuechanged();
+		}	
 
 	}
 }

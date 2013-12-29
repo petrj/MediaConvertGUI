@@ -17,7 +17,7 @@ namespace MediaConvertGUI
 			// clear combo
 			combo.Model = new ListStore(typeof(string));
 			combo.Active = -1;
-		}		
+		}
 			
 		/// <summary>
 		/// Fills the combo box.
@@ -240,6 +240,27 @@ namespace MediaConvertGUI
 	        int output;
 	        return Int32.TryParse(s, out output);
 	    }
+
+		public static decimal ParseDecimalValueFromValue(string value, Dictionary<decimal,string> dict)
+		{
+				var res = 0m;
+
+				if (SupportMethods.IsNumeric( value))
+				{
+					res = SupportMethods.ToDecimal(value);
+				} else
+				{
+					foreach (var  kvp in dict)
+					{
+						if (kvp.Value == value)
+						{
+							res = kvp.Key;
+						}
+					}
+				}
+			
+				return res;
+		}
 
 		public static string ExecuteAndReturnOutput(string command,string arguments)
 		{

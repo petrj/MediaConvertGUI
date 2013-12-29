@@ -568,9 +568,10 @@ public partial class MainWindow: Gtk.Window
 				}
 
 
+				var tmpDuration = MoviesInfo[m.Value].DurationMS;
 				MoviesInfo[m.Value].ClearTracks();
-				widgetTargetMovieTrack.MovieInfo.AppendTracksTo(MoviesInfo[m.Value],"Video");
-				widgetTargetAudioTracks.Info.AppendTracksTo(MoviesInfo[m.Value],"Audio");
+				widgetTargetMovieTrack.MovieInfo.AppendTracksTo(MoviesInfo[m.Value],tmpDuration,"Video");
+				widgetTargetAudioTracks.Info.AppendTracksTo(MoviesInfo[m.Value],tmpDuration,"Audio");
 			}
 		//}
 

@@ -48,30 +48,6 @@ namespace MediaConvertGUI
 			}
 		}
 
-		public decimal BitRateTypedValue
-		{
-			get
-			{
-				var res = 0m;
-
-				if (SupportMethods.IsNumeric( comboBitRate.Entry.Text))
-				{
-					res = SupportMethods.ToDecimal(comboBitRate.Entry.Text);
-				} else
-				{
-					foreach (var  kvp in MediaInfo.DefaultVideoBitRates)
-					{
-						if (kvp.Value == comboBitRate.Entry.Text)
-						{
-							res = kvp.Key;
-						}
-					}
-				}
-			
-				return res;
-			}
-		}
-
 		#endregion
 
 		public WidgetMovieTrack ()
@@ -226,7 +202,8 @@ namespace MediaConvertGUI
 				{
 					var m = MovieInfo.FirstVideoTrack;
 
-					m.Bitrate = BitRateTypedValue*1024;
+					var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboBitRate.ActiveText,MediaInfo.DefaultVideoBitRates);
+					m.Bitrate = bitRateTypedValue*1024;
 
 					if (SupportMethods.IsNumeric(entryHeight.Text))					
 					m.Height = Convert.ToInt32(entryHeight.Text);
