@@ -1,19 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI\SupportMethods.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI\MainWindow.cs">
     <Files>
       <File FileName="MediaConvertGUI\WidgetMovieTrack.cs" Line="66" Column="1" />
       <File FileName="MediaConvertGUI\Main.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\MainWindow.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\WidgetGeneralMediaInfo.cs" Line="79" Column="43" />
+      <File FileName="MediaConvertGUI\MainWindow.cs" Line="292" Column="18" />
+      <File FileName="MediaConvertGUI\WidgetGeneralMediaInfo.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI\WidgetAudioTracks.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\MediaInfo.cs" Line="454" Column="24" />
-      <File FileName="MediaConvertGUI\SupportMethods.cs" Line="260" Column="6" />
+      <File FileName="MediaConvertGUI\MediaInfo.cs" Line="433" Column="1" />
+      <File FileName="MediaConvertGUI\SupportMethods.cs" Line="13" Column="34" />
       <File FileName="MediaConvertGUI\ProgressWin.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI\Dialogs.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI\EventLock.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI\gtk-gui\MainWindow.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\..\..\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.targets" Line="3354" Column="53" />
+      <File FileName="..\..\..\..\..\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.targets" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
