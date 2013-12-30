@@ -30,7 +30,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelFps;
 		private global::Gtk.Label labelTrackSize;
 		private global::Gtk.Label GtkLabelVideoOptions;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

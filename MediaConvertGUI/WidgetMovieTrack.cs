@@ -98,11 +98,6 @@ namespace MediaConvertGUI
 					{
 						SupportMethods.FillComboBox(comboCodec,new List<string>() {m.Codec}, Editable,m.Codec);
 					}
-
-					frameVideooptions.Visible = 
-						(MovieInfo != null) && 
-						(MovieInfo.FirstVideoTrack!=null) && 
-						( ((Editable) && (comboCodec.Active > 0)) || !Editable );
 					
 					m.ReComputeStreamSizeByBitrate();
 					labelTrackSize.Text = m.HumanReadableStreamSize;
@@ -127,6 +122,13 @@ namespace MediaConvertGUI
 					SupportMethods.FillComboBoxEntry(comboAspect,defaultAspects,"",false,false);
 					SupportMethods.FillComboBoxEntry(comboFrameRate,frameRates,"",false,false);				 
 				}
+
+
+				frameVideooptions.Visible = 
+					(MovieInfo != null) && 
+					(MovieInfo.FirstVideoTrack!=null) && 
+					( ((Editable) && (comboCodec.Active > 0)) || !Editable );
+
 				_eventLock.Unlock();
 			}
 		}

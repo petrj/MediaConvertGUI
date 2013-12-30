@@ -210,29 +210,28 @@ public partial class MainWindow: Gtk.Window
 	public void AddMediaInfo(string fName)
 	{
 		var sourceMovie = new MediaInfo();
-		sourceMovie.OpenFromFile(fName);
-
-		if (sourceMovie.AudioTracks.Count>1 || sourceMovie.FirstVideoTrack!=null)
+		if (sourceMovie.OpenFromFile (fName)) 
 		{
+			if (sourceMovie.AudioTracks.Count > 1 || sourceMovie.FirstVideoTrack != null) {
 
-			var targetMovie = new MediaInfo();
-			sourceMovie.Copyto(targetMovie,true);
+				var targetMovie = new MediaInfo ();
+				sourceMovie.Copyto (targetMovie, true);
 
-			// tawidgetGenerarack
-			if (sourceMovie.AudioTracks.Count>0)
-			{
-				var audioTrack = new TrackInfo();
-	                audioTrack.TrackType = "Audio";
-	                audioTrack.Channels = 2;
-	                audioTrack.Bitrate = 192000;
-	                audioTrack.SamplingRateHz = 44100;
-	                audioTrack.DurationMS = sourceMovie.DurationMS;
-	                targetMovie.Tracks.Add(audioTrack);
+				// tawidgetGenerarack
+				if (sourceMovie.AudioTracks.Count > 0) {
+					var audioTrack = new TrackInfo ();
+					audioTrack.TrackType = "Audio";
+					audioTrack.Channels = 2;
+					audioTrack.Bitrate = 192000;
+					audioTrack.SamplingRateHz = 44100;
+					audioTrack.DurationMS = sourceMovie.DurationMS;
+					targetMovie.Tracks.Add (audioTrack);
+				}
+
+				MoviesInfo.Add (sourceMovie, targetMovie);
+
+				FillTree ();
 			}
-
-			MoviesInfo.Add(sourceMovie, targetMovie);
-
-			FillTree();
 		}	
 	}
 
@@ -257,7 +256,7 @@ public partial class MainWindow: Gtk.Window
 
 		if (File.Exists(_outputFileName))
 			{
-				using (var fs = new FileStream(_outputFileName,FileMode.Open,FileAccess.Read))
+			using (var fs = new FileStream(_outputFileName,FileMode.Open,FileAccess.Read,FileShare.ReadWrite))
 				{
 					using (var sr = new StreamReader(fs)) 
 					{					    
@@ -287,7 +286,13 @@ public partial class MainWindow: Gtk.Window
                         {                                        
                                 if (_proressWindow.AbortRequest)
                                 {
-                                        SupportMethods.ExecuteAndReturnOutput("killall","ffmpeg");
+										if (SupportMethods.RunningPlatform == SupportMethods.RunningPlatformEnum.Unix) 
+										{
+											SupportMethods.ExecuteAndReturnOutput ("killall", "ffmpeg");
+										} else 
+										{
+											SupportMethods.ExecuteAndReturnOutput ("taskkill", "/f /im ffmpeg.exe");
+										}
                                         _processAbortRequest = true;
                                 }
 
@@ -419,24 +424,22 @@ public partial class MainWindow: Gtk.Window
 
         public void ExecutFFMpegCommand(string cmd, string FFMPEGOutputFileName)
         {			
-				_outputFile = FFMPEGOutputFileName;				
+			_outputFile = FFMPEGOutputFileName;				
+				
+			string processToExecute;
+			string parametres;
 
-				var processToExecute = "sh";
-				var parametres=String.Format("-c '" + cmd + " 2> {0} '",_outputFile);
+			if (SupportMethods.RunningPlatform == SupportMethods.RunningPlatformEnum.Unix) 
+			{
+				processToExecute = "sh";
+				parametres = String.Format ("-c '" + cmd + " 2> {0} '", _outputFile);
+			} else 
+			{
+				processToExecute = "cmd";
+				parametres = String.Format ("/C " + cmd + " 2> {0} ", _outputFile);
+			}		
 
-				 using(var process = new Process
-				    {
-				        StartInfo = new ProcessStartInfo
-				        {
-				            FileName = processToExecute,
-							Arguments = parametres,
-				            UseShellExecute = true
-				        }
-				    })
-					{
-						    process.Start();
-						    process.WaitForExit(); 
-					}
+			SupportMethods.ExecuteAndReturnOutput (processToExecute, parametres);
 		}        
 
 	#endregion

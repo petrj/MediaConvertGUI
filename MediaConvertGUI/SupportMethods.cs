@@ -10,6 +10,27 @@ namespace MediaConvertGUI
 {
 	public static class SupportMethods
 	{
+		public enum RunningPlatformEnum
+		{
+			Unix = 0,
+			Windows = 1
+		}
+
+		public static RunningPlatformEnum RunningPlatform
+		{
+			get
+			{
+				if (Environment.OSVersion.Platform.ToString() == "Unix")
+				{
+					return RunningPlatformEnum.Unix;
+				}
+				else
+				{
+					return RunningPlatformEnum.Windows;
+				}
+			}
+		}
+
 		#region filling Combo
 
 		public static void ClearCombo(Gtk.ComboBox combo)
@@ -270,14 +291,20 @@ namespace MediaConvertGUI
 		public static List<string> ExecuteAndReturnOutputAsList(string command,string arguments)
 		{
 			var lines = new List<string>();
-			var info = new System.Diagnostics.ProcessStartInfo(command,arguments);
-				info.UseShellExecute = false; 
-				info.ErrorDialog = true; 
-				info.CreateNoWindow = true; 
-				info.RedirectStandardOutput = true; 
-			
-			 	Process p = System.Diagnostics.Process.Start(info); 
-				p.WaitForExit();
+			var info = new System.Diagnostics.ProcessStartInfo (command, arguments) 
+			{
+				WindowStyle = ProcessWindowStyle.Hidden,
+				UseShellExecute = false,
+				ErrorDialog = false,
+				CreateNoWindow = true,
+				RedirectStandardOutput = true
+			};
+
+			var p = new Process ();
+			p.StartInfo = info;
+			p.Start ();
+
+			//p.WaitForExit();
 				using (var /*  System.IO.StreamReader*/  sReader = p.StandardOutput)
 				{		
 

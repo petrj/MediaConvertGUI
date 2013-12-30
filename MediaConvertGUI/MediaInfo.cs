@@ -426,10 +426,13 @@ namespace MediaConvertGUI
 		/// <param name='fileName'>
 		/// File name.
 		/// </param>
-		public void OpenFromFile(string fileName)
+		public bool OpenFromFile(string fileName)
 		{
-			if (File.Exists(fileName))
+			try
 			{
+				if (!File.Exists(fileName))
+					return false;
+
 				FileName = fileName;
 				var fi = new System.IO.FileInfo(fileName);
 				FileSize = fi.Length;
@@ -450,8 +453,13 @@ namespace MediaConvertGUI
 					track.ParseFromXmlNode(node);
 					Tracks.Add(track);
 				}
-			}
-		
+				return true;
+
+			} catch (Exception ex)
+			{
+				Console.WriteLine ("Error:"+ex.ToString());
+				return false;
+			}		
 		}
 
 		#endregion
