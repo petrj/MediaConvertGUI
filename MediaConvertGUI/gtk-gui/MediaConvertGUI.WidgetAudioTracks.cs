@@ -23,7 +23,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelKhz;
 		private global::Gtk.ComboBoxEntry comboSampleRate;
 		private global::Gtk.Label GtkLabel;
-
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

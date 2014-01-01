@@ -10,6 +10,8 @@ namespace MediaConvertGUI
 {
 	public static class SupportMethods
 	{
+		#region OS
+
 		public enum RunningPlatformEnum
 		{
 			Unix = 0,
@@ -31,7 +33,9 @@ namespace MediaConvertGUI
 			}
 		}
 
-		#region filling Combo
+		#endregion
+
+		#region GTK 
 
 		public static void ClearCombo(Gtk.ComboBox combo)
 		{
@@ -117,7 +121,6 @@ namespace MediaConvertGUI
 
 				}
 		}
-
 
 		/// <summary>
 		/// Fills the combo box entry.
@@ -222,8 +225,6 @@ namespace MediaConvertGUI
 				
 		}
 
-		#endregion 
-
 		public static void SetAvailability(Gtk.Widget widget, bool editable = false)
 		{
 			var entryBackgroundColor = editable ? new Gdk.Color(255,255,255) : new Gdk.Color(214,210,208);
@@ -239,6 +240,10 @@ namespace MediaConvertGUI
 				(widget as Gtk.ComboBoxEntry).Entry.ModifyBase(StateType.Normal, entryBackgroundColor);
 			}
 		}
+
+		#endregion 
+
+		#region numeric/decimal parse
 
 		public static bool IsNumeric(this string s)
 	    {
@@ -283,6 +288,10 @@ namespace MediaConvertGUI
 				return res;
 		}
 
+		#endregion 
+
+		#region execution
+
 		public static string ExecuteAndReturnOutput(string command,string arguments)
 		{
 			return (String.Join(String.Empty,ExecuteAndReturnOutputAsList(command,arguments)));
@@ -317,6 +326,51 @@ namespace MediaConvertGUI
 
 			return lines;			
 		}
+
+		#endregion 
+
+		#region human-readable strings conversion
+
+		/// <summary>
+		/// Returns size (long) as string like "2 GB"
+		/// </summary>
+		public static string HumanReadableSize(long sizeInBytes)
+		{
+				var res = "0 MB";
+
+				var sizeMB = sizeInBytes/(1000.00*1000.00);
+				if (sizeMB>1000)
+				{
+					var sizeGB = sizeMB/(1000.00);
+					sizeGB = Math.Round(sizeGB,1);
+					res = sizeGB.ToString()+" GB";
+				} else
+				{
+					sizeMB = Math.Round(sizeMB,1);
+					res = sizeMB.ToString()+" MB";
+				}
+
+				return res;
+		}
+
+		/// <summary>
+		/// Returns duration (decimal) in miliseconds as string like "hh:mm:ss"
+		/// </summary>
+		public static string HuamReadableDuration(decimal miliSeconds)
+		{
+				var res = "00:00:00";
+
+				var totalSeconds = Math.Round(miliSeconds/(decimal)1000);
+				var hours = Math.Truncate(totalSeconds/(decimal)(60*60));
+				var minutes = Math.Truncate( (totalSeconds - hours*60*60)/60);
+				var seconds = Math.Truncate( (totalSeconds - hours*60*60 -minutes*60 ));
+
+				res = minutes.ToString().PadLeft(2,'0') + ":"+ minutes.ToString().PadLeft(2,'0') + ":" + seconds.ToString().PadLeft(2,'0');
+
+				return res;
+		}
+
+		#endregion 
 	}
 }
 

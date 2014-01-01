@@ -15,7 +15,7 @@ namespace MediaConvertGUI
 		private global::Gtk.ComboBox comboScheme;
 		private global::Gtk.Label labelTargetContLabel;
 		private global::Gtk.Label labelScheme;
-
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -12,7 +12,6 @@ public partial class MainWindow: Gtk.Window
 {	
 	public Dictionary<MediaInfo,MediaInfo> MoviesInfo = new Dictionary<MediaInfo,MediaInfo>();
 
-
 	#region private fields
 
 	private TreeViewData _fileTreeViewData;
@@ -166,8 +165,6 @@ public partial class MainWindow: Gtk.Window
 	#endregion
 
 	#region methods
-
-
 
 	private void CreateGridColumns()
 	{
@@ -375,6 +372,100 @@ public partial class MainWindow: Gtk.Window
 
 	#region conversion
 
+		public static string MakeFFMpegCommand(MediaInfo sourceMovie, MediaInfo targetMovie, int currentPass)
+		{		
+				var res= String.Empty;
+				if (targetMovie.FirstVideoTrack != null)
+				{
+					var video = " -vcodec copy";
+					var container = String.Empty;
+					var ext = String.Empty;
+
+					switch (targetMovie.TargetContainer)
+					{
+						case  VideoContainerEnum.avi : container = " -f avi"; ext = ".avi"; break;
+						case  VideoContainerEnum.flv : container = " -f flv"; ext = ".flv"; break;
+						case  VideoContainerEnum.mp4 : container = " -f mp4"; ext = ".mp4"; break;
+						case  VideoContainerEnum.mpeg : container = " -f mpeg"; ext = ".mpeg"; break;
+						case  VideoContainerEnum.ogg : container = " -f ogg"; ext = ".ogv"; break;
+						case  VideoContainerEnum.mkv : container = " "; ext = ".mkv"; break;
+						case  VideoContainerEnum.webm : container = " -f webm "; ext = ".webm"; break;
+					}
+
+					var videContainer = String.Empty;
+					var aspect = String.Empty;
+					var scale =   String.Empty;
+					var bitrate = String.Empty;					
+
+					if (targetMovie.TargetVideoCodec != VideoCodecEnum.none)
+					{
+						aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
+						scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
+						bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;
+
+						switch (targetMovie.TargetVideoCodec)
+						{
+							case VideoCodecEnum.xvid: video = " -vcodec libxvid"; break;
+							case VideoCodecEnum.flv: video = " -vcodec flv"; break;
+							case VideoCodecEnum.h264: video = " -vcodec h264"; break;
+							case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"; break;
+							case VideoCodecEnum.theora: video = " -vcodec theora"; break;
+							case VideoCodecEnum.vp8: video = " -vcodec libvpx"; break;
+						}						
+
+						video += aspect + scale + bitrate;
+					}			
+
+					
+					
+					var sourceFile = " -i \"" + sourceMovie.FileName+"\"";
+					var targetFile = String.Format(" \"{0}\"",sourceMovie.FileName+".converted" + ext);
+					
+					targetMovie.FFMPEGOutputFileName = String.Format("{0}",sourceMovie.FileName+".converted" + ext + ".log");
+					targetMovie.FFMPEGPassLogFileName = String.Format(" \"{0}\"",sourceMovie.FileName+".converted" + ext + ".passlog");					
+					targetMovie.FileName = String.Format("{0}",sourceMovie.FileName+".converted" + ext);;
+					
+					if (File.Exists(targetMovie.FFMPEGPassLogFileName))
+					{
+							File.Delete(targetMovie.FFMPEGPassLogFileName);
+					}
+
+					var audio = " -acodec copy";
+
+					if ( (targetMovie.AudioTracks.Count>0) && 
+				    	 (targetMovie.FirstAudioTrack != null) &&
+				    	 (targetMovie.FirstAudioTrack.TargetAudioCodec != AudioCodecEnum.none))
+						{
+							var targetAudioTrack = targetMovie.FirstAudioTrack;
+							switch (targetAudioTrack.TargetAudioCodec)
+							{
+								case AudioCodecEnum.MP3: audio = String.Format(" -acodec libmp3lame"); break;
+								case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis"); break;
+							}
+
+							audio += String.Format(" -ac {0} -ar {1} -ab {2}",
+							                          targetAudioTrack.Channels,
+							                          targetAudioTrack.SamplingRateHz,
+							                          targetAudioTrack.Bitrate);
+					}
+
+					// more audio tracks? supporting only the first one
+					var map = String.Empty;
+					if (sourceMovie.AudioTracks.Count > 1)
+					{
+						map = " -map 0:0 -map 0:1";
+					} 				
+
+					var pass = String.Format(" -pass {0} -passlogfile {1}",currentPass,targetMovie.FFMPEGPassLogFileName);
+
+					res = "ffmpeg -y -dump " + sourceFile + map + video + container + audio + pass + targetFile;					
+				}	
+
+			return res;
+		}
+
+	
+
 	public void RunCommandList()
 	{
 		_currentConvertingMovie = null;
@@ -402,14 +493,14 @@ public partial class MainWindow: Gtk.Window
 
 			if (_processAbortRequest) break;
 
-			var cmd1 =  MediaInfo.MakeFFMpegCommand(kvp.Key,kvp.Value,1);
+			var cmd1 =  MakeFFMpegCommand(kvp.Key,kvp.Value,1);
 			ExecutFFMpegCommand(cmd1, kvp.Value.FFMPEGOutputFileName );
 
 			if (_processAbortRequest) break;
 
 			_currentPass = 2;
 
-			var cmd2 =  MediaInfo.MakeFFMpegCommand(kvp.Key,kvp.Value,2);
+			var cmd2 =  MakeFFMpegCommand(kvp.Key,kvp.Value,2);
 			ExecutFFMpegCommand(cmd2, kvp.Value.FFMPEGOutputFileName);
 		}
 

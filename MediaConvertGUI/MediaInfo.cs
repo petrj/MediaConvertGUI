@@ -39,149 +39,33 @@ namespace MediaConvertGUI
 
 	#endregion
 
-	public class MediaInfo
+	public class MediaInfo : MediaInfoBase
 	{
-		public static string MakeFFMpegCommand(MediaInfo sourceMovie, MediaInfo targetMovie, int currentPass)
-		{		
-				var res= String.Empty;
-				if (targetMovie.FirstVideoTrack != null)
-				{
-					var video = " -vcodec copy";
-					var container = String.Empty;
-					var ext = String.Empty;
-
-					switch (targetMovie.TargetContainer)
-					{
-						case  VideoContainerEnum.avi : container = " -f avi"; ext = ".avi"; break;
-						case  VideoContainerEnum.flv : container = " -f flv"; ext = ".flv"; break;
-						case  VideoContainerEnum.mp4 : container = " -f mp4"; ext = ".mp4"; break;
-						case  VideoContainerEnum.mpeg : container = " -f mpeg"; ext = ".mpeg"; break;
-						case  VideoContainerEnum.ogg : container = " -f ogg"; ext = ".ogv"; break;
-						case  VideoContainerEnum.mkv : container = " "; ext = ".mkv"; break;
-						case  VideoContainerEnum.webm : container = " -f webm "; ext = ".webm"; break;
-					}
-
-					var videContainer = String.Empty;
-					var aspect = String.Empty;
-					var scale =   String.Empty;
-					var bitrate = String.Empty;					
-
-					if (targetMovie.TargetVideoCodec != VideoCodecEnum.none)
-					{
-						aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
-						scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
-						bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;
-
-						switch (targetMovie.TargetVideoCodec)
-						{
-							case VideoCodecEnum.xvid: video = " -vcodec libxvid"; break;
-							case VideoCodecEnum.flv: video = " -vcodec flv"; break;
-							case VideoCodecEnum.h264: video = " -vcodec h264"; break;
-							case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"; break;
-							case VideoCodecEnum.theora: video = " -vcodec theora"; break;
-							case VideoCodecEnum.vp8: video = " -vcodec libvpx"; break;
-						}						
-
-						video += aspect + scale + bitrate;
-					}			
-
-					
-					
-					var sourceFile = " -i \"" + sourceMovie.FileName+"\"";
-					var targetFile = String.Format(" \"{0}\"",sourceMovie.FileName+".converted" + ext);
-					
-					targetMovie.FFMPEGOutputFileName = String.Format("{0}",sourceMovie.FileName+".converted" + ext + ".log");
-					targetMovie.FFMPEGPassLogFileName = String.Format(" \"{0}\"",sourceMovie.FileName+".converted" + ext + ".passlog");					
-					targetMovie.FileName = String.Format("{0}",sourceMovie.FileName+".converted" + ext);;
-					
-					if (File.Exists(targetMovie.FFMPEGPassLogFileName))
-					{
-							File.Delete(targetMovie.FFMPEGPassLogFileName);
-					}
-
-					var audio = " -acodec copy";
-
-					if ( (targetMovie.AudioTracks.Count>0) && 
-				    	 (targetMovie.FirstAudioTrack != null) &&
-				    	 (targetMovie.FirstAudioTrack.TargetAudioCodec != AudioCodecEnum.none))
-						{
-							var targetAudioTrack = targetMovie.FirstAudioTrack;
-							switch (targetAudioTrack.TargetAudioCodec)
-							{
-								case AudioCodecEnum.MP3: audio = String.Format(" -acodec libmp3lame"); break;
-								case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis"); break;
-							}
-
-							audio += String.Format(" -ac {0} -ar {1} -ab {2}",
-							                          targetAudioTrack.Channels,
-							                          targetAudioTrack.SamplingRateHz,
-							                          targetAudioTrack.Bitrate);
-					}
-
-					// more audio tracks? supporting only the first one
-					var map = String.Empty;
-					if (sourceMovie.AudioTracks.Count > 1)
-					{
-						map = " -map 0:0 -map 0:1";
-					} 				
-
-					var pass = String.Format(" -pass {0} -passlogfile {1}",currentPass,targetMovie.FFMPEGPassLogFileName);
-
-					res = "ffmpeg -y -dump " + sourceFile + map + video + container + audio + pass + targetFile;					
-				}	
-
-			return res;
-		}
-
-		#region static constants
-
-		public static Dictionary<VideoCodecEnum,string> DefaultVideoCodecsDescriptions = new Dictionary<VideoCodecEnum, string>()
-		{
-			{VideoCodecEnum.xvid,"MPEG-4 ASP libxvid (MPEG-4 part 2)"},
-			{VideoCodecEnum.flv,"Sorenson Spark / Sorenson H.263 (Flash Video)"},
-			{VideoCodecEnum.h264,"MPEG-4 AVC libx264 (MPEG-4 part 10)"},
-			{VideoCodecEnum.mpeg,"MPEG-1 video"},
-			{VideoCodecEnum.theora,"Theora libtheora"},
-			{VideoCodecEnum.vp8,"VP8 libvpx"},
-		};
-
-		public static Dictionary<decimal,string> DefaultVideoBitRates = new Dictionary<decimal, string>()
-		{
-			{1500m,"VCD (1.5 Mb)"},
-			{3500m,"TV  (3.5 Mb)"},		
-			{9000m,"DVD (9 Mb)"},
-			{15000m,"HDTV (15 Mb)"},
-			{30000m,"HD DVD (30 Mb)"}
-		};
-
-		public static Dictionary<decimal,string> DefaultSamplingRates = new Dictionary<decimal, string>()
-		{
-
-			{08000m,"Telephone (8 kHz)"},
-			{11025m,"1/4 Audio-CD (11 kHz)"},
-			{22050m,"1/2 Audio-CD (22 kHz)"},
-			{44100m,"Audio-CD (44 kHz)"},
-			{48000m,"TV (48 kHz)"},		
-			{96000m,"DVD-Audio (96 kHz)"}
-		};
-
-		public static Dictionary<decimal,string> DefaultAudioBitRates = new Dictionary<decimal, string>()
-		{
-			{32m,"32"},
-			{64m,"64"},		
-			{128m,"128"},
-		};
-
-		#endregion
-
 		#region fileds && properties
 
-		public string FileName { get; set; }
-		public long FileSize { get; set; }
+		private string _fileName;
+		public string  FileName
+		{ 
+			get { return _fileName; }
+			set {
+					if (_fileName != value) NotifyChange("FileName",value);
+					_fileName = value; 					
+				}
+		}
+
+		private long _fileSize = 0;
+		public long FileSize 
+		{ 
+			get { return _fileSize; }
+			set 
+			{ 
+				if (_fileSize != value) NotifyChange("FileSize",value);
+				_fileSize = value;
+			}
+		}
 
 		public Dictionary<string,MediaInfoScheme> Schemes = new Dictionary<string,MediaInfoScheme> ();
 		private string _selectedScheme = "none";
-
 		public string SelectedScheme
 		{
 			get 
@@ -190,11 +74,23 @@ namespace MediaConvertGUI
 			}
 			set 
 			{
+				if (_selectedScheme != value) NotifyChange("SelectedScheme",value);
 				_selectedScheme = value;
 			}
 		}
 
-		public List<TrackInfo> Tracks  { get; set; }
+		private List<TrackInfo> _tracks = new List<TrackInfo>();
+		public List<TrackInfo> Tracks
+		{
+			get { return _tracks; }
+			set 
+			{ 
+				if (_tracks != value) NotifyChange("Tracks",value);
+				_tracks = value;
+			}
+		}
+
+		#region properties-getters
 
 		private TrackInfo _firstVideoTrack = null;
 		public TrackInfo FirstVideoTrack
@@ -257,8 +153,13 @@ namespace MediaConvertGUI
 			}
 		}
 
-		#region properties-getters
-			
+		/// <summary>
+		/// Gets the over all bit rate in ms
+		/// Computed from DurationMS and FileSize
+		/// </summary>
+		/// <value>
+		/// The over all bit rate.
+		/// </value>
 		public decimal OverAllBitRate
 		{
 			get
@@ -304,16 +205,7 @@ namespace MediaConvertGUI
 		{
 			get
 			{
-				var res = "00:00";
-
-				var totalSeconds = Math.Round(DurationMS/(decimal)1000);
-				var hours = Math.Truncate(totalSeconds/(decimal)(60*60));
-				var minutes = Math.Truncate( (totalSeconds - hours*60*60)/60);
-				var seconds = Math.Truncate( (totalSeconds - hours*60*60 -minutes*60 ));
-
-				res = minutes.ToString().PadLeft(2,'0') + ":"+ minutes.ToString().PadLeft(2,'0') + ":" + seconds.ToString().PadLeft(2,'0');
-
-				return res;
+				return SupportMethods.HuamReadableDuration(DurationMS);
 			}
 		}
 
@@ -321,35 +213,35 @@ namespace MediaConvertGUI
 		{
 			get
 			{
-				return ShowHumanReadableSize(FileSize);
+				return SupportMethods.HumanReadableSize(FileSize);
 			}
 		}
 
 		#endregion
 
-		public static string ShowHumanReadableSize(long sizeInBytes)
-		{
-				var res = "0 MB";
-
-				var sizeMB = sizeInBytes/(1000.00*1000.00);
-				if (sizeMB>1000)
-				{
-					var sizeGB = sizeMB/(1000.00);
-					sizeGB = Math.Round(sizeGB,1);
-					res = sizeGB.ToString()+" GB";
-				} else
-				{
-					sizeMB = Math.Round(sizeMB,1);
-					res = sizeMB.ToString()+" MB";
-				}
-
-				return res;
-		}
-
 		public string RawMediaInfoOutput { get; set; }
 
-		public VideoCodecEnum TargetVideoCodec { get; set; }
-		public VideoContainerEnum TargetContainer { get; set; }
+		private VideoCodecEnum _targetVideoCodec  = VideoCodecEnum.xvid;
+		public VideoCodecEnum TargetVideoCodec
+		{ 
+			get { return _targetVideoCodec; }
+			set 
+			{ 
+				if (_targetVideoCodec != value) NotifyChange("TargetVideoCodec",value);
+				_targetVideoCodec = value;
+			}
+		}
+
+		private VideoContainerEnum _targetContainer = VideoContainerEnum.avi;
+		public VideoContainerEnum TargetContainer
+		{ 
+			get { return _targetContainer; }
+			set 
+			{ 
+				if (_targetContainer != value) NotifyChange("TargetContainer",value);
+				_targetContainer = value;
+			}
+		}
 
 		public string FFMPEGOutputFileName { get; set; }
 		public string FFMPEGPassLogFileName { get; set; }
@@ -358,13 +250,33 @@ namespace MediaConvertGUI
 
 		public MediaInfo ()
 		{
-			Tracks = new List<TrackInfo>();
-			TargetVideoCodec = VideoCodecEnum.xvid;
-			TargetContainer = VideoContainerEnum.avi;
 			LoadSchemes();
 		}
 
 		#region methods
+
+		public override bool IsChanged ()
+		{
+			var anyTrackChanged = false;
+			foreach (var track in Tracks)
+			{
+				if (track.IsChanged())
+				{
+					return true;
+				}
+			}
+
+			return _changed;
+		}
+
+		public override void UnChanged()
+		{
+			_changed = false;
+			foreach (var track in Tracks)
+			{
+				track.UnChanged();
+			}
+		}
 
 		private void LoadSchemes()
 		{
@@ -453,6 +365,7 @@ namespace MediaConvertGUI
 					track.ParseFromXmlNode(node);
 					Tracks.Add(track);
 				}
+
 				return true;
 
 			} catch (Exception ex)
@@ -463,197 +376,6 @@ namespace MediaConvertGUI
 		}
 
 		#endregion
-	}
-
-	public class TrackInfo
-	{
-		#region fileds && properties
-
-		public AudioCodecEnum TargetAudioCodec { get; set; }
-
-		public string TrackType { get; set; }
-		public string Codec { get; set; }
-		public int Channels { get; set; }
-
-		public decimal FrameRate { get; set; }
-
-		public int Width { get; set; }
-		public decimal PixelAspect { get; set; }
-		public int RealWidth
-		{ 
-			get
-			{
-				return Convert.ToInt32(PixelAspect * Width);
-			}
-		}
-
-		public int Height  { get; set; }
-		public string Aspect  { get; set; }
-		public decimal AspectAsNumber 
-		{
-			get
-			{
-				if (!String.IsNullOrEmpty(Aspect))
-						{
-							var aspectWidthAndHeightStringArray = Aspect.Split( new char[] {':','/'});
-							if ((aspectWidthAndHeightStringArray != null) && (aspectWidthAndHeightStringArray.Length == 2))
-							{
-								if ((SupportMethods.IsNumeric(aspectWidthAndHeightStringArray[0])) &&  (SupportMethods.IsNumeric(aspectWidthAndHeightStringArray[1])))
-								{
-									return SupportMethods.ToDecimal(aspectWidthAndHeightStringArray[0]) / SupportMethods.ToDecimal(aspectWidthAndHeightStringArray[1]);
-								}
-							}
-						}
-
-				return -1;
-			}
-		}
-		public string Duration  { get; set; }
-		public decimal DurationMS  { get; set; }
-
-		public decimal SamplingRateHz  { get; set; }
-		public decimal SamplingRateKHz
-		{				
-			get
-			{
-				return Math.Round(SamplingRateHz/1004);
-			}
-		}
-
-
-		public long StreamSize  { get; set; }
-
-		public decimal Bitrate { get; set; }
-		public decimal BitrateKbps 
-		{ 
-			get
-			{
-				return Math.Round(Bitrate/1024);
-			}
-		}
-		public decimal BitrateMbps 
-		{ 
-			get
-			{
-				return Math.Round((Bitrate/1024)/1024);
-			}
-		}
-
-		public void ReComputeStreamSizeByBitrate()
-		{
-			var bitratebps = BitrateKbps*1024;
-			var bitrateBps = bitratebps/(decimal)8;
-
-			var durationS = DurationMS/(decimal)1000.00;
-
-			StreamSize = Convert.ToInt64(bitrateBps*durationS);
-		}
-
-		public string HumanReadableBitRate
-		{
-			get
-			{
-				return Math.Round(BitrateKbps) + " kpbs";
-			}
-		}
-
-		public string HumanReadableStreamSize
-		{
-			get
-			{
-				return MediaInfo.ShowHumanReadableSize(StreamSize);
-			}
-		}
-
-		#endregion
-
-		public void CopyTo(TrackInfo track)
-		{
-			track.Aspect = Aspect;
-			track.Bitrate = Bitrate;
-			track.Codec = Codec;
-			track.Channels = Channels;
-			track.TrackType = TrackType;
-			track.FrameRate = FrameRate;
-			track.SamplingRateHz = SamplingRateHz;
-			track.StreamSize = StreamSize;
-
-			track.Width = RealWidth;
-			track.PixelAspect = 1;
-
-			track.Height = Height;
-			track.DurationMS = DurationMS;
-			track.TargetAudioCodec = TargetAudioCodec;
-		}
-
-		public void Clear()
-		{
-			Codec = String.Empty;
-
-			Aspect = "0x0";
-			Bitrate = 0;
-
-			Channels = 0;
-			TrackType = String.Empty;
-			FrameRate = 0;
-			SamplingRateHz = 0;
-
-			Width = RealWidth;
-			PixelAspect = 1;
-
-			Height = Height;
-			DurationMS = DurationMS;
-
-
-			TargetAudioCodec = AudioCodecEnum.none;
-		}	
-
-		public void ParseFromXmlNode(XmlNode node)
-		{
-			foreach (XmlNode subNode in node.ChildNodes)
-			{
-			   	if (subNode.Name == "Overall_bit_rate" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					Bitrate = SupportMethods.ToDecimal(subNode.InnerText);
-
-				if (subNode.Name == "Frame_rate" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					FrameRate = SupportMethods.ToDecimal(subNode.InnerText);
-
-				if (subNode.Name == "Sampling_rate" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					SamplingRateHz = SupportMethods.ToDecimal(subNode.InnerText);
-
-				if (subNode.Name == "Bit_rate" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					Bitrate = decimal.Parse(subNode.InnerText);
-
-				if (subNode.Name == "Stream_size" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					StreamSize = long.Parse(subNode.InnerText);
-
-				if (subNode.Name == "Channel_s_" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					Channels = Int32.Parse(subNode.InnerText);
-
-				if (subNode.Name == "Pixel_aspect_ratio" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					PixelAspect = SupportMethods.ToDecimal(subNode.InnerText);
-
-				if (subNode.Name == "Width" && (SupportMethods.IsInt(subNode.InnerText)))
-					Width = Int32.Parse(subNode.InnerText);
-				if (subNode.Name == "Height" && (SupportMethods.IsInt(subNode.InnerText)))
-					Height = Int32.Parse(subNode.InnerText);
-
-				if (subNode.Name == "Display_aspect_ratio" && (subNode.InnerText.Contains(":")))
-					Aspect = subNode.InnerText;
-
-				if (subNode.Name == "Codec")
-					Codec = subNode.InnerText;
-
-				if (subNode.Name == "Duration" && (subNode.InnerText.Contains(":")))
-					Duration = subNode.InnerText;
-
-			   	if (subNode.Name == "Duration" && (SupportMethods.IsNumeric(subNode.InnerText)))
-					DurationMS = SupportMethods.ToDecimal(subNode.InnerText);
-
-			}
-
-			TrackType = node.Attributes.GetNamedItem("type").Value;
-		}
 	}
 }
 

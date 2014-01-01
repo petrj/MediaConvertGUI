@@ -7,11 +7,11 @@ namespace MediaConvertGUI
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class WidgetMovieTrack : Gtk.Bin
 	{
+		#region fileds && properties
+
 		private MediaInfo _movieInfo;
 		private bool _editable = false;
 		private EventLock _eventLock = new EventLock();
-
-		#region properties
 
 		public MediaInfo MovieInfo 
 		{ 
@@ -56,6 +56,8 @@ namespace MediaConvertGUI
 			Editable = false;
 			_movieInfo = new MediaInfo();
 		}
+
+		#region methods
 
 		public void FillFrom(MediaInfo mInfo)
 		{
@@ -132,6 +134,8 @@ namespace MediaConvertGUI
 				_eventLock.Unlock();
 			}
 		}
+
+		#endregion
 
 		#region events
 

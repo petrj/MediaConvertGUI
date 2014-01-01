@@ -7,6 +7,8 @@ namespace MediaConvertGUI
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class WidgetAudioTracks : Gtk.Bin
 	{
+		#region fileds && properties
+
 		private MediaInfo _info;
 		private bool _editable = false;
 		private EventLock _eventLock = new EventLock();
@@ -49,6 +51,68 @@ namespace MediaConvertGUI
 				SupportMethods.SetAvailability(comboChannels as Gtk.Widget,_editable);
 			}
 		}
+
+		public TrackInfo SelectedTrack
+		{
+			get
+			{
+				if (Info == null)
+					return null;
+
+				var tracks = Info.AudioTracks;
+				TrackInfo activeTrack = null;
+				if (tracks.Count>0 && comboTracks.Active+1<=tracks.Count && tracks.ContainsKey(comboTracks.Active+1))
+				{
+					activeTrack = tracks[comboTracks.Active+1];
+				}
+
+				return activeTrack;
+			}
+		}
+
+		public AudioCodecEnum SelectedAudioCodec
+		{
+			get
+			{
+				var res = AudioCodecEnum.none;
+
+				if ( (comboCodec.Active > 0) && (comboCodec.Active < (Enum.GetNames((typeof(AudioCodecEnum))).Length)))
+				{
+					return (AudioCodecEnum)comboCodec.Active;
+				}
+
+				return res;
+			}
+
+		}
+
+		public decimal BitRateTypedValue
+		{
+			get
+			{
+				var res = 0m;
+
+				if (SupportMethods.IsNumeric( comboBitrate.Entry.Text))
+				{
+					res = SupportMethods.ToDecimal(comboBitrate.Entry.Text);
+				} else
+				{
+					foreach (var  kvp in MediaInfo.DefaultAudioBitRates)
+					{
+						if (kvp.Value == comboBitrate.Entry.Text)
+						{
+							res = kvp.Key;
+						}
+					}
+				}
+			
+				return res;
+			}
+		}
+
+		#endregion
+
+		#region methods
 
 		public void SelectFirstAudioTrack()
 		{
@@ -136,63 +200,9 @@ namespace MediaConvertGUI
 			SelectFirstAudioTrack();
 		}
 
-		public TrackInfo SelectedTrack
-		{
-			get
-			{
-				if (Info == null)
-					return null;
+		#endregion
 
-				var tracks = Info.AudioTracks;
-				TrackInfo activeTrack = null;
-				if (tracks.Count>0 && comboTracks.Active+1<=tracks.Count && tracks.ContainsKey(comboTracks.Active+1))
-				{
-					activeTrack = tracks[comboTracks.Active+1];
-				}
-
-				return activeTrack;
-			}
-		}
-
-		public AudioCodecEnum SelectedAudioCodec
-		{
-			get
-			{
-				var res = AudioCodecEnum.none;
-
-				if ( (comboCodec.Active > 0) && (comboCodec.Active < (Enum.GetNames((typeof(AudioCodecEnum))).Length)))
-				{
-					return (AudioCodecEnum)comboCodec.Active;
-				}
-
-				return res;
-			}
-
-		}
-
-		public decimal BitRateTypedValue
-		{
-			get
-			{
-				var res = 0m;
-
-				if (SupportMethods.IsNumeric( comboBitrate.Entry.Text))
-				{
-					res = SupportMethods.ToDecimal(comboBitrate.Entry.Text);
-				} else
-				{
-					foreach (var  kvp in MediaInfo.DefaultAudioBitRates)
-					{
-						if (kvp.Value == comboBitrate.Entry.Text)
-						{
-							res = kvp.Key;
-						}
-					}
-				}
-			
-				return res;
-			}
-		}
+		#region events
 
 		private void OnAnyValuechanged()
 		{
@@ -238,6 +248,8 @@ namespace MediaConvertGUI
 		{
 			OnAnyValuechanged();
 		}	
+
+		#endregion
 
 	}
 }

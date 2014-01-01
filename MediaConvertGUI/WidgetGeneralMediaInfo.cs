@@ -6,6 +6,8 @@ namespace MediaConvertGUI
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class WidgetGeneralMediaInfo : Gtk.Bin
 	{
+		#region fileds && properties
+
 		private EventLock _eventLock = new EventLock();
 
 		public MediaInfo _sourceMovieInfo;
@@ -27,6 +29,8 @@ namespace MediaConvertGUI
 			}
 		}
 
+		#endregion
+
 		public WidgetGeneralMediaInfo ()
 		{
 			this.Build ();
@@ -37,32 +41,7 @@ namespace MediaConvertGUI
 			comboScheme.Changed+=OnSchemeComboValueChanged;		
 		}
 
-		protected void OnSchemeComboValueChanged (object sender, EventArgs e)
-		{
-			if (_eventLock.Lock())
-			{
-				_targetMovieInfo.SelectedScheme = comboScheme.ActiveText;
-
-				OnSchemeChanged(EventArgs.Empty);
-
-				_eventLock.Unlock();
-
-				Fill();
-			}
-		}
-
-		protected void OnAnyValueChanged (object sender, EventArgs e)
-		{
-			if (_eventLock.Lock())
-			{
-				if (TargetMovieInfo != null)
-				{
-					_targetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
-				}
-
-				_eventLock.Unlock();
-			}
-		}
+		#region methods
 
 		public void FillFrom(MediaInfo sourceInfo, MediaInfo targetInfo)
 		{
@@ -109,14 +88,47 @@ namespace MediaConvertGUI
 			}
 		}
 
-	  public delegate void  ChangedSchemeEventHandler(object sender, EventArgs e);
-	  public event ChangedSchemeEventHandler SchemeChanged;
+		#endregion
 
-	  protected virtual void OnSchemeChanged(EventArgs e) 
-      {
-         if (SchemeChanged != null)
-            SchemeChanged(this, e);
-      }
+		#region events
+
+		protected void OnSchemeComboValueChanged (object sender, EventArgs e)
+		{
+			if (_eventLock.Lock())
+			{
+				_targetMovieInfo.SelectedScheme = comboScheme.ActiveText;
+
+				OnSchemeChanged(EventArgs.Empty);
+
+				_eventLock.Unlock();
+
+				Fill();
+			}
+		}
+
+		protected void OnAnyValueChanged (object sender, EventArgs e)
+		{
+			if (_eventLock.Lock())
+			{
+				if (TargetMovieInfo != null)
+				{
+					_targetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
+				}
+
+				_eventLock.Unlock();
+			}
+		}
+
+  		public delegate void  ChangedSchemeEventHandler(object sender, EventArgs e);
+	  	public event ChangedSchemeEventHandler SchemeChanged;
+
+	  	protected virtual void OnSchemeChanged(EventArgs e) 
+      	{
+        	 if (SchemeChanged != null)
+            	SchemeChanged(this, e);
+      	}
+
+		#endregion
 	}
 }
 

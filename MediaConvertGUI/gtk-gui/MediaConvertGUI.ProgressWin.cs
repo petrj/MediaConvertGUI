@@ -26,7 +26,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelCurrentPassPercents;
 		private global::Gtk.Button buttonAbort;
 		private global::Gtk.Button buttonClose;
-
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -195,27 +195,51 @@ namespace MediaConvertGUI
 			this.buttonAbort.CanFocus = true;
 			this.buttonAbort.Name = "buttonAbort";
 			this.buttonAbort.UseUnderline = true;
-			this.buttonAbort.Label = global::Mono.Unix.Catalog.GetString ("Abort");
-			global::Gtk.Image w20 = new global::Gtk.Image ();
-			w20.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-stop", global::Gtk.IconSize.Menu);
-			this.buttonAbort.Image = w20;
+			// Container child buttonAbort.Gtk.Container+ContainerChild
+			global::Gtk.Alignment w20 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			global::Gtk.HBox w21 = new global::Gtk.HBox ();
+			w21.Spacing = 2;
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Image w22 = new global::Gtk.Image ();
+			w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-stop", global::Gtk.IconSize.Menu);
+			w21.Add (w22);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w24 = new global::Gtk.Label ();
+			w24.LabelProp = global::Mono.Unix.Catalog.GetString ("Abort");
+			w24.UseUnderline = true;
+			w21.Add (w24);
+			w20.Add (w21);
+			this.buttonAbort.Add (w20);
 			this.@fixed.Add (this.buttonAbort);
-			global::Gtk.Fixed.FixedChild w21 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAbort]));
-			w21.X = 310;
-			w21.Y = 210;
+			global::Gtk.Fixed.FixedChild w28 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAbort]));
+			w28.X = 310;
+			w28.Y = 210;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.buttonClose = new global::Gtk.Button ();
 			this.buttonClose.CanFocus = true;
 			this.buttonClose.Name = "buttonClose";
 			this.buttonClose.UseUnderline = true;
-			this.buttonClose.Label = global::Mono.Unix.Catalog.GetString ("Close");
-			global::Gtk.Image w22 = new global::Gtk.Image ();
-			w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-close", global::Gtk.IconSize.Menu);
-			this.buttonClose.Image = w22;
+			// Container child buttonClose.Gtk.Container+ContainerChild
+			global::Gtk.Alignment w29 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			global::Gtk.HBox w30 = new global::Gtk.HBox ();
+			w30.Spacing = 2;
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Image w31 = new global::Gtk.Image ();
+			w31.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-close", global::Gtk.IconSize.Menu);
+			w30.Add (w31);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w33 = new global::Gtk.Label ();
+			w33.LabelProp = global::Mono.Unix.Catalog.GetString ("Close");
+			w33.UseUnderline = true;
+			w30.Add (w33);
+			w29.Add (w30);
+			this.buttonClose.Add (w29);
 			this.@fixed.Add (this.buttonClose);
-			global::Gtk.Fixed.FixedChild w23 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonClose]));
-			w23.X = 380;
-			w23.Y = 210;
+			global::Gtk.Fixed.FixedChild w37 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonClose]));
+			w37.X = 380;
+			w37.Y = 210;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
