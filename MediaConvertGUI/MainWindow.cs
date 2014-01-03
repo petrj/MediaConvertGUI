@@ -51,6 +51,7 @@ public partial class MainWindow: Gtk.Window
 
 		buttonApply.Clicked+=OnButtonApplyClicked;
 		buttonGoConvert.Clicked+=OnButtonGoConvertClicked;
+		buttonPreview.Clicked += OnPreviwButtonClicked;
 
 		FillTree();
 	}
@@ -595,6 +596,28 @@ public partial class MainWindow: Gtk.Window
 	{
 		RunCommandList();
 		ShowProgess();
+	}	
+
+	protected void OnPreviwButtonClicked (object sender, EventArgs e)
+	{
+		// creating preview string
+		var commands = new StringBuilder();
+
+		foreach (var kvp in MoviesInfo)
+		{
+			commands.Append(MakeFFMpegCommand(kvp.Key,kvp.Value,1));
+			commands.Append(System.Environment.NewLine);
+
+			commands.Append(MakeFFMpegCommand(kvp.Key,kvp.Value,2));
+			commands.Append(System.Environment.NewLine);
+		}
+
+		using (var tw  = new TextWin())
+		{
+			tw.Title = "FFmpeg command preview";
+			tw.Text = commands.ToString();
+			tw.Show();
+		}
 	}	
 
 	protected void OnButtonRemoveClicked (object sender, EventArgs e)

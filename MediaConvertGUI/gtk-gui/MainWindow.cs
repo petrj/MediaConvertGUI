@@ -36,6 +36,7 @@ public partial class MainWindow
 	private global::Gtk.Alignment GtkAlignment14;
 	private global::MediaConvertGUI.WidgetAudioTracks widgetTargetAudioTracks;
 	private global::Gtk.Label GtkLabelTargetaudio;
+	private global::Gtk.Button buttonPreview;
 	
 	protected virtual void Build ()
 	{
@@ -234,7 +235,7 @@ public partial class MainWindow
 		this.buttonGoConvert.Add (w27);
 		this.@fixed.Add (this.buttonGoConvert);
 		global::Gtk.Fixed.FixedChild w35 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonGoConvert]));
-		w35.X = 10;
+		w35.X = 220;
 		w35.Y = 760;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonRemove = new global::Gtk.Button ();
@@ -367,12 +368,38 @@ public partial class MainWindow
 		global::Gtk.Fixed.FixedChild w74 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
 		w74.X = 380;
 		w74.Y = 510;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.buttonPreview = new global::Gtk.Button ();
+		this.buttonPreview.WidthRequest = 200;
+		this.buttonPreview.CanFocus = true;
+		this.buttonPreview.Name = "buttonPreview";
+		this.buttonPreview.UseUnderline = true;
+		// Container child buttonPreview.Gtk.Container+ContainerChild
+		global::Gtk.Alignment w75 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+		// Container child GtkAlignment.Gtk.Container+ContainerChild
+		global::Gtk.HBox w76 = new global::Gtk.HBox ();
+		w76.Spacing = 2;
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Image w77 = new global::Gtk.Image ();
+		w77.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-justify-fill", global::Gtk.IconSize.Menu);
+		w76.Add (w77);
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Label w79 = new global::Gtk.Label ();
+		w79.LabelProp = global::Mono.Unix.Catalog.GetString ("Preview");
+		w79.UseUnderline = true;
+		w76.Add (w79);
+		w75.Add (w76);
+		this.buttonPreview.Add (w75);
+		this.@fixed.Add (this.buttonPreview);
+		global::Gtk.Fixed.FixedChild w83 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonPreview]));
+		w83.X = 10;
+		w83.Y = 760;
 		this.Add (this.@fixed);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
 		this.DefaultWidth = 744;
-		this.DefaultHeight = 814;
+		this.DefaultHeight = 815;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.tree.CursorChanged += new global::System.EventHandler (this.OnTreeCursorChanged);

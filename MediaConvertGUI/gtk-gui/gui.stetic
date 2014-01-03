@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="744 814">
+  <widget class="Gtk.Window" id="MainWindow" design-size="744 815">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Title" translatable="yes">Media Convert</property>
@@ -242,7 +242,7 @@
             <property name="UseUnderline">True</property>
           </widget>
           <packing>
-            <property name="X">10</property>
+            <property name="X">220</property>
             <property name="Y">760</property>
           </packing>
         </child>
@@ -345,6 +345,21 @@
           <packing>
             <property name="X">380</property>
             <property name="Y">510</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="buttonPreview">
+            <property name="MemberName" />
+            <property name="WidthRequest">200</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextAndIcon</property>
+            <property name="Icon">stock:gtk-justify-fill Menu</property>
+            <property name="Label" translatable="yes">Preview</property>
+            <property name="UseUnderline">True</property>
+          </widget>
+          <packing>
+            <property name="X">10</property>
+            <property name="Y">760</property>
           </packing>
         </child>
       </widget>
@@ -1171,6 +1186,25 @@
             <property name="X">380</property>
             <property name="Y">210</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Window" id="MediaConvertGUI.TextWin" design-size="270 108">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">TextWin</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <child>
+      <widget class="Gtk.ScrolledWindow" id="scrolledwindow">
+        <property name="MemberName" />
+        <property name="CanFocus">True</property>
+        <property name="ShadowType">In</property>
+        <child>
+          <widget class="Gtk.TextView" id="textView">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Text" translatable="yes" />
+          </widget>
         </child>
       </widget>
     </child>

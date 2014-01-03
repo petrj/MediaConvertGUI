@@ -88,6 +88,8 @@
     <Compile Include="MediaInfoScheme.cs" />
     <Compile Include="MediaInfoBase.cs" />
     <Compile Include="TrackInfo.cs" />
+    <Compile Include="TextWin.cs" />
+    <Compile Include="gtk-gui\MediaConvertGUI.TextWin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
