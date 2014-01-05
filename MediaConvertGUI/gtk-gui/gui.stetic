@@ -44,7 +44,6 @@
                         <property name="WidthRequest">300</property>
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
-                        <signal name="CursorChanged" handler="OnTreeCursorChanged" />
                       </widget>
                     </child>
                   </widget>
@@ -304,7 +303,6 @@
             <property name="Icon">stock:gtk-apply Menu</property>
             <property name="Label" translatable="yes">Apply</property>
             <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnButtonApplyClicked" />
           </widget>
           <packing>
             <property name="X">10</property>
@@ -1190,7 +1188,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="MediaConvertGUI.TextWin" design-size="270 108">
+  <widget class="Gtk.Window" id="MediaConvertGUI.TextWin" design-size="577 512">
     <property name="MemberName" />
     <property name="Title" translatable="yes">TextWin</property>
     <property name="WindowPosition">CenterOnParent</property>

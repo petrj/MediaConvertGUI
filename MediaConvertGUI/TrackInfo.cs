@@ -169,7 +169,7 @@ namespace MediaConvertGUI
 		{				
 			get
 			{
-				return Math.Round(SamplingRateHz/1024);
+				return Math.Round(SamplingRateHz/1000);
 			}
 		}
 
@@ -199,7 +199,7 @@ namespace MediaConvertGUI
 		{ 
 			get
 			{
-				return Math.Round(Bitrate/1024);
+				return Math.Round(Bitrate/1000);
 			}
 		}
 
@@ -207,13 +207,13 @@ namespace MediaConvertGUI
 		{ 
 			get
 			{
-				return Math.Round((Bitrate/1024)/1024);
+				return Math.Round((Bitrate/1000)/1000);
 			}
 		}
 
 		public void ReComputeStreamSizeByBitrate()
 		{
-			var bitratebps = BitrateKbps*1024;
+			var bitratebps = BitrateKbps*1000;
 			var bitrateBps = bitratebps/(decimal)8;
 
 			var durationS = DurationMS/(decimal)1000.00;

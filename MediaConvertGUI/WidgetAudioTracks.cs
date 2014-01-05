@@ -160,7 +160,8 @@ namespace MediaConvertGUI
 					// codec
 					if (Editable)
 					{
-						frameAudioOptions.Visible = activeTrack.TargetAudioCodec != AudioCodecEnum.none;
+						frameAudioOptions.Visible = (activeTrack.TargetAudioCodec != AudioCodecEnum.none) && 
+													(activeTrack.TargetAudioCodec != AudioCodecEnum.copy);
 						SupportMethods.FillComboBox(comboCodec,typeof(AudioCodecEnum),true,(int)activeTrack.TargetAudioCodec);
 					} else
 					{
@@ -214,7 +215,7 @@ namespace MediaConvertGUI
 				{
 					activeTrack.TargetAudioCodec = SelectedAudioCodec;
 
-					activeTrack.Bitrate = BitRateTypedValue*1024;
+					activeTrack.Bitrate = BitRateTypedValue*1000;
 					activeTrack.ReComputeStreamSizeByBitrate();
 
 					activeTrack.Channels = Convert.ToInt32(comboChannels.ActiveText);

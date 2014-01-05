@@ -55,7 +55,7 @@ namespace MediaConvertGUI
 		{
 			if (_eventLock.Lock())
 			{
-				if (SourceMovieInfo != null && SourceMovieInfo.FirstVideoTrack != null)
+				if (SourceMovieInfo != null)
 				{
 					labelDuration.Text = SourceMovieInfo.HuamReadableDuration;
 					labelSize.Text = SourceMovieInfo.HumanReadableSize;

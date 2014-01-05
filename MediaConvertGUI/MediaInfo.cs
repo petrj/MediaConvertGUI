@@ -10,20 +10,23 @@ namespace MediaConvertGUI
 
 	public enum AudioCodecEnum
 	{
-		none = 0,
-		MP3 = 1,
-		vorbis = 2
+		none,
+		copy,
+		MP3,
+		vorbis,
+		aac
 	}
 
 	public enum VideoCodecEnum
 	{
-		none = 0,
-		xvid = 1,
-		flv = 2,
-		h264 = 3,
-		mpeg = 4,
-		theora = 5,
-		vp8 = 6
+		none,
+		copy,
+		xvid,
+		flv,
+		h264,
+		mpeg,
+		theora,
+		vp8
 	}
 
 	public enum VideoContainerEnum

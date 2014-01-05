@@ -28,8 +28,8 @@ namespace MediaConvertGUI
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 270;
-			this.DefaultHeight = 108;
+			this.DefaultWidth = 577;
+			this.DefaultHeight = 512;
 			this.Show ();
 		}
 	}

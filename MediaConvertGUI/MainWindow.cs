@@ -210,20 +210,34 @@ public partial class MainWindow: Gtk.Window
 		var sourceMovie = new MediaInfo();
 		if (sourceMovie.OpenFromFile (fName)) 
 		{
-			if (sourceMovie.AudioTracks.Count > 1 || sourceMovie.FirstVideoTrack != null) {
-
+			if (sourceMovie.AudioTracks.Count > 0 || sourceMovie.FirstVideoTrack != null) 
+			{
 				var targetMovie = new MediaInfo ();
-				sourceMovie.Copyto (targetMovie, true);
+				sourceMovie.Copyto (targetMovie, false);
 
-				// tawidgetGenerarack
-				if (sourceMovie.AudioTracks.Count > 0) {
-					var audioTrack = new TrackInfo ();
-					audioTrack.TrackType = "Audio";
-					audioTrack.Channels = 2;
-					audioTrack.Bitrate = 192000;
-					audioTrack.SamplingRateHz = 44100;
-					audioTrack.DurationMS = sourceMovie.DurationMS;
-					targetMovie.Tracks.Add (audioTrack);
+				// leaving only first audio track
+				while (targetMovie.AudioTracks.Count>1)
+				{
+					TrackInfo lastAudioTrack =  null;
+					foreach (var track in targetMovie.Tracks)
+					{
+						if (track.TrackType == "Audio")
+						{
+							lastAudioTrack = track;
+						}
+					}
+					if (targetMovie.Tracks.Contains(lastAudioTrack)) 
+					{
+						targetMovie.Tracks.Remove(lastAudioTrack);
+					} else 
+					{
+						break;
+					}
+				}
+
+				if (targetMovie.AudioTracks.Count>0)
+				{
+					targetMovie.FirstAudioTrack.TargetAudioCodec = AudioCodecEnum.copy;
 				}
 
 				MoviesInfo.Add (sourceMovie, targetMovie);
@@ -303,7 +317,8 @@ public partial class MainWindow: Gtk.Window
                                 var passAsString = String.Empty;
                                 var totalFilesAsString = String.Empty;
 
-                                if (_currentConvertingMovie != null)
+                                if (_currentConvertingMovie != null && 
+			    					_currentConvertingMovie.FirstVideoTrack != null)
                                 {
                                         fName = System.IO.Path.GetFileName(_currentConvertingMovie.FileName);
 
@@ -375,12 +390,30 @@ public partial class MainWindow: Gtk.Window
 
 		public static string MakeFFMpegCommand(MediaInfo sourceMovie, MediaInfo targetMovie, int currentPass)
 		{		
-				var res= String.Empty;
-				if (targetMovie.FirstVideoTrack != null)
+				// single audio convert? 
+				if ( (targetMovie.AudioTracks.Count > 0) && 
+		    		 (targetMovie.FirstAudioTrack.TargetAudioCodec!= AudioCodecEnum.none) &&
+		    		 ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none)) &&
+		      		  (currentPass>1))
 				{
-					var video = " -vcodec copy";
-					var container = String.Empty;
-					var ext = String.Empty;
+					return string.Empty;					
+				} 		
+
+				var res= String.Empty;
+
+				var sourceFile = " -i \"" + sourceMovie.FileName+"\"";				
+				var ext = System.IO.Path.GetExtension(sourceMovie.FileName);
+				var targetFile = sourceMovie.FileName+".converted" + ext;
+				var video = " -vn";  // disable video								
+
+				var audio = " -an "; // disable audio				
+
+				var map = String.Empty;
+
+				if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=VideoCodecEnum.none)
+				{
+					var videoSettings= String.Empty;					
+					var container = String.Empty;														
 
 					switch (targetMovie.TargetContainer)
 					{
@@ -392,79 +425,78 @@ public partial class MainWindow: Gtk.Window
 						case  VideoContainerEnum.mkv : container = " "; ext = ".mkv"; break;
 						case  VideoContainerEnum.webm : container = " -f webm "; ext = ".webm"; break;
 					}
+					targetFile = sourceMovie.FileName+".converted" + ext;
+					
+					var aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
+					var	scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
+					var	bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;	
 
-					var videContainer = String.Empty;
-					var aspect = String.Empty;
-					var scale =   String.Empty;
-					var bitrate = String.Empty;					
+					var pass = String.Format(" -pass {0} -passlogfile \"{1}\"",currentPass,targetFile + ".passlog");
 
-					if (targetMovie.TargetVideoCodec != VideoCodecEnum.none)
+					videoSettings = aspect + scale + bitrate + container + pass;	
+					
+					switch (targetMovie.TargetVideoCodec)
 					{
-						aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
-						scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
-						bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;
+						case VideoCodecEnum.copy: video = " -vcodec copy"; break;
+						case VideoCodecEnum.xvid: video = " -vcodec libxvid"+videoSettings; break;
+						case VideoCodecEnum.flv: video = " -vcodec flv"+videoSettings; break;
+						case VideoCodecEnum.h264: video = " -vcodec h264"+videoSettings; break;
+						case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"+videoSettings; break;
+						case VideoCodecEnum.theora: video = " -vcodec theora"+videoSettings; break;
+						case VideoCodecEnum.vp8: video = " -vcodec libvpx"+videoSettings; break;
+					}
+				}
 
-						switch (targetMovie.TargetVideoCodec)
-						{
-							case VideoCodecEnum.xvid: video = " -vcodec libxvid"; break;
-							case VideoCodecEnum.flv: video = " -vcodec flv"; break;
-							case VideoCodecEnum.h264: video = " -vcodec h264"; break;
-							case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"; break;
-							case VideoCodecEnum.theora: video = " -vcodec theora"; break;
-							case VideoCodecEnum.vp8: video = " -vcodec libvpx"; break;
-						}						
 
-						video += aspect + scale + bitrate;
-					}			
+			// only first Audio Track!
+			if (targetMovie.AudioTracks.Count>0)
+			{
+				var targetAudioTrack = targetMovie.FirstAudioTrack;
 
-					
-					
-					var sourceFile = " -i \"" + sourceMovie.FileName+"\"";
-					var targetFile = String.Format(" \"{0}\"",sourceMovie.FileName+".converted" + ext);
-					
-					targetMovie.FFMPEGOutputFileName = String.Format("{0}",sourceMovie.FileName+".converted" + ext + ".log");
-					targetMovie.FFMPEGPassLogFileName = String.Format(" \"{0}\"",sourceMovie.FileName+".converted" + ext + ".passlog");					
-					targetMovie.FileName = String.Format("{0}",sourceMovie.FileName+".converted" + ext);;
-					
-					if (File.Exists(targetMovie.FFMPEGPassLogFileName))
+				var audioQuality = String.Format(" -ac {0} -ar {1} -ab {2}",	
+					                          targetAudioTrack.Channels,
+					                          targetAudioTrack.SamplingRateHz,
+					                          targetAudioTrack.Bitrate);
+							
+
+					switch (targetAudioTrack.TargetAudioCodec)
 					{
-							File.Delete(targetMovie.FFMPEGPassLogFileName);
+						case AudioCodecEnum.copy:audio = " -acodec copy "; break;
+						case AudioCodecEnum.MP3: audio = String.Format(" -acodec libmp3lame"+audioQuality); ext = ".mp3"; break;
+						case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis "+audioQuality); ext = ".ogg"; break;
+						case AudioCodecEnum.aac: audio = String.Format(" -acodec libfaac "+audioQuality); ext = ".aac"; break;
+						default: audio = " -an "; break;
 					}
 
-					var audio = " -acodec copy";
 
-					if ( (targetMovie.AudioTracks.Count>0) && 
-				    	 (targetMovie.FirstAudioTrack != null) &&
-				    	 (targetMovie.FirstAudioTrack.TargetAudioCodec != AudioCodecEnum.none))
-						{
-							var targetAudioTrack = targetMovie.FirstAudioTrack;
-							switch (targetAudioTrack.TargetAudioCodec)
-							{
-								case AudioCodecEnum.MP3: audio = String.Format(" -acodec libmp3lame"); break;
-								case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis"); break;
-							}
-
-							audio += String.Format(" -ac {0} -ar {1} -ab {2}",
-							                          targetAudioTrack.Channels,
-							                          targetAudioTrack.SamplingRateHz,
-							                          targetAudioTrack.Bitrate);
-					}
-
-					// more audio tracks? supporting only the first one
-					var map = String.Empty;
-					if (sourceMovie.AudioTracks.Count > 1)
+					if ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none))
 					{
-						map = " -map 0:0 -map 0:1";
-					} 				
+						// converting single audio
+						targetFile = sourceMovie.FileName+".converted" + ext;
+					}
+			}		
 
-					var pass = String.Format(" -pass {0} -passlogfile {1}",currentPass,targetMovie.FFMPEGPassLogFileName);
+			// more audio tracks? supporting only the first one					
+			if (sourceMovie.AudioTracks.Count > 1 && sourceMovie.FirstVideoTrack != null)
+			{
+				map = " -map 0:0 -map 0:1";
+			} 		
 
-					res = "ffmpeg -y -dump " + sourceFile + map + video + container + audio + pass + targetFile;					
-				}	
+			targetMovie.FFMPEGOutputFileName = targetFile + ".log";
+			targetMovie.FFMPEGPassLogFileName = targetFile + ".passlog";					
+			targetMovie.FileName = targetFile;
+
+			if (File.Exists(targetMovie.FFMPEGOutputFileName))
+					File.Delete(targetMovie.FFMPEGOutputFileName);
+			if (File.Exists(targetMovie.FFMPEGPassLogFileName))
+					File.Delete(targetMovie.FFMPEGPassLogFileName);			
+
+			targetFile = String.Format(" \"{0}\"",targetFile);
+
+			res = "ffmpeg -y -dump " + sourceFile + map + video + audio + targetFile;
 
 			return res;
 		}
-
 	
 
 	public void RunCommandList()
@@ -486,6 +518,9 @@ public partial class MainWindow: Gtk.Window
 
 		foreach (var kvp in MoviesInfo)
 		{
+			var cmd1 =  MakeFFMpegCommand(kvp.Key,kvp.Value,1);
+			var cmd2 =  MakeFFMpegCommand(kvp.Key,kvp.Value,2);
+
 			_currentFileListNumber++;
 
 			_currentConvertingMovie = kvp.Value;
@@ -494,15 +529,16 @@ public partial class MainWindow: Gtk.Window
 
 			if (_processAbortRequest) break;
 
-			var cmd1 =  MakeFFMpegCommand(kvp.Key,kvp.Value,1);
 			ExecutFFMpegCommand(cmd1, kvp.Value.FFMPEGOutputFileName );
 
 			if (_processAbortRequest) break;
 
 			_currentPass = 2;
 
-			var cmd2 =  MakeFFMpegCommand(kvp.Key,kvp.Value,2);
-			ExecutFFMpegCommand(cmd2, kvp.Value.FFMPEGOutputFileName);
+			if (!String.IsNullOrEmpty(cmd2))
+			{
+				ExecutFFMpegCommand(cmd2, kvp.Value.FFMPEGOutputFileName);
+			}
 		}
 
 		Application.Invoke((_,__) =>
