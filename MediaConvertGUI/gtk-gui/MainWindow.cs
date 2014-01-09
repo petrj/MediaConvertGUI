@@ -13,7 +13,6 @@ public partial class MainWindow
 	private global::Gtk.Frame frameGeneral;
 	private global::Gtk.Alignment GtkAlignment1;
 	private global::MediaConvertGUI.WidgetGeneralMediaInfo widgetGenera;
-	private global::Gtk.Label GtkLabelFrameGeneral;
 	private global::Gtk.Frame frameVideo;
 	private global::Gtk.Alignment GtkAlignment2;
 	private global::MediaConvertGUI.WidgetMovieTrack widgetSourceMovieTrack;
@@ -46,6 +45,7 @@ public partial class MainWindow
 		global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
+		this.HeightRequest = 770;
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString ("Media Convert");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
@@ -86,27 +86,19 @@ public partial class MainWindow
 		w5.X = 5;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameGeneral = new global::Gtk.Frame ();
-		this.frameGeneral.WidthRequest = 730;
-		this.frameGeneral.HeightRequest = 80;
 		this.frameGeneral.Name = "frameGeneral";
 		// Container child frameGeneral.Gtk.Container+ContainerChild
 		this.GtkAlignment1 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment1.WidthRequest = 600;
+		this.GtkAlignment1.WidthRequest = 635;
+		this.GtkAlignment1.HeightRequest = 65;
 		this.GtkAlignment1.Name = "GtkAlignment1";
 		this.GtkAlignment1.LeftPadding = ((uint)(12));
 		// Container child GtkAlignment1.Gtk.Container+ContainerChild
 		this.widgetGenera = new global::MediaConvertGUI.WidgetGeneralMediaInfo ();
-		this.widgetGenera.WidthRequest = 730;
-		this.widgetGenera.HeightRequest = 100;
 		this.widgetGenera.Events = ((global::Gdk.EventMask)(256));
 		this.widgetGenera.Name = "widgetGenera";
 		this.GtkAlignment1.Add (this.widgetGenera);
 		this.frameGeneral.Add (this.GtkAlignment1);
-		this.GtkLabelFrameGeneral = new global::Gtk.Label ();
-		this.GtkLabelFrameGeneral.Name = "GtkLabelFrameGeneral";
-		this.GtkLabelFrameGeneral.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>General</b>");
-		this.GtkLabelFrameGeneral.UseMarkup = true;
-		this.frameGeneral.LabelWidget = this.GtkLabelFrameGeneral;
 		this.@fixed.Add (this.frameGeneral);
 		global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameGeneral]));
 		w8.X = 5;
@@ -114,7 +106,7 @@ public partial class MainWindow
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameVideo = new global::Gtk.Frame ();
 		this.frameVideo.WidthRequest = 355;
-		this.frameVideo.HeightRequest = 280;
+		this.frameVideo.HeightRequest = 305;
 		this.frameVideo.Name = "frameVideo";
 		// Container child frameVideo.Gtk.Container+ContainerChild
 		this.GtkAlignment2 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
@@ -135,11 +127,11 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameVideo);
 		global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideo]));
 		w11.X = 5;
-		w11.Y = 220;
+		w11.Y = 205;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameSourceAudioTracks = new global::Gtk.Frame ();
 		this.frameSourceAudioTracks.WidthRequest = 355;
-		this.frameSourceAudioTracks.HeightRequest = 215;
+		this.frameSourceAudioTracks.HeightRequest = 220;
 		this.frameSourceAudioTracks.Name = "frameSourceAudioTracks";
 		// Container child frameSourceAudioTracks.Gtk.Container+ContainerChild
 		this.GtkAlignment5 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
@@ -160,11 +152,11 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameSourceAudioTracks);
 		global::Gtk.Fixed.FixedChild w14 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameSourceAudioTracks]));
 		w14.X = 7;
-		w14.Y = 510;
+		w14.Y = 515;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetVideo = new global::Gtk.Frame ();
 		this.frameTargetVideo.WidthRequest = 355;
-		this.frameTargetVideo.HeightRequest = 280;
+		this.frameTargetVideo.HeightRequest = 305;
 		this.frameTargetVideo.Name = "frameTargetVideo";
 		// Container child frameTargetVideo.Gtk.Container+ContainerChild
 		this.GtkAlignment6 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
@@ -185,11 +177,11 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameTargetVideo);
 		global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetVideo]));
 		w17.X = 380;
-		w17.Y = 220;
+		w17.Y = 205;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonAdd = new global::Gtk.Button ();
 		this.buttonAdd.WidthRequest = 35;
-		this.buttonAdd.HeightRequest = 35;
+		this.buttonAdd.HeightRequest = 30;
 		this.buttonAdd.CanFocus = true;
 		this.buttonAdd.Name = "buttonAdd";
 		this.buttonAdd.UseUnderline = true;
@@ -213,7 +205,8 @@ public partial class MainWindow
 		w26.Y = 15;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonGoConvert = new global::Gtk.Button ();
-		this.buttonGoConvert.WidthRequest = 200;
+		this.buttonGoConvert.WidthRequest = 85;
+		this.buttonGoConvert.HeightRequest = 30;
 		this.buttonGoConvert.CanFocus = true;
 		this.buttonGoConvert.Name = "buttonGoConvert";
 		this.buttonGoConvert.UseUnderline = true;
@@ -235,12 +228,12 @@ public partial class MainWindow
 		this.buttonGoConvert.Add (w27);
 		this.@fixed.Add (this.buttonGoConvert);
 		global::Gtk.Fixed.FixedChild w35 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonGoConvert]));
-		w35.X = 220;
-		w35.Y = 760;
+		w35.X = 650;
+		w35.Y = 165;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonRemove = new global::Gtk.Button ();
 		this.buttonRemove.WidthRequest = 35;
-		this.buttonRemove.HeightRequest = 35;
+		this.buttonRemove.HeightRequest = 30;
 		this.buttonRemove.CanFocus = true;
 		this.buttonRemove.Name = "buttonRemove";
 		this.buttonRemove.UseUnderline = true;
@@ -261,11 +254,11 @@ public partial class MainWindow
 		this.@fixed.Add (this.buttonRemove);
 		global::Gtk.Fixed.FixedChild w44 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemove]));
 		w44.X = 650;
-		w44.Y = 55;
+		w44.Y = 50;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonAddFolder = new global::Gtk.Button ();
 		this.buttonAddFolder.WidthRequest = 45;
-		this.buttonAddFolder.HeightRequest = 35;
+		this.buttonAddFolder.HeightRequest = 30;
 		this.buttonAddFolder.CanFocus = true;
 		this.buttonAddFolder.Name = "buttonAddFolder";
 		this.buttonAddFolder.UseUnderline = true;
@@ -292,7 +285,7 @@ public partial class MainWindow
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonRemoveAll = new global::Gtk.Button ();
 		this.buttonRemoveAll.WidthRequest = 45;
-		this.buttonRemoveAll.HeightRequest = 35;
+		this.buttonRemoveAll.HeightRequest = 30;
 		this.buttonRemoveAll.CanFocus = true;
 		this.buttonRemoveAll.Name = "buttonRemoveAll";
 		this.buttonRemoveAll.UseUnderline = true;
@@ -315,10 +308,10 @@ public partial class MainWindow
 		this.@fixed.Add (this.buttonRemoveAll);
 		global::Gtk.Fixed.FixedChild w62 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemoveAll]));
 		w62.X = 690;
-		w62.Y = 55;
+		w62.Y = 50;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonApply = new global::Gtk.Button ();
-		this.buttonApply.WidthRequest = 720;
+		this.buttonApply.WidthRequest = 355;
 		this.buttonApply.HeightRequest = 25;
 		this.buttonApply.CanFocus = true;
 		this.buttonApply.Name = "buttonApply";
@@ -341,12 +334,12 @@ public partial class MainWindow
 		this.buttonApply.Add (w63);
 		this.@fixed.Add (this.buttonApply);
 		global::Gtk.Fixed.FixedChild w71 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
-		w71.X = 10;
-		w71.Y = 730;
+		w71.X = 380;
+		w71.Y = 740;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetAudio = new global::Gtk.Frame ();
 		this.frameTargetAudio.WidthRequest = 355;
-		this.frameTargetAudio.HeightRequest = 215;
+		this.frameTargetAudio.HeightRequest = 220;
 		this.frameTargetAudio.Name = "frameTargetAudio";
 		// Container child frameTargetAudio.Gtk.Container+ContainerChild
 		this.GtkAlignment14 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
@@ -367,10 +360,11 @@ public partial class MainWindow
 		this.@fixed.Add (this.frameTargetAudio);
 		global::Gtk.Fixed.FixedChild w74 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
 		w74.X = 380;
-		w74.Y = 510;
+		w74.Y = 515;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonPreview = new global::Gtk.Button ();
-		this.buttonPreview.WidthRequest = 200;
+		this.buttonPreview.WidthRequest = 85;
+		this.buttonPreview.HeightRequest = 30;
 		this.buttonPreview.CanFocus = true;
 		this.buttonPreview.Name = "buttonPreview";
 		this.buttonPreview.UseUnderline = true;
@@ -392,14 +386,14 @@ public partial class MainWindow
 		this.buttonPreview.Add (w75);
 		this.@fixed.Add (this.buttonPreview);
 		global::Gtk.Fixed.FixedChild w83 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonPreview]));
-		w83.X = 10;
-		w83.Y = 760;
+		w83.X = 650;
+		w83.Y = 130;
 		this.Add (this.@fixed);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
 		this.DefaultWidth = 744;
-		this.DefaultHeight = 815;
+		this.DefaultHeight = 795;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 	}

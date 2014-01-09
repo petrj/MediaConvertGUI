@@ -30,6 +30,8 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelFps;
 		private global::Gtk.Label labelTrackSize;
 		private global::Gtk.Label GtkLabelVideoOptions;
+		private global::Gtk.Label labelContainerInfo;
+		private global::Gtk.ComboBox comboContainer;
 		
 		protected virtual void Build ()
 		{
@@ -47,8 +49,8 @@ namespace MediaConvertGUI
 			this.labelCodecInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Codec");
 			this.@fixed.Add (this.labelCodecInfo);
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelCodecInfo]));
-			w1.X = 5;
-			w1.Y = 10;
+			w1.X = 20;
+			w1.Y = 40;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboCodec = global::Gtk.ComboBox.NewText ();
 			this.comboCodec.WidthRequest = 80;
@@ -56,7 +58,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.comboCodec);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));
 			w2.X = 130;
-			w2.Y = 5;
+			w2.Y = 35;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.frameVideooptions = new global::Gtk.Frame ();
 			this.frameVideooptions.WidthRequest = 340;
@@ -238,7 +240,22 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.frameVideooptions);
 			global::Gtk.Fixed.FixedChild w24 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideooptions]));
 			w24.X = 5;
-			w24.Y = 35;
+			w24.Y = 65;
+			// Container child fixed.Gtk.Fixed+FixedChild
+			this.labelContainerInfo = new global::Gtk.Label ();
+			this.labelContainerInfo.Name = "labelContainerInfo";
+			this.labelContainerInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Container");
+			this.@fixed.Add (this.labelContainerInfo);
+			global::Gtk.Fixed.FixedChild w25 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelContainerInfo]));
+			w25.X = 20;
+			w25.Y = 10;
+			// Container child fixed.Gtk.Fixed+FixedChild
+			this.comboContainer = global::Gtk.ComboBox.NewText ();
+			this.comboContainer.Name = "comboContainer";
+			this.@fixed.Add (this.comboContainer);
+			global::Gtk.Fixed.FixedChild w26 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
+			w26.X = 130;
+			w26.Y = 6;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

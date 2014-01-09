@@ -11,9 +11,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelDuration;
 		private global::Gtk.Label labelSizeInfo;
 		private global::Gtk.Label labelSize;
-		private global::Gtk.ComboBox comboContainer;
 		private global::Gtk.ComboBox comboScheme;
-		private global::Gtk.Label labelTargetContLabel;
 		private global::Gtk.Label labelScheme;
 		
 		protected virtual void Build ()
@@ -75,35 +73,20 @@ namespace MediaConvertGUI
 			w6.X = 130;
 			w6.Y = 25;
 			// Container child fixed.Gtk.Fixed+FixedChild
-			this.comboContainer = global::Gtk.ComboBox.NewText ();
-			this.comboContainer.WidthRequest = 70;
-			this.comboContainer.Name = "comboContainer";
-			this.@fixed.Add (this.comboContainer);
-			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
-			w7.X = 505;
-			w7.Y = 30;
-			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboScheme = global::Gtk.ComboBox.NewText ();
 			this.comboScheme.Name = "comboScheme";
 			this.@fixed.Add (this.comboScheme);
-			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboScheme]));
-			w8.X = 505;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelTargetContLabel = new global::Gtk.Label ();
-			this.labelTargetContLabel.Name = "labelTargetContLabel";
-			this.labelTargetContLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Target container");
-			this.@fixed.Add (this.labelTargetContLabel);
-			global::Gtk.Fixed.FixedChild w9 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelTargetContLabel]));
-			w9.X = 375;
-			w9.Y = 35;
+			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboScheme]));
+			w7.X = 460;
+			w7.Y = 20;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelScheme = new global::Gtk.Label ();
 			this.labelScheme.Name = "labelScheme";
 			this.labelScheme.LabelProp = global::Mono.Unix.Catalog.GetString ("Scheme");
 			this.@fixed.Add (this.labelScheme);
-			global::Gtk.Fixed.FixedChild w10 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelScheme]));
-			w10.X = 375;
-			w10.Y = 5;
+			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelScheme]));
+			w8.X = 375;
+			w8.Y = 25;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

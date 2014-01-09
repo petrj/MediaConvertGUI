@@ -37,7 +37,6 @@ namespace MediaConvertGUI
 			_sourceMovieInfo = new MediaInfo();
 			_targetMovieInfo = new MediaInfo();
 
-			comboContainer.Changed+= OnAnyValueChanged;
 			comboScheme.Changed+=OnSchemeComboValueChanged;		
 		}
 
@@ -69,8 +68,6 @@ namespace MediaConvertGUI
 
 				if (TargetMovieInfo!= null)
 				{
-					SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),true,(int)TargetMovieInfo.TargetContainer);
-
 					var schemeStrings = new List<string>();
 					schemeStrings.Add("none");
 					foreach (var scheme in TargetMovieInfo.Schemes.Keys)
@@ -79,8 +76,7 @@ namespace MediaConvertGUI
 					}
 					SupportMethods.FillComboBox(comboScheme,schemeStrings,true,TargetMovieInfo.SelectedScheme);
 				} else
-				{
-					SupportMethods.ClearCombo(comboContainer);
+				{				
 					SupportMethods.ClearCombo(comboScheme);
 				}
 
@@ -103,19 +99,6 @@ namespace MediaConvertGUI
 				_eventLock.Unlock();
 
 				Fill();
-			}
-		}
-
-		protected void OnAnyValueChanged (object sender, EventArgs e)
-		{
-			if (_eventLock.Lock())
-			{
-				if (TargetMovieInfo != null)
-				{
-					_targetMovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
-				}
-
-				_eventLock.Unlock();
 			}
 		}
 

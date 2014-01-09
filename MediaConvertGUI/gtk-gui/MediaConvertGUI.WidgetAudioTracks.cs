@@ -41,14 +41,14 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelTrackInfo);
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelTrackInfo]));
 			w1.X = 5;
-			w1.Y = 10;
+			w1.Y = 15;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboTracks = global::Gtk.ComboBox.NewText ();
 			this.comboTracks.Name = "comboTracks";
 			this.@fixed.Add (this.comboTracks);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboTracks]));
 			w2.X = 130;
-			w2.Y = 5;
+			w2.Y = 10;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelCodecInfo = new global::Gtk.Label ();
 			this.labelCodecInfo.Name = "labelCodecInfo";
@@ -56,14 +56,14 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.labelCodecInfo);
 			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelCodecInfo]));
 			w3.X = 5;
-			w3.Y = 40;
+			w3.Y = 45;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboCodec = global::Gtk.ComboBox.NewText ();
 			this.comboCodec.Name = "comboCodec";
 			this.@fixed.Add (this.comboCodec);
 			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));
 			w4.X = 130;
-			w4.Y = 35;
+			w4.Y = 40;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.frameAudioOptions = new global::Gtk.Frame ();
 			this.frameAudioOptions.Name = "frameAudioOptions";
@@ -158,7 +158,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.frameAudioOptions);
 			global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameAudioOptions]));
 			w17.X = 5;
-			w17.Y = 65;
+			w17.Y = 70;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

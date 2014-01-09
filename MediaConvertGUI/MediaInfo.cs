@@ -14,7 +14,8 @@ namespace MediaConvertGUI
 		copy,
 		MP3,
 		vorbis,
-		aac
+		aac,
+		flac
 	}
 
 	public enum VideoCodecEnum
@@ -31,13 +32,14 @@ namespace MediaConvertGUI
 
 	public enum VideoContainerEnum
 	{
-		avi = 0,
-		flv = 1,
-		mp4 = 2,
-		mkv = 3,
-		mpeg = 4,
-		ogg = 5,
-		webm = 6
+		none,
+		avi,
+		flv,
+		mp4,
+		mkv,
+		mpeg,
+		ogg,
+		webm
 	}
 
 	#endregion
@@ -224,7 +226,7 @@ namespace MediaConvertGUI
 
 		public string RawMediaInfoOutput { get; set; }
 
-		private VideoCodecEnum _targetVideoCodec  = VideoCodecEnum.xvid;
+		private VideoCodecEnum _targetVideoCodec  = VideoCodecEnum.none;
 		public VideoCodecEnum TargetVideoCodec
 		{ 
 			get { return _targetVideoCodec; }
@@ -235,7 +237,7 @@ namespace MediaConvertGUI
 			}
 		}
 
-		private VideoContainerEnum _targetContainer = VideoContainerEnum.avi;
+		private VideoContainerEnum _targetContainer = VideoContainerEnum.none;
 		public VideoContainerEnum TargetContainer
 		{ 
 			get { return _targetContainer; }

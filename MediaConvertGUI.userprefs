@@ -3,13 +3,16 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/MainWindow.cs">
     <Files>
       <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="51" Column="3" />
-      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="43" Column="3" />
+      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="244" Column="6" />
       <File FileName="MediaConvertGUI/TrackInfo.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI/MainWindow.cs" Line="616" Column="1" />
+      <File FileName="MediaConvertGUI/MainWindow.cs" Line="47" Column="45" />
       <File FileName="MediaConvertGUI/Main.cs" Line="39" Column="38" />
       <File FileName="MediaConvertGUI/ProgressWin.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/TreeViewData.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/TextWin.cs" Line="18" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="59" Column="59" />
+      <File FileName="MediaConvertGUI/WidgetGeneralMediaInfo.cs" Line="71" Column="6" />
+      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

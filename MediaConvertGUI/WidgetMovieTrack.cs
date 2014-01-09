@@ -55,6 +55,8 @@ namespace MediaConvertGUI
 			this.Build ();
 			Editable = false;
 			_movieInfo = new MediaInfo();
+
+			comboContainer.Changed+=delegate { OnAnyValueChanged(); };
 		}
 
 		#region methods
@@ -93,6 +95,8 @@ namespace MediaConvertGUI
 
 					SupportMethods.FillComboBoxEntry(comboBitRate,MediaInfo.DefaultVideoBitRates,m.BitrateKbps,Editable);
 
+					SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),Editable,(int)MovieInfo.TargetContainer);
+
 					if (Editable)
 					{
 						SupportMethods.FillComboBox(comboCodec,typeof(VideoCodecEnum),Editable,(int)MovieInfo.TargetVideoCodec);
@@ -110,21 +114,15 @@ namespace MediaConvertGUI
 					entryHeight.Text = String.Empty;
 					entryPixelAspect.Text = String.Empty;
 
-					if (MovieInfo!=null) 
-					{
-						SupportMethods.FillComboBox(comboCodec,new List<string>() {String.Empty}, false,String.Empty);	
-					} else
-					{
-						comboCodec.Model = new ListStore(typeof(string));
-						comboCodec.Active = 0;
-						labelTrackSize.Text = String.Empty;
-					}
 
-					SupportMethods.FillComboBoxEntry(comboBitRate,MediaInfo.DefaultVideoBitRates,0,false);
-					SupportMethods.FillComboBoxEntry(comboAspect,defaultAspects,"",false,false);
-					SupportMethods.FillComboBoxEntry(comboFrameRate,frameRates,"",false,false);				 
+					SupportMethods.ClearCombo(comboCodec);
+					SupportMethods.ClearCombo(comboContainer);
+					labelTrackSize.Text = String.Empty;
+
+					SupportMethods.ClearCombo(comboBitRate);
+     				SupportMethods.ClearCombo(comboAspect);
+					SupportMethods.ClearCombo(comboFrameRate);			 
 				}
-
 
 				frameVideooptions.Visible = 
 					(MovieInfo != null) && 
@@ -161,10 +159,10 @@ namespace MediaConvertGUI
 						entryHeight.Text = Convert.ToInt32( width / aspectRatio ).ToString();
 					}
 					_eventLock.Unlock();
-
-					OnAnyValueChanged();
 				}
 			}
+
+			OnAnyValueChanged();
 		}		
 
 		protected void OnEntryHeightChanged (object sender, EventArgs e)
@@ -185,9 +183,10 @@ namespace MediaConvertGUI
 					}	
 
 					_eventLock.Unlock();					
-					OnAnyValueChanged();
 				}
 			}
+
+			OnAnyValueChanged();
 		}
 
 		protected void OnComboAspectChanged (object sender, EventArgs e)
@@ -223,6 +222,7 @@ namespace MediaConvertGUI
 					m.FrameRate = SupportMethods.ToDecimal(comboFrameRate.ActiveText);
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;
+					MovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
 
 					comboCodec.TooltipText = String.Empty;
 					if (comboCodec.Active > 0)
@@ -258,10 +258,6 @@ namespace MediaConvertGUI
 			OnAnyValueChanged();
 		}
 
-		protected void OnButtonCodecsInfoClicked (object sender, EventArgs e)
-		{
-
-		}
 		#endregion
 
 	}
