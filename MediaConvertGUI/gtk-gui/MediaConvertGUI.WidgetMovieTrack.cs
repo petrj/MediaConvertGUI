@@ -32,7 +32,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label GtkLabelVideoOptions;
 		private global::Gtk.Label labelContainerInfo;
 		private global::Gtk.ComboBox comboContainer;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -53,7 +53,6 @@ namespace MediaConvertGUI
 			w1.Y = 40;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboCodec = global::Gtk.ComboBox.NewText ();
-			this.comboCodec.WidthRequest = 80;
 			this.comboCodec.Name = "comboCodec";
 			this.@fixed.Add (this.comboCodec);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));

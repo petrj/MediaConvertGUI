@@ -268,141 +268,108 @@ public partial class MainWindow: Gtk.Window
 
 	#region progess
 
-	/// <summary>
-	/// Gets the last frame from convert log file.
-	/// Parsing text "frame=15" to 15
-	/// </summary>
-	/// <returns>
-	/// The last frame from convert log file (int).
-	/// If value not found, returns -1
-	/// </returns>
-	/// <param name='_outputFileName'>
-	/// _output file name.
-	/// </param>
-	private int GetLastFrameFromConvertLogFile(string _outputFileName)
-	{
-		var lastFrame = -1;
 
-		if (File.Exists(_outputFileName))
-			{
-			using (var fs = new FileStream(_outputFileName,FileMode.Open,FileAccess.Read,FileShare.ReadWrite))
-				{
-					using (var sr = new StreamReader(fs)) 
-					{					    
-						string line;
-										 while ((line = sr.ReadLine()) != null)
-                                         {
-                                                        if (line != null && line.Length>11 && line.StartsWith("frame="))
-                                                        {
-                                                                var lastFrameAsString = line.Substring(6,5).Trim();
-                                                                if (SupportMethods.IsNumeric(lastFrameAsString))
-                                                                        lastFrame = Convert.ToInt32(lastFrameAsString);
-                                                        }
-                                         }
-					}
-				}
-			}
-
-		return lastFrame;
-	}
 
 	public void ShowProgess()
-        {
-                        _proressWindow.Show();
-                        _proressWindow.SetPercents(0,0,0,_processStartedAt);
+    {
+        _proressWindow.Show();
+        _proressWindow.SetPercents(0,0,0,_processStartedAt);
 
-                        while (_processthread != null && _processthread.IsAlive)
-                        {                                        
-                                if (_proressWindow.AbortRequest)
-                                {
-										if (SupportMethods.RunningPlatform == SupportMethods.RunningPlatformEnum.Unix) 
-										{
-											SupportMethods.ExecuteAndReturnOutput ("killall", "ffmpeg");
-										} else 
-										{
-											SupportMethods.ExecuteAndReturnOutput ("taskkill", "/f /im ffmpeg.exe");
-										}
-                                        _processAbortRequest = true;
-                                }
+		while (_processthread != null && _processthread.IsAlive) 
+		{                                        
+			if (_proressWindow.AbortRequest) 
+			{
+				if (SupportMethods.RunningPlatform == SupportMethods.RunningPlatformEnum.Unix) 
+				{
+					SupportMethods.ExecuteAndReturnOutput ("killall", "ffmpeg");
+				} else
+				{
+					SupportMethods.ExecuteAndReturnOutput ("taskkill", "/f /im ffmpeg.exe");
+				}
+				_processAbortRequest = true;
+			}
 
-                                var percentsCurrentFilePass = 0d;
-                                var percentsCurrentFile = 0d;
-                                var percentsTotal = 0d;
+			var percentsCurrentFilePass = 0d;
+			var percentsCurrentFile = 0d;
+			var percentsTotal = 0d;
 
+			var fName = String.Empty;
+			var passAsString = String.Empty;
+			var totalFilesAsString = String.Empty;
 
-                                var fName = String.Empty;
-                                var passAsString = String.Empty;
-                                var totalFilesAsString = String.Empty;
+			if (_currentConvertingMovie != null) 
+			{
+				percentsCurrentFile = 0;
+				fName = System.IO.Path.GetFileName (_currentConvertingMovie.FileName);								
 
-								if (_currentConvertingMovie != null)
-								{
-									percentsCurrentFile = 0;
-									fName = System.IO.Path.GetFileName(_currentConvertingMovie.FileName);								
+				if (_currentConvertingMovie.FirstVideoTrack != null) 
+				{
+					var frames = Convert.ToDouble (_currentConvertingMovie.DurationMS / 1000m * _currentConvertingMovie.FirstVideoTrack.FrameRate);
 
-				    				if (_currentConvertingMovie.FirstVideoTrack != null)
-	                                {
-	                                        var frames = Convert.ToDouble(_currentConvertingMovie.DurationMS/1000m*_currentConvertingMovie.FirstVideoTrack.FrameRate);
+					// detecting progress from text file
+					var lastFrame = MediaInfoBase.GetLastFrameFromConvertLogFile (_outputFile);
+					if ((frames > 0) && (lastFrame != -1)) 
+					{
+						percentsCurrentFilePass = Convert.ToInt32 (lastFrame / (frames / (double)100));
+					}
 
-	                                        // detecting progress from text file
-	                                        var lastFrame = GetLastFrameFromConvertLogFile(_outputFile);
-	                                        if ( (frames>0) && (lastFrame != -1))
-	                                        {
-	                                                percentsCurrentFilePass = Convert.ToInt32(lastFrame / (frames/(double)100));
-	                                        }
+					// computing current file progress
+					if (_currentPass > 0) 
+					{        
+						var correctedFrame = lastFrame;
+						if (correctedFrame < 0)
+							correctedFrame = 0;
 
-	                                        // computing current file progress
-	                                        if (_currentPass>0)
-	                                        {        
-	                                                var correctedFrame = lastFrame;
-	                                                if (correctedFrame<0) correctedFrame = 0;
+						passAsString = "Pass: " + _currentPass.ToString ();
 
-	                                                passAsString = "Pass: " + _currentPass.ToString();
+						var actualFrame = (_currentPass - 1) * frames + correctedFrame;
+						percentsCurrentFile = actualFrame / (frames * 2 / 100d);                                
+					}
+				} else if (_currentConvertingMovie.FirstAudioTrack != null)
+				{
+					// only audio convert
+					decimal totalTime = _currentConvertingMovie.DurationMS/1000m;
+					decimal time = MediaInfoBase.GetLastTimeFromConvertLogFile (_outputFile);
 
-	                                                var actualFrame = (_currentPass-1)*frames + correctedFrame;
-	                                                percentsCurrentFile = actualFrame/(frames*2/100d);                                
-	                                        }
+					if (time > 0) 
+					{
+						percentsCurrentFilePass = percentsCurrentFile = Convert.ToDouble (time / (totalTime / 100m));
+					}
+				}							
 
-	                                }
-								}
+				if (_currentFileListNumber >= 0 && _currentFileListCount > 0)
+				{
+					percentsTotal = Convert.ToDouble (_currentFileListNumber / (Convert.ToDouble (_currentFileListCount) / 100d));
 
-                                if (_currentFileListNumber>=0 && _currentFileListCount>0)
-                                {
-                                        percentsTotal = Convert.ToDouble(_currentFileListNumber/(Convert.ToDouble(_currentFileListCount)/100d));
+					totalFilesAsString = (_currentFileListNumber + 1).ToString () + "/" + (_currentFileListCount).ToString ();
 
-                                        totalFilesAsString = (_currentFileListNumber+1).ToString()+"/"+(_currentFileListCount).ToString();
+					// adding actual file progress fraction
+					if (percentsCurrentFile > 0) 
+					{
+						var onePart = 1d / (double)_currentFileListCount;
+						percentsTotal = percentsTotal + percentsCurrentFile * onePart;
+					}
+				}
 
-                                        // adding actual file progress fraction
-                                        if (percentsCurrentFile>0)
-                                        {
-                                                var onePart=1d/(double)_currentFileListCount;
-                                                percentsTotal = percentsTotal + percentsCurrentFile*onePart;
-                                        }
+				_proressWindow.SetPercents (Math.Round (percentsTotal, 2),
+					Math.Round (percentsCurrentFile, 2),
+					Math.Round (percentsCurrentFilePass, 2),
+					_processStartedAt,
+					fName,
+					passAsString,
+					totalFilesAsString);
 
-                                }
+				while (GLib.MainContext.Iteration ());
+				Thread.Sleep (500);
+			}
+		}
 
-                         _proressWindow.SetPercents(Math.Round (percentsTotal,2),
-                         Math.Round (percentsCurrentFile,2),
-                         Math.Round (percentsCurrentFilePass,2),
-                         _processStartedAt,
-                         fName,
-                         passAsString,
-                         totalFilesAsString);
-                                /*
-                                _proressWindow.CurrentFilePassPercents = percentsCurrentFilePass;
-                                _proressWindow.CurrentFilePercents = percentsCurrentFile;
-                                _proressWindow.TotalPercents = percentsTotal;
-                                */
+		_proressWindow.SetPercents (100,
+			100,
+			100,
+			_processStartedAt);
 
-                                while (GLib.MainContext.Iteration ());
-                                Thread.Sleep(500);
-                        }
-
-                        _proressWindow.SetPercents(100,
-                         100,
-                         100,
-                         _processStartedAt);
-
-        }
+	}
 
 	#endregion
 

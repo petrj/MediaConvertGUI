@@ -48,6 +48,95 @@ namespace MediaConvertGUI
 
 		#endregion
 
+		#region static Methods
+
+		/// <summary>
+		/// Gets the last frame from convert log file.
+		/// Parsing text "frame=15" to 15
+		/// </summary>
+		/// <returns>
+		/// The last frame from convert log file (int).
+		/// If value not found, returns -1
+		/// </returns>
+		/// <param name='_outputFileName'>
+		/// _output file name.
+		/// </param>
+		public static int GetLastFrameFromConvertLogFile(string outputFileName)
+		{
+			var lastFrame = -1;
+
+			if (File.Exists(outputFileName))
+			{
+				using (var fs = new FileStream(outputFileName,FileMode.Open,FileAccess.Read,FileShare.ReadWrite))
+				{
+					using (var sr = new StreamReader(fs)) 
+					{					    
+						string line;
+						while ((line = sr.ReadLine()) != null)
+						{
+							if (line != null && line.Length>11 && line.StartsWith("frame="))
+							{
+								var lastFrameAsString = line.Substring(6,5).Trim();
+								if (SupportMethods.IsNumeric(lastFrameAsString))
+									lastFrame = Convert.ToInt32(lastFrameAsString);
+							}
+						}
+					}
+				}
+			}
+
+			return lastFrame;
+		}
+
+		/// <summary>
+		/// Gets the last time from convert log file in seconds
+		/// Parsing text "time=00:22:25.05" to 1345 (22*60++25+0.05) s
+		/// </summary>
+		/// <returns>
+		/// The last frame time convert log file (int).
+		/// If value not found, returns -1
+		/// </returns>
+		/// <param name='outputFileName'>
+		/// log file name.
+		/// </param>
+		public static int GetLastTimeFromConvertLogFile(string outputFileName)
+		{
+			var lastTime = -1;
+
+			if (File.Exists(outputFileName))
+			{
+				using (var fs = new FileStream(outputFileName,FileMode.Open,FileAccess.Read,FileShare.ReadWrite))
+				{
+					using (var sr = new StreamReader(fs)) 
+					{					    
+						string line;
+						while ((line = sr.ReadLine()) != null)
+						{
+							if (line != null && line.Contains("time="))
+							{
+								var pos = line.IndexOf ("time=");
+								if (line.Length > pos + 5 + 8) 
+								{
+									var lastTimeAsString = line.Substring (pos + 5, 8).Trim ();
+									var hms = lastTimeAsString.Split (':');
+									if (hms.Length == 3 &&
+									    SupportMethods.IsNumeric (hms [0]) &&
+									    SupportMethods.IsNumeric (hms [1]) &&
+									    SupportMethods.IsNumeric (hms [2])) 
+									{
+										lastTime = Convert.ToInt32(hms[0])*3600+Convert.ToInt32(hms[1])*60+Convert.ToInt32(hms[2]); // ignoring ms
+									}
+								}							
+							}
+						}
+					}
+				}
+			}
+			return lastTime;
+		}
+
+		#endregion
+
 		#region changed
 
 		protected bool _changed = false;

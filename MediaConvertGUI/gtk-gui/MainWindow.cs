@@ -36,7 +36,7 @@ public partial class MainWindow
 	private global::MediaConvertGUI.WidgetAudioTracks widgetTargetAudioTracks;
 	private global::Gtk.Label GtkLabelTargetaudio;
 	private global::Gtk.Button buttonPreview;
-	
+
 	protected virtual void Build ()
 	{
 		global::Stetic.Gui.Initialize (this);
@@ -185,24 +185,13 @@ public partial class MainWindow
 		this.buttonAdd.CanFocus = true;
 		this.buttonAdd.Name = "buttonAdd";
 		this.buttonAdd.UseUnderline = true;
-		// Container child buttonAdd.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w18 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w19 = new global::Gtk.HBox ();
-		w19.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w20 = new global::Gtk.Image ();
-		w20.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
-		w19.Add (w20);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w22 = new global::Gtk.Label ();
-		w19.Add (w22);
-		w18.Add (w19);
-		this.buttonAdd.Add (w18);
+		global::Gtk.Image w18 = new global::Gtk.Image ();
+		w18.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
+		this.buttonAdd.Image = w18;
 		this.@fixed.Add (this.buttonAdd);
-		global::Gtk.Fixed.FixedChild w26 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAdd]));
-		w26.X = 650;
-		w26.Y = 15;
+		global::Gtk.Fixed.FixedChild w19 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAdd]));
+		w19.X = 650;
+		w19.Y = 15;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonGoConvert = new global::Gtk.Button ();
 		this.buttonGoConvert.WidthRequest = 85;
@@ -210,26 +199,14 @@ public partial class MainWindow
 		this.buttonGoConvert.CanFocus = true;
 		this.buttonGoConvert.Name = "buttonGoConvert";
 		this.buttonGoConvert.UseUnderline = true;
-		// Container child buttonGoConvert.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w27 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w28 = new global::Gtk.HBox ();
-		w28.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w29 = new global::Gtk.Image ();
-		w29.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-play", global::Gtk.IconSize.Menu);
-		w28.Add (w29);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w31 = new global::Gtk.Label ();
-		w31.LabelProp = global::Mono.Unix.Catalog.GetString ("Go");
-		w31.UseUnderline = true;
-		w28.Add (w31);
-		w27.Add (w28);
-		this.buttonGoConvert.Add (w27);
+		this.buttonGoConvert.Label = global::Mono.Unix.Catalog.GetString ("Go");
+		global::Gtk.Image w20 = new global::Gtk.Image ();
+		w20.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-play", global::Gtk.IconSize.Menu);
+		this.buttonGoConvert.Image = w20;
 		this.@fixed.Add (this.buttonGoConvert);
-		global::Gtk.Fixed.FixedChild w35 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonGoConvert]));
-		w35.X = 650;
-		w35.Y = 165;
+		global::Gtk.Fixed.FixedChild w21 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonGoConvert]));
+		w21.X = 650;
+		w21.Y = 165;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonRemove = new global::Gtk.Button ();
 		this.buttonRemove.WidthRequest = 35;
@@ -237,24 +214,13 @@ public partial class MainWindow
 		this.buttonRemove.CanFocus = true;
 		this.buttonRemove.Name = "buttonRemove";
 		this.buttonRemove.UseUnderline = true;
-		// Container child buttonRemove.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w36 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w37 = new global::Gtk.HBox ();
-		w37.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w38 = new global::Gtk.Image ();
-		w38.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.Menu);
-		w37.Add (w38);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w40 = new global::Gtk.Label ();
-		w37.Add (w40);
-		w36.Add (w37);
-		this.buttonRemove.Add (w36);
+		global::Gtk.Image w22 = new global::Gtk.Image ();
+		w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.Menu);
+		this.buttonRemove.Image = w22;
 		this.@fixed.Add (this.buttonRemove);
-		global::Gtk.Fixed.FixedChild w44 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemove]));
-		w44.X = 650;
-		w44.Y = 50;
+		global::Gtk.Fixed.FixedChild w23 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemove]));
+		w23.X = 650;
+		w23.Y = 50;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonAddFolder = new global::Gtk.Button ();
 		this.buttonAddFolder.WidthRequest = 45;
@@ -262,26 +228,14 @@ public partial class MainWindow
 		this.buttonAddFolder.CanFocus = true;
 		this.buttonAddFolder.Name = "buttonAddFolder";
 		this.buttonAddFolder.UseUnderline = true;
-		// Container child buttonAddFolder.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w45 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w46 = new global::Gtk.HBox ();
-		w46.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w47 = new global::Gtk.Image ();
-		w47.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
-		w46.Add (w47);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w49 = new global::Gtk.Label ();
-		w49.LabelProp = global::Mono.Unix.Catalog.GetString ("Dir");
-		w49.UseUnderline = true;
-		w46.Add (w49);
-		w45.Add (w46);
-		this.buttonAddFolder.Add (w45);
+		this.buttonAddFolder.Label = global::Mono.Unix.Catalog.GetString ("Dir");
+		global::Gtk.Image w24 = new global::Gtk.Image ();
+		w24.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
+		this.buttonAddFolder.Image = w24;
 		this.@fixed.Add (this.buttonAddFolder);
-		global::Gtk.Fixed.FixedChild w53 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAddFolder]));
-		w53.X = 690;
-		w53.Y = 15;
+		global::Gtk.Fixed.FixedChild w25 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonAddFolder]));
+		w25.X = 690;
+		w25.Y = 15;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonRemoveAll = new global::Gtk.Button ();
 		this.buttonRemoveAll.WidthRequest = 45;
@@ -289,26 +243,14 @@ public partial class MainWindow
 		this.buttonRemoveAll.CanFocus = true;
 		this.buttonRemoveAll.Name = "buttonRemoveAll";
 		this.buttonRemoveAll.UseUnderline = true;
-		// Container child buttonRemoveAll.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w54 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w55 = new global::Gtk.HBox ();
-		w55.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w56 = new global::Gtk.Image ();
-		w56.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.Menu);
-		w55.Add (w56);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w58 = new global::Gtk.Label ();
-		w58.LabelProp = global::Mono.Unix.Catalog.GetString ("All");
-		w58.UseUnderline = true;
-		w55.Add (w58);
-		w54.Add (w55);
-		this.buttonRemoveAll.Add (w54);
+		this.buttonRemoveAll.Label = global::Mono.Unix.Catalog.GetString ("All");
+		global::Gtk.Image w26 = new global::Gtk.Image ();
+		w26.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.Menu);
+		this.buttonRemoveAll.Image = w26;
 		this.@fixed.Add (this.buttonRemoveAll);
-		global::Gtk.Fixed.FixedChild w62 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemoveAll]));
-		w62.X = 690;
-		w62.Y = 50;
+		global::Gtk.Fixed.FixedChild w27 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonRemoveAll]));
+		w27.X = 690;
+		w27.Y = 50;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonApply = new global::Gtk.Button ();
 		this.buttonApply.WidthRequest = 355;
@@ -316,26 +258,14 @@ public partial class MainWindow
 		this.buttonApply.CanFocus = true;
 		this.buttonApply.Name = "buttonApply";
 		this.buttonApply.UseUnderline = true;
-		// Container child buttonApply.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w63 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w64 = new global::Gtk.HBox ();
-		w64.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w65 = new global::Gtk.Image ();
-		w65.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-		w64.Add (w65);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w67 = new global::Gtk.Label ();
-		w67.LabelProp = global::Mono.Unix.Catalog.GetString ("Apply");
-		w67.UseUnderline = true;
-		w64.Add (w67);
-		w63.Add (w64);
-		this.buttonApply.Add (w63);
+		this.buttonApply.Label = global::Mono.Unix.Catalog.GetString ("Apply");
+		global::Gtk.Image w28 = new global::Gtk.Image ();
+		w28.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
+		this.buttonApply.Image = w28;
 		this.@fixed.Add (this.buttonApply);
-		global::Gtk.Fixed.FixedChild w71 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
-		w71.X = 380;
-		w71.Y = 740;
+		global::Gtk.Fixed.FixedChild w29 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
+		w29.X = 380;
+		w29.Y = 740;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetAudio = new global::Gtk.Frame ();
 		this.frameTargetAudio.WidthRequest = 355;
@@ -358,9 +288,9 @@ public partial class MainWindow
 		this.GtkLabelTargetaudio.UseMarkup = true;
 		this.frameTargetAudio.LabelWidget = this.GtkLabelTargetaudio;
 		this.@fixed.Add (this.frameTargetAudio);
-		global::Gtk.Fixed.FixedChild w74 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
-		w74.X = 380;
-		w74.Y = 515;
+		global::Gtk.Fixed.FixedChild w32 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
+		w32.X = 380;
+		w32.Y = 515;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonPreview = new global::Gtk.Button ();
 		this.buttonPreview.WidthRequest = 85;
@@ -368,26 +298,14 @@ public partial class MainWindow
 		this.buttonPreview.CanFocus = true;
 		this.buttonPreview.Name = "buttonPreview";
 		this.buttonPreview.UseUnderline = true;
-		// Container child buttonPreview.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w75 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w76 = new global::Gtk.HBox ();
-		w76.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w77 = new global::Gtk.Image ();
-		w77.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-justify-fill", global::Gtk.IconSize.Menu);
-		w76.Add (w77);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w79 = new global::Gtk.Label ();
-		w79.LabelProp = global::Mono.Unix.Catalog.GetString ("Preview");
-		w79.UseUnderline = true;
-		w76.Add (w79);
-		w75.Add (w76);
-		this.buttonPreview.Add (w75);
+		this.buttonPreview.Label = global::Mono.Unix.Catalog.GetString ("Preview");
+		global::Gtk.Image w33 = new global::Gtk.Image ();
+		w33.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-justify-fill", global::Gtk.IconSize.Menu);
+		this.buttonPreview.Image = w33;
 		this.@fixed.Add (this.buttonPreview);
-		global::Gtk.Fixed.FixedChild w83 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonPreview]));
-		w83.X = 650;
-		w83.Y = 130;
+		global::Gtk.Fixed.FixedChild w34 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonPreview]));
+		w34.X = 650;
+		w34.Y = 130;
 		this.Add (this.@fixed);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

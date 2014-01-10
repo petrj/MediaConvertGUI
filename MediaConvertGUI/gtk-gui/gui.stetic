@@ -394,7 +394,6 @@
         <child>
           <widget class="Gtk.ComboBox" id="comboCodec">
             <property name="MemberName" />
-            <property name="WidthRequest">80</property>
             <property name="IsTextCombo">True</property>
             <property name="Items" translatable="yes" />
             <signal name="Changed" handler="OnComboCodecChanged" />
@@ -1056,16 +1055,6 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="labelTotalPercents">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">0%</property>
-          </widget>
-          <packing>
-            <property name="X">410</property>
-            <property name="Y">60</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.Label" id="labelCurrentFilePercents">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">0%</property>
@@ -1073,16 +1062,6 @@
           <packing>
             <property name="X">410</property>
             <property name="Y">35</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="labelCurrentPassPercents">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">0%</property>
-          </widget>
-          <packing>
-            <property name="X">410</property>
-            <property name="Y">10</property>
           </packing>
         </child>
         <child>
@@ -1173,6 +1152,26 @@
           <packing>
             <property name="X">120</property>
             <property name="Y">60</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="labelCurrentPassPercents">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">0%</property>
+          </widget>
+          <packing>
+            <property name="X">410</property>
+            <property name="Y">60</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="labelTotalPercents">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">0%</property>
+          </widget>
+          <packing>
+            <property name="X">410</property>
+            <property name="Y">10</property>
           </packing>
         </child>
       </widget>

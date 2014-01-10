@@ -303,6 +303,9 @@ namespace MediaConvertGUI
 				if (subNode.Name == "Channel_s_" && (SupportMethods.IsNumeric(subNode.InnerText)))
 					Channels = Int32.Parse(subNode.InnerText);
 
+				if (subNode.Name == "Channel_count" && (SupportMethods.IsNumeric(subNode.InnerText)))
+					Channels = Int32.Parse(subNode.InnerText);
+
 				if (subNode.Name == "Pixel_aspect_ratio" && (SupportMethods.IsNumeric(subNode.InnerText)))
 					PixelAspect = SupportMethods.ToDecimal(subNode.InnerText);
 
