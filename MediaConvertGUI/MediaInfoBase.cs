@@ -5,6 +5,49 @@ using System.Collections.Generic;
 
 namespace MediaConvertGUI
 {
+
+	#region audio && video enums
+
+	public enum AudioCodecEnum
+	{
+		none,
+		copy,
+		mp2,
+		mp3,
+		vorbis,
+		aac,
+		flac,
+		ac3
+	}
+
+	public enum VideoCodecEnum
+	{
+		none,
+		copy,
+		xvid,
+		flv,
+		h263,
+		h264,
+		mpeg,
+		theora,
+		vp8
+	}
+
+	public enum VideoContainerEnum
+	{
+		none,
+		avi,
+		flv,
+		mp4,
+		mkv,
+		mpeg,
+		ogg,
+		webm,
+		_3gp
+	}
+
+	#endregion
+
 	public abstract class MediaInfoBase
 	{
 		#region static constants
@@ -49,6 +92,29 @@ namespace MediaConvertGUI
 		#endregion
 
 		#region static Methods
+
+		public static VideoContainerEnum DetectContainerByExt(string fileName)
+		{
+			var res = VideoContainerEnum.none;
+			var ext = System.IO.Path.GetExtension(fileName).ToLower();
+			if (!String.IsNullOrEmpty(ext) && ext.Length>1)
+			{
+				ext = ext.Substring(1);
+			}
+
+			foreach (var cont in Enum.GetNames(typeof(VideoContainerEnum)))
+			{
+				if (cont == ext)
+				{
+					if (Enum.TryParse(cont,out res))
+					{
+						break;
+					} 					
+				}
+			}
+
+			return res;
+		}
 
 		/// <summary>
 		/// Gets the last frame from convert log file.

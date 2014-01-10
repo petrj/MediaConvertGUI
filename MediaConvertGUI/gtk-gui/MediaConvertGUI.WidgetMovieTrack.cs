@@ -32,7 +32,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label GtkLabelVideoOptions;
 		private global::Gtk.Label labelContainerInfo;
 		private global::Gtk.ComboBox comboContainer;
-
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

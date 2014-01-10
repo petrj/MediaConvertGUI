@@ -6,44 +6,6 @@ using System.Collections.Generic;
 namespace MediaConvertGUI
 {
 
-	#region audio && video enums
-
-	public enum AudioCodecEnum
-	{
-		none,
-		copy,
-		MP3,
-		vorbis,
-		aac,
-		flac
-	}
-
-	public enum VideoCodecEnum
-	{
-		none,
-		copy,
-		xvid,
-		flv,
-		h264,
-		mpeg,
-		theora,
-		vp8
-	}
-
-	public enum VideoContainerEnum
-	{
-		none,
-		avi,
-		flv,
-		mp4,
-		mkv,
-		mpeg,
-		ogg,
-		webm
-	}
-
-	#endregion
-
 	public class MediaInfo : MediaInfoBase
 	{
 		#region fileds && properties
@@ -287,9 +249,10 @@ namespace MediaConvertGUI
 		{
 			Schemes.Clear();
 
-			Schemes.Add( "Flash video", new MediaInfoScheme(VideoContainerEnum.flv, VideoCodecEnum.flv,AudioCodecEnum.MP3) );
+			Schemes.Add( "Flash video", new MediaInfoScheme(VideoContainerEnum.flv, VideoCodecEnum.flv,AudioCodecEnum.mp3) );
 			Schemes.Add( "Ogg video", new MediaInfoScheme(VideoContainerEnum.ogg, VideoCodecEnum.theora,AudioCodecEnum.vorbis) );
 			Schemes.Add( "WebM video", new MediaInfoScheme(VideoContainerEnum.webm, VideoCodecEnum.vp8,AudioCodecEnum.vorbis) );
+			Schemes.Add( "3GP (h264)", new MediaInfoScheme(VideoContainerEnum._3gp, VideoCodecEnum.h264,AudioCodecEnum.aac) );
 		}
 
 		public void Clear()
@@ -356,6 +319,8 @@ namespace MediaConvertGUI
 
 				var raw = String.Empty;
 				Tracks.Clear();
+
+				TargetContainer = MediaInfoBase.DetectContainerByExt(fileName);
 
 				var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput("mediainfo","-f --Output=XML \"" + fileName + "\"");
 				RawMediaInfoOutput = mediaInfoXML;			

@@ -33,6 +33,8 @@ public partial class MainWindow: Gtk.Window
 	{
 		Build ();
 
+		TestPrerequisites();
+
 		_fileTreeViewData = new TreeViewData(tree); 
 		CreateGridColumns();
 		widgetTargetMovieTrack.Editable = true;
@@ -169,6 +171,52 @@ public partial class MainWindow: Gtk.Window
 
 	#region methods
 
+	private void TestPrerequisites()
+	{
+		var ffmpeg = false;
+		var mediaInfo = false;
+
+		try
+		{
+			var ffmpegOutput = SupportMethods.ExecuteAndReturnOutput ("ffmpeg", "-version");
+			if (!string.IsNullOrEmpty(ffmpegOutput))
+			{
+				if (ffmpegOutput.Contains("version "))
+				{
+					ffmpeg = true;
+				}
+			}
+		} catch(Exception ex)
+		{
+			Console.WriteLine(ex.ToString());
+		}
+
+		try
+		{
+			var mediaInfoOutput = SupportMethods.ExecuteAndReturnOutput ("mediainfo", "--version");
+			if (!string.IsNullOrEmpty(mediaInfoOutput))
+			{
+				if (mediaInfoOutput.Contains("MediaInfo Command line"))
+				{
+					 mediaInfo = true;
+				}
+			}
+		} catch(Exception ex)
+		{
+			Console.WriteLine(ex.ToString());
+		}
+
+		if (!ffmpeg)
+		{
+			Dialogs.InfoDialog("ffmpeg not detected!",MessageType.Warning);
+		}
+
+		if (!mediaInfo)
+		{
+			Dialogs.InfoDialog("MediaInfo command line not detected!",MessageType.Warning);
+		}
+	}
+
 	private void CreateGridColumns()
 	{
 		_fileTreeViewData.Data.Clear();
@@ -253,7 +301,7 @@ public partial class MainWindow: Gtk.Window
 						targetMovie.FirstAudioTrack.TargetAudioCodec = AudioCodecEnum.copy;
 					} else
 					{
-						targetMovie.FirstAudioTrack.TargetAudioCodec = AudioCodecEnum.MP3;
+						targetMovie.FirstAudioTrack.TargetAudioCodec = AudioCodecEnum.mp3;
 					}
 				}
 
@@ -267,8 +315,6 @@ public partial class MainWindow: Gtk.Window
 	#endregion
 
 	#region progess
-
-
 
 	public void ShowProgess()
     {
@@ -297,13 +343,23 @@ public partial class MainWindow: Gtk.Window
 			var passAsString = String.Empty;
 			var totalFilesAsString = String.Empty;
 
-			if (_currentConvertingMovie != null) 
+			if (_currentConvertingMovie != null && _currentPass>0)
 			{
+				decimal totalTime = _currentConvertingMovie.DurationMS/1000m;
 				percentsCurrentFile = 0;
 				fName = System.IO.Path.GetFileName (_currentConvertingMovie.FileName);								
 
 				if (_currentConvertingMovie.FirstVideoTrack != null) 
 				{
+					decimal time = MediaInfoBase.GetLastTimeFromConvertLogFile (_outputFile);
+
+					if (time > 0) 
+					{
+						percentsCurrentFilePass = percentsCurrentFile = Convert.ToDouble (time / (totalTime / 100m));
+						percentsCurrentFile =  percentsCurrentFilePass/2;
+						percentsCurrentFile += (_currentPass-1)*50;
+					}
+					/*
 					var frames = Convert.ToDouble (_currentConvertingMovie.DurationMS / 1000m * _currentConvertingMovie.FirstVideoTrack.FrameRate);
 
 					// detecting progress from text file
@@ -316,19 +372,21 @@ public partial class MainWindow: Gtk.Window
 					// computing current file progress
 					if (_currentPass > 0) 
 					{        
+
 						var correctedFrame = lastFrame;
 						if (correctedFrame < 0)
 							correctedFrame = 0;
 
+
 						passAsString = "Pass: " + _currentPass.ToString ();
 
-						var actualFrame = (_currentPass - 1) * frames + correctedFrame;
-						percentsCurrentFile = actualFrame / (frames * 2 / 100d);                                
+						//var actualFrame = (_currentPass - 1) * frames + correctedFrame;
+						percentsCurrentFile =  actualFrame / (frames * 2 / 100d);                                
 					}
+					*/
 				} else if (_currentConvertingMovie.FirstAudioTrack != null)
 				{
 					// only audio convert
-					decimal totalTime = _currentConvertingMovie.DurationMS/1000m;
 					decimal time = MediaInfoBase.GetLastTimeFromConvertLogFile (_outputFile);
 
 					if (time > 0) 
@@ -411,6 +469,7 @@ public partial class MainWindow: Gtk.Window
 						case  VideoContainerEnum.ogg : container = " -f ogg"; ext = ".ogv"; break;
 						case  VideoContainerEnum.mkv : container = " "; ext = ".mkv"; break;
 						case  VideoContainerEnum.webm : container = " -f webm "; ext = ".webm"; break;
+						case  VideoContainerEnum._3gp : container = " -f 3gp "; ext = ".3gp"; break;
 					}
 					targetFile = sourceMovie.FileName+".converted" + ext;
 					
@@ -427,6 +486,7 @@ public partial class MainWindow: Gtk.Window
 						case VideoCodecEnum.copy: video = " -vcodec copy"; break;
 						case VideoCodecEnum.xvid: video = " -vcodec libxvid"+videoSettings; break;
 						case VideoCodecEnum.flv: video = " -vcodec flv"+videoSettings; break;
+						case VideoCodecEnum.h263: video = " -vcodec h263"+videoSettings; break;
 						case VideoCodecEnum.h264: video = " -vcodec h264"+videoSettings; break;
 						case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"+videoSettings; break;
 						case VideoCodecEnum.theora: video = " -vcodec theora"+videoSettings; break;
@@ -449,10 +509,11 @@ public partial class MainWindow: Gtk.Window
 					switch (targetAudioTrack.TargetAudioCodec)
 					{
 						case AudioCodecEnum.copy:audio = " -acodec copy "; break;
-						case AudioCodecEnum.MP3: audio = String.Format(" -acodec libmp3lame"+audioQuality); ext = ".mp3"; break;
+						case AudioCodecEnum.mp3: audio = String.Format(" -acodec libmp3lame"+audioQuality); ext = ".mp3"; break;
 						case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis "+audioQuality); ext = ".ogg"; break;
 						case AudioCodecEnum.aac: audio = String.Format(" -acodec libfaac "+audioQuality); ext = ".aac"; break;
 						case AudioCodecEnum.flac: audio = String.Format(" -acodec flac "+audioQuality); ext = ".flac"; break;
+						case AudioCodecEnum.ac3: audio = String.Format(" -acodec ac3 "+audioQuality); ext = ".ac3"; break;
 						default: audio = " -an "; break;
 					}
 
@@ -490,6 +551,7 @@ public partial class MainWindow: Gtk.Window
 	public void RunCommandList()
 	{
 		_currentConvertingMovie = null;
+		_processAbortRequest = false;
 
 		_processthread = new Thread(ThreadMethod);
 		_processStartedAt = DateTime.Now;

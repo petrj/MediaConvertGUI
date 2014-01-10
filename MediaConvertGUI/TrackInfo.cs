@@ -7,7 +7,7 @@ namespace MediaConvertGUI
 	{
 		#region fileds && properties
 
-		private AudioCodecEnum _targetAudioCodec = AudioCodecEnum.MP3;
+		private AudioCodecEnum _targetAudioCodec = AudioCodecEnum.mp3;
 		public AudioCodecEnum TargetAudioCodec
 		{ 
 			get { return _targetAudioCodec; }

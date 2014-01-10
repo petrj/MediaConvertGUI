@@ -61,6 +61,11 @@ namespace MediaConvertGUI
 			CurrentFilePercents = currentFile;
 			CurrentFilePassPercents = currentPass;
 
+			if (fName!=null && fName.Length>30)
+			{
+				fName = fName.Substring(0,15) + "......" + fName.Substring(fName.Length-15,15);
+			}
+
 			progressCurrentFile.Text = (fName != String.Empty) ? fName : String.Empty;
 			progressCurrentPass.Text = (passString != String.Empty) ? passString : String.Empty;
 			progressTotal.Text = (totalString != String.Empty) ? totalString : String.Empty;
