@@ -208,7 +208,7 @@ namespace MediaConvertGUI
 					var m = MovieInfo.FirstVideoTrack;
 
 					var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboBitRate.ActiveText,MediaInfo.DefaultVideoBitRates);
-					m.Bitrate = bitRateTypedValue*1024;
+					m.Bitrate = bitRateTypedValue*1000;
 
 					if (SupportMethods.IsNumeric(entryHeight.Text))					
 					m.Height = Convert.ToInt32(entryHeight.Text);
@@ -238,8 +238,8 @@ namespace MediaConvertGUI
 					}
 
 					_eventLock.Unlock();
+					Fill();
 				}
-				Fill();
 			}
 		}		
 

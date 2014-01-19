@@ -65,7 +65,8 @@ namespace MediaConvertGUI
 		public static Dictionary<decimal,string> DefaultVideoBitRates = new Dictionary<decimal, string>()
 		{
 			{1500m,"VCD (1.5 Mb)"},
-			{3500m,"TV  (3.5 Mb)"},		
+			{2000m,"Standard (2 Mb)"},
+			{3500m,"TV  (3.5 Mb)"},	
 			{9000m,"DVD (9 Mb)"},
 			{15000m,"HDTV (15 Mb)"},
 			{30000m,"HD DVD (30 Mb)"}
