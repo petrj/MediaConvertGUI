@@ -32,6 +32,10 @@ namespace MediaConvertGUI
 		private global::Gtk.Label GtkLabelVideoOptions;
 		private global::Gtk.Label labelContainerInfo;
 		private global::Gtk.ComboBox comboContainer;
+		private global::Gtk.EventBox eventBocContainer;
+		private global::Gtk.Image imageContainer;
+		private global::Gtk.EventBox eventBoxCodec;
+		private global::Gtk.Image imageCodec;
 		
 		protected virtual void Build ()
 		{
@@ -255,10 +259,45 @@ namespace MediaConvertGUI
 			global::Gtk.Fixed.FixedChild w26 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
 			w26.X = 130;
 			w26.Y = 6;
+			// Container child fixed.Gtk.Fixed+FixedChild
+			this.eventBocContainer = new global::Gtk.EventBox ();
+			this.eventBocContainer.WidthRequest = 30;
+			this.eventBocContainer.HeightRequest = 30;
+			this.eventBocContainer.Events = ((global::Gdk.EventMask)(256));
+			this.eventBocContainer.Name = "eventBocContainer";
+			// Container child eventBocContainer.Gtk.Container+ContainerChild
+			this.imageContainer = new global::Gtk.Image ();
+			this.imageContainer.WidthRequest = 25;
+			this.imageContainer.HeightRequest = 25;
+			this.imageContainer.Name = "imageContainer";
+			this.imageContainer.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
+			this.eventBocContainer.Add (this.imageContainer);
+			this.@fixed.Add (this.eventBocContainer);
+			global::Gtk.Fixed.FixedChild w28 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBocContainer]));
+			w28.X = 98;
+			w28.Y = 5;
+			// Container child fixed.Gtk.Fixed+FixedChild
+			this.eventBoxCodec = new global::Gtk.EventBox ();
+			this.eventBoxCodec.WidthRequest = 30;
+			this.eventBoxCodec.HeightRequest = 30;
+			this.eventBoxCodec.Events = ((global::Gdk.EventMask)(256));
+			this.eventBoxCodec.Name = "eventBoxCodec";
+			// Container child eventBoxCodec.Gtk.Container+ContainerChild
+			this.imageCodec = new global::Gtk.Image ();
+			this.imageCodec.WidthRequest = 25;
+			this.imageCodec.HeightRequest = 25;
+			this.imageCodec.Name = "imageCodec";
+			this.imageCodec.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
+			this.eventBoxCodec.Add (this.imageCodec);
+			this.@fixed.Add (this.eventBoxCodec);
+			global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBoxCodec]));
+			w30.X = 98;
+			w30.Y = 35;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
+			this.eventBoxCodec.Hide ();
 			this.Hide ();
 			this.comboCodec.Changed += new global::System.EventHandler (this.OnComboCodecChanged);
 			this.comboBitRate.Changed += new global::System.EventHandler (this.OnComboBitRateChanged);

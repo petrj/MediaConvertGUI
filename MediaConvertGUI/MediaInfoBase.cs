@@ -52,6 +52,39 @@ namespace MediaConvertGUI
 	{
 		#region static constants
 
+		public static Dictionary<AudioCodecEnum,string> WikiAudioCodecsLinks = new Dictionary<AudioCodecEnum, string>()
+		{
+			{AudioCodecEnum.mp2 ,"http://en.wikipedia.org/wiki/MP2"},
+			{AudioCodecEnum.mp3,"http://en.wikipedia.org/wiki/MP3"},
+			{AudioCodecEnum.vorbis,"http://en.wikipedia.org/wiki/Vorbis"},
+			{AudioCodecEnum.aac,"http://en.wikipedia.org/wiki/Aac"},
+			{AudioCodecEnum.flac,"http://en.wikipedia.org/wiki/flac"},
+			{AudioCodecEnum.ac3,"http://en.wikipedia.org/wiki/Dolby_AC-3"}
+		};
+
+		public static Dictionary<VideoCodecEnum,string> WikiVideoCodecsLinks = new Dictionary<VideoCodecEnum, string>()
+		{		
+			{VideoCodecEnum.xvid ,"http://en.wikipedia.org/wiki/xvid"},
+			{VideoCodecEnum.flv,"http://en.wikipedia.org/wiki/Sorenson_Media#Sorenson_Spark"},
+			{VideoCodecEnum.h263,"http://en.wikipedia.org/wiki/h263"},
+			{VideoCodecEnum.h264,"http://en.wikipedia.org/wiki/h264"},
+			{VideoCodecEnum.mpeg,"http://en.wikipedia.org/wiki/MPEG-1"},
+			{VideoCodecEnum.theora,"http://en.wikipedia.org/wiki/theora"},
+			{VideoCodecEnum.vp8,"http://en.wikipedia.org/wiki/vp8"}
+		};
+
+		public static Dictionary<VideoContainerEnum,string> WikiContainerCodecsLinks = new Dictionary<VideoContainerEnum, string>()
+		{		
+			{VideoContainerEnum.avi ,"http://en.wikipedia.org/wiki/Audio_Video_Interleave"},
+			{VideoContainerEnum.flv ,"http://en.wikipedia.org/wiki/Flash_Video"},
+			{VideoContainerEnum.mkv ,"http://en.wikipedia.org/wiki/Mkv"},
+			{VideoContainerEnum.mp4 ,"http://en.wikipedia.org/wiki/Mp4"},
+			{VideoContainerEnum.mpeg ,"http://en.wikipedia.org/wiki/Mp4"},
+			{VideoContainerEnum.ogg ,"http://en.wikipedia.org/wiki/Ogg"},
+			{VideoContainerEnum.webm ,"http://en.wikipedia.org/wiki/Webm"},
+			{VideoContainerEnum._3gp ,"http://en.wikipedia.org/wiki/3gp"},
+		};
+
 		public static Dictionary<VideoCodecEnum,string> DefaultVideoCodecsDescriptions = new Dictionary<VideoCodecEnum, string>()
 		{
 			{VideoCodecEnum.xvid,"MPEG-4 ASP libxvid (MPEG-4 part 2)"},

@@ -292,6 +292,17 @@ namespace MediaConvertGUI
 
 		#region execution
 
+		public static void ExecuteInShell(string command)
+		{
+			/*
+			ProcessStartInfo psi = new ProcessStartInfo(command);
+	        psi.UseShellExecute = true;
+	        Process.Start(psi);
+	        */
+
+			Process.Start(command);
+		}
+
 		public static string ExecuteAndReturnOutput(string command,string arguments)
 		{
 			return (String.Join(String.Empty,ExecuteAndReturnOutputAsList(command,arguments)));

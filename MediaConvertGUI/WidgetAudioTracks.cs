@@ -172,7 +172,6 @@ namespace MediaConvertGUI
 					SupportMethods.FillComboBoxEntry(comboSampleRate,MediaInfo.DefaultSamplingRates,activeTrack.SamplingRateHz,Editable);
 					SupportMethods.FillComboBoxEntry(comboBitrate,MediaInfo.DefaultAudioBitRates,activeTrack.BitrateKbps,Editable);
 
-
 					labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
 				} else
 				{
@@ -186,6 +185,8 @@ namespace MediaConvertGUI
 
 					labelTrackSze.Text = String.Empty;
 				}
+
+				image.Visible = comboCodec.Active>0;
 
 				_eventLock.Unlock();
 			} 
@@ -249,6 +250,20 @@ namespace MediaConvertGUI
 		{
 			OnAnyValuechanged();
 		}	
+
+
+		protected void OnEventBoxButtonPressEvent (object o, ButtonPressEventArgs args)
+		{
+			var activeTrack = SelectedTrack;
+			if (activeTrack!= null)
+			{
+				var codec = SelectedAudioCodec;
+				if (MediaInfoBase.WikiAudioCodecsLinks.ContainsKey(codec))
+				{
+					SupportMethods.ExecuteInShell(MediaInfoBase.WikiAudioCodecsLinks[codec]);
+				}
+			}
+		}
 
 		#endregion
 

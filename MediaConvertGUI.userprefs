@@ -1,14 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/WidgetMovieTrack.cs">
     <Files>
       <File FileName="MediaConvertGUI/MainWindow.cs" Line="14" Column="2" />
+      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="255" Column="1" />
+      <File FileName="MediaConvertGUI/SupportMethods.cs" Line="303" Column="25" />
+      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="62" Column="64" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/mnt/data/Develop/git/MediaConvertGUI/MediaConvertGUI/WidgetTargetAudioTrack.cs" line="150" />
       <Breakpoint file="C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\ProgressWin.cs" line="94" />
+      <Breakpoint file="/mnt/data/Develop/git/MediaConvertGUI/MediaConvertGUI/MediaConvertGUI/WidgetMovieTrack.cs" line="266" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>

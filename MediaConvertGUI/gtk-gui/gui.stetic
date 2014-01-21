@@ -666,6 +666,47 @@
             <property name="Y">6</property>
           </packing>
         </child>
+        <child>
+          <widget class="Gtk.EventBox" id="eventBocContainer">
+            <property name="MemberName" />
+            <property name="WidthRequest">30</property>
+            <property name="HeightRequest">30</property>
+            <property name="Events">ButtonPressMask</property>
+            <child>
+              <widget class="Gtk.Image" id="imageContainer">
+                <property name="MemberName" />
+                <property name="WidthRequest">25</property>
+                <property name="HeightRequest">25</property>
+                <property name="Pixbuf">stock:gtk-dialog-info Menu</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">98</property>
+            <property name="Y">5</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.EventBox" id="eventBoxCodec">
+            <property name="MemberName" />
+            <property name="WidthRequest">30</property>
+            <property name="HeightRequest">30</property>
+            <property name="Visible">False</property>
+            <property name="Events">ButtonPressMask</property>
+            <child>
+              <widget class="Gtk.Image" id="imageCodec">
+                <property name="MemberName" />
+                <property name="WidthRequest">25</property>
+                <property name="HeightRequest">25</property>
+                <property name="Pixbuf">stock:gtk-dialog-info Menu</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">98</property>
+            <property name="Y">35</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>
@@ -941,6 +982,25 @@
           <packing>
             <property name="X">5</property>
             <property name="Y">70</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.EventBox" id="eventBox">
+            <property name="MemberName" />
+            <property name="WidthRequest">25</property>
+            <property name="HeightRequest">25</property>
+            <property name="Events">ButtonPressMask</property>
+            <signal name="ButtonPressEvent" handler="OnEventBoxButtonPressEvent" />
+            <child>
+              <widget class="Gtk.Image" id="image">
+                <property name="MemberName" />
+                <property name="Pixbuf">stock:gtk-dialog-info Menu</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">99</property>
+            <property name="Y">40</property>
           </packing>
         </child>
       </widget>

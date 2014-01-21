@@ -57,6 +57,8 @@ namespace MediaConvertGUI
 			_movieInfo = new MediaInfo();
 
 			comboContainer.Changed+=delegate { OnAnyValueChanged(); };
+			eventBoxCodec.ButtonPressEvent+= OnCodecEventBoxButtonPressEvent;
+			eventBocContainer.ButtonPressEvent += OnContainerEventBoxButtonPressEvent;
 		}
 
 		#region methods
@@ -123,6 +125,9 @@ namespace MediaConvertGUI
      				SupportMethods.ClearCombo(comboAspect);
 					SupportMethods.ClearCombo(comboFrameRate);			 
 				}
+
+				imageCodec.Visible = comboCodec.Active>0;
+				imageContainer.Visible = comboContainer.Active>0;
 
 				frameVideooptions.Visible = 
 					(MovieInfo != null) && 
@@ -257,6 +262,32 @@ namespace MediaConvertGUI
 		{
 			OnAnyValueChanged();
 		}
+
+
+		protected void OnCodecEventBoxButtonPressEvent (object o, ButtonPressEventArgs args)
+		{
+			if (Editable && MovieInfo!= null && comboCodec.Active>0)
+			{
+				var codec = (VideoCodecEnum)comboCodec.Active;
+				if (MediaInfoBase.WikiVideoCodecsLinks.ContainsKey(codec))
+				{
+					SupportMethods.ExecuteInShell(MediaInfoBase.WikiVideoCodecsLinks[codec]);
+				}
+			}
+		}
+
+		protected void OnContainerEventBoxButtonPressEvent (object o, ButtonPressEventArgs args)
+		{
+			if (Editable && MovieInfo!= null && comboContainer.Active>0)
+			{
+				var container = (VideoContainerEnum)comboContainer.Active;
+				if (MediaInfoBase.WikiContainerCodecsLinks.ContainsKey(container))
+				{
+					SupportMethods.ExecuteInShell(MediaInfoBase.WikiContainerCodecsLinks[container]);
+				}
+			}
+		}
+
 
 		#endregion
 

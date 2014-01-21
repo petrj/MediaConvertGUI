@@ -23,6 +23,8 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelKhz;
 		private global::Gtk.ComboBoxEntry comboSampleRate;
 		private global::Gtk.Label GtkLabel;
+		private global::Gtk.EventBox eventBox;
+		private global::Gtk.Image image;
 		
 		protected virtual void Build ()
 		{
@@ -159,6 +161,21 @@ namespace MediaConvertGUI
 			global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameAudioOptions]));
 			w17.X = 5;
 			w17.Y = 70;
+			// Container child fixed.Gtk.Fixed+FixedChild
+			this.eventBox = new global::Gtk.EventBox ();
+			this.eventBox.WidthRequest = 25;
+			this.eventBox.HeightRequest = 25;
+			this.eventBox.Events = ((global::Gdk.EventMask)(256));
+			this.eventBox.Name = "eventBox";
+			// Container child eventBox.Gtk.Container+ContainerChild
+			this.image = new global::Gtk.Image ();
+			this.image.Name = "image";
+			this.image.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
+			this.eventBox.Add (this.image);
+			this.@fixed.Add (this.eventBox);
+			global::Gtk.Fixed.FixedChild w19 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBox]));
+			w19.X = 99;
+			w19.Y = 40;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -166,6 +183,7 @@ namespace MediaConvertGUI
 			this.Hide ();
 			this.comboTracks.Changed += new global::System.EventHandler (this.OnComboTracksChanged);
 			this.comboCodec.Changed += new global::System.EventHandler (this.OnComboCodecChanged);
+			this.eventBox.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnEventBoxButtonPressEvent);
 		}
 	}
 }
