@@ -48,14 +48,9 @@ public partial class MainWindow: Gtk.Window
 
 		tree.CursorChanged += OnTreeCursorChanged;
 
-		buttonAdd.Clicked+=OnButtonAddClicked;
-		buttonAddFolder.Clicked+=OnButtonAddFolderClicked;
-		buttonRemove.Clicked+=OnButtonRemoveClicked;
-		buttonRemoveAll.Clicked+=OnButtonRemoveAllClicked;
+
 
 		buttonApply.Clicked+=OnButtonApplyClicked;
-		buttonGoConvert.Clicked+=OnButtonGoConvertClicked;
-		buttonPreview.Clicked += OnPreviwButtonClicked;
 
 		FillTree();
 	}
@@ -222,10 +217,10 @@ public partial class MainWindow: Gtk.Window
 		_fileTreeViewData.Data.Clear();
 		_fileTreeViewData.Columns.Clear();
 
-		_fileTreeViewData.AppendStringColumn("File Name", null, false); 
-		_fileTreeViewData.AppendStringColumn("Target Codec", null, false);
+		_fileTreeViewData.AppendStringColumn("Filename", null, false); 
 		_fileTreeViewData.AppendStringColumn("Container", null, false);
-		_fileTreeViewData.AppendStringColumn("Audio", null, false);
+		_fileTreeViewData.AppendStringColumn("V.codec", null, false);
+		_fileTreeViewData.AppendStringColumn("A.codec", null, false);
 		_fileTreeViewData.CreateTreeViewColumns();
 		
 	}
@@ -236,12 +231,12 @@ public partial class MainWindow: Gtk.Window
 
 		foreach(var info in MoviesInfo.Keys)
 		{
-			var name = info.FileName; 
+			var name = System.IO.Path.GetFileName (info.FileName);
 			var codec = MoviesInfo[info].TargetVideoCodec.ToString();
 			var cont = MoviesInfo[info].TargetContainer.ToString();
 			var audio = MoviesInfo[info].FirstAudioTrack != null ?MoviesInfo[info].FirstAudioTrack.TargetAudioCodec.ToString() : "none";
 				MoviesInfo[info].TargetContainer.ToString();
-			_fileTreeViewData.AppendData(new List<object>{name,codec,cont,audio});
+			_fileTreeViewData.AppendData(new List<object>{name,cont,codec,audio});
 		}
   	   
 		tree.Model = _fileTreeViewData.CreateTreeViewListStore();
@@ -557,7 +552,7 @@ public partial class MainWindow: Gtk.Window
 		_processStartedAt = DateTime.Now;
 		_processthread.Start();
 
- 		buttonGoConvert.Sensitive = false;
+		applyAction.Sensitive = false;
 
 	}
 
@@ -602,7 +597,7 @@ public partial class MainWindow: Gtk.Window
 
 		Application.Invoke((_,__) =>
 		{
-			buttonGoConvert.Sensitive = true;
+			applyAction.Sensitive = true;
 			widgetTargetMovieTrack.Editable = true;
 			_processthread.Join();
 			_processthread = null;
