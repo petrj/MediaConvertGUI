@@ -1,0 +1,5 @@
+C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\bin\Debug\MediaConvertGUI.exe
+C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\bin\Debug\MediaConvertGUI.pdb
+C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\obj\x86\Debug\MediaConvertGUI.csprojResolveAssemblyReference.cache
+C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\obj\x86\Debug\MediaConvertGUI.exe
+C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\obj\x86\Debug\MediaConvertGUI.pdb
