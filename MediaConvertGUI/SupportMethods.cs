@@ -42,6 +42,11 @@ namespace MediaConvertGUI
 			// clear combo
 			combo.Model = new ListStore(typeof(string));
 			combo.Active = -1;
+
+			if (combo is ComboBoxEntry) 
+			{
+				(combo as ComboBoxEntry).Entry.Text = String.Empty;
+			}
 		}
 			
 		/// <summary>

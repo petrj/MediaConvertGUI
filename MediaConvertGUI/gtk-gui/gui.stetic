@@ -86,7 +86,7 @@
         <child>
           <widget class="Gtk.MenuBar" id="menubar2">
             <property name="MemberName" />
-            <node name="__gtksharp_121_Stetic_Editor_ActionMenuBar" type="Menubar">
+            <node name="menubar2" type="Menubar">
               <node type="Menu" action="FiAction" />
               <node type="Menu" action="FileAction">
                 <node type="Menuitem" action="newAction" />
@@ -340,7 +340,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetMovieTrack" design-size="358 285">
+  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetMovieTrack" design-size="339 285">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -393,8 +393,8 @@
         <child>
           <widget class="Gtk.Frame" id="frameVideooptions">
             <property name="MemberName" />
-            <property name="WidthRequest">340</property>
-            <property name="HeightRequest">220</property>
+            <property name="WidthRequest">315</property>
+            <property name="HeightRequest">210</property>
             <property name="ShadowType">None</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment">
@@ -425,21 +425,12 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="labelSlash">
-                        <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Pixel Aspect</property>
-                      </widget>
-                      <packing>
-                        <property name="Y">65</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="Gtk.Label" id="labelAspect">
                         <property name="MemberName" />
                         <property name="LabelProp" translatable="yes">Aspect</property>
                       </widget>
                       <packing>
-                        <property name="Y">95</property>
+                        <property name="Y">65</property>
                       </packing>
                     </child>
                     <child>
@@ -448,7 +439,7 @@
                         <property name="LabelProp" translatable="yes">Bitrate</property>
                       </widget>
                       <packing>
-                        <property name="Y">125</property>
+                        <property name="Y">95</property>
                       </packing>
                     </child>
                     <child>
@@ -457,7 +448,7 @@
                         <property name="LabelProp" translatable="yes">Frame Rate</property>
                       </widget>
                       <packing>
-                        <property name="Y">155</property>
+                        <property name="Y">125</property>
                       </packing>
                     </child>
                     <child>
@@ -466,20 +457,20 @@
                         <property name="LabelProp" translatable="yes">Track Size</property>
                       </widget>
                       <packing>
-                        <property name="Y">185</property>
+                        <property name="Y">155</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="Gtk.ComboBoxEntry" id="comboBitRate">
                         <property name="MemberName" />
-                        <property name="WidthRequest">170</property>
+                        <property name="WidthRequest">140</property>
                         <property name="IsTextCombo">True</property>
                         <property name="Items" translatable="yes" />
                         <signal name="Changed" handler="OnComboBitRateChanged" />
                       </widget>
                       <packing>
                         <property name="X">110</property>
-                        <property name="Y">120</property>
+                        <property name="Y">90</property>
                       </packing>
                     </child>
                     <child>
@@ -491,26 +482,26 @@
                       </widget>
                       <packing>
                         <property name="X">110</property>
-                        <property name="Y">90</property>
+                        <property name="Y">60</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="Gtk.Entry" id="entryPixelAspect">
                         <property name="MemberName" />
-                        <property name="WidthRequest">60</property>
+                        <property name="WidthRequest">50</property>
                         <property name="CanFocus">True</property>
                         <property name="IsEditable">True</property>
                         <property name="InvisibleChar">●</property>
                       </widget>
                       <packing>
-                        <property name="X">110</property>
-                        <property name="Y">60</property>
+                        <property name="X">250</property>
+                        <property name="Y">30</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="Gtk.Entry" id="entryRealWidth">
                         <property name="MemberName" />
-                        <property name="WidthRequest">60</property>
+                        <property name="WidthRequest">50</property>
                         <property name="CanFocus">True</property>
                         <property name="IsEditable">True</property>
                         <property name="InvisibleChar">●</property>
@@ -525,18 +516,19 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Label" translatable="yes">keep</property>
+                        <property name="Active">True</property>
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
                       </widget>
                       <packing>
-                        <property name="X">250</property>
+                        <property name="X">215</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="Gtk.Entry" id="entryWidth">
                         <property name="MemberName" />
-                        <property name="WidthRequest">50</property>
+                        <property name="WidthRequest">40</property>
                         <property name="CanFocus">True</property>
                         <property name="IsEditable">True</property>
                         <property name="InvisibleChar">●</property>
@@ -549,14 +541,14 @@
                     <child>
                       <widget class="Gtk.Entry" id="entryHeight">
                         <property name="MemberName" />
-                        <property name="WidthRequest">50</property>
+                        <property name="WidthRequest">40</property>
                         <property name="CanFocus">True</property>
                         <property name="IsEditable">True</property>
                         <property name="InvisibleChar">●</property>
                         <signal name="Changed" handler="OnEntryHeightChanged" />
                       </widget>
                       <packing>
-                        <property name="X">191</property>
+                        <property name="X">170</property>
                       </packing>
                     </child>
                     <child>
@@ -565,7 +557,7 @@
                         <property name="LabelProp" translatable="yes">x</property>
                       </widget>
                       <packing>
-                        <property name="X">170</property>
+                        <property name="X">155</property>
                         <property name="Y">5</property>
                       </packing>
                     </child>
@@ -575,8 +567,8 @@
                         <property name="LabelProp" translatable="yes">kbps</property>
                       </widget>
                       <packing>
-                        <property name="X">285</property>
-                        <property name="Y">125</property>
+                        <property name="X">260</property>
+                        <property name="Y">95</property>
                       </packing>
                     </child>
                     <child>
@@ -589,7 +581,7 @@
                       </widget>
                       <packing>
                         <property name="X">110</property>
-                        <property name="Y">150</property>
+                        <property name="Y">120</property>
                       </packing>
                     </child>
                     <child>
@@ -609,7 +601,77 @@
                       </widget>
                       <packing>
                         <property name="X">115</property>
-                        <property name="Y">185</property>
+                        <property name="Y">155</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="labelPixelAspect">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Pixel aspect</property>
+                      </widget>
+                      <packing>
+                        <property name="X">165</property>
+                        <property name="Y">35</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="chBoxResolution">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="Active">True</property>
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">True</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnChBoxResolutionClicked" />
+                      </widget>
+                      <packing>
+                        <property name="X">-25</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="chBoxAspect">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">True</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnChBoxAspectClicked" />
+                      </widget>
+                      <packing>
+                        <property name="X">-25</property>
+                        <property name="Y">60</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="chBoxFrameRate">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">True</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnChBoxFrameRateClicked" />
+                      </widget>
+                      <packing>
+                        <property name="X">-25</property>
+                        <property name="Y">120</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="chBoxBitRate">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">True</property>
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnChBoxBitRateClicked" />
+                      </widget>
+                      <packing>
+                        <property name="X">-25</property>
+                        <property name="Y">90</property>
                       </packing>
                     </child>
                   </widget>
@@ -628,7 +690,7 @@
             </child>
           </widget>
           <packing>
-            <property name="X">5</property>
+            <property name="X">20</property>
             <property name="Y">65</property>
           </packing>
         </child>

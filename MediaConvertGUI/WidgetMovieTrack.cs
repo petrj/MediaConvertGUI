@@ -79,28 +79,70 @@ namespace MediaConvertGUI
 				var defaultAspects = new List<string>{"16:9","4:3"};
 				var frameRates = new List<string>{"23.976","25"};
 
+				var chBoxesVisible = false;
+
 				//textviewRawOutput.Buffer.Text = MovieInfo.RawMediaInfoOutput;
 				if (MovieInfo != null && MovieInfo.FirstVideoTrack != null)
 				{
 					var m = MovieInfo.FirstVideoTrack;
 
-					entryWidth.Text = m.Width.ToString();
-					entryRealWidth.Text = m.RealWidth.ToString();
-					entryHeight.Text = m.Height.ToString();
-					entryPixelAspect.Text = m.PixelAspect.ToString();
+					chBoxResolution.Active = MovieInfo.EditResolution;
+					chBoxAspect.Active = MovieInfo.EditAspect;
+					chBoxBitRate.Active = MovieInfo.EditBitRate;
+					chBoxFrameRate.Active = MovieInfo.EditFrameRate;
 
-					// fill frame rate combo
-					SupportMethods.FillComboBoxEntry(comboFrameRate,frameRates,m.FrameRate.ToString(),true,Editable);
+					if (MovieInfo.EditResolution) 
+					{
+						entryWidth.Text = m.Width.ToString ();		
+						entryHeight.Text = m.Height.ToString();
+						entryPixelAspect.Text = m.PixelAspect.ToString();
+						entryRealWidth.Text = m.RealWidth.ToString();
+					}
+					else 
+					{
+						entryHeight.Text = String.Empty;
+						entryPixelAspect.Text = String.Empty;
+						entryWidth.Text = String.Empty;
+						entryRealWidth.Text = String.Empty;
+					}
+					entryWidth.Sensitive = entryHeight.Sensitive = MovieInfo.EditResolution;
 
-					// fill aspect ratio combo
-					SupportMethods.FillComboBoxEntry(comboAspect,defaultAspects,m.Aspect,false,Editable);
+					if (MovieInfo.EditAspect) 
+					{
+						// fill aspect ratio combo
+						SupportMethods.FillComboBoxEntry (comboAspect, defaultAspects, m.Aspect, false, Editable);
+					} else 
+					{
+						SupportMethods.ClearCombo(comboAspect);
+					}
+					comboAspect.Sensitive = MovieInfo.EditAspect;
 
-					SupportMethods.FillComboBoxEntry(comboBitRate,MediaInfo.DefaultVideoBitRates,m.BitrateKbps,Editable);
+					if (MovieInfo.EditFrameRate) 
+					{
+						// fill frame rate combo
+						SupportMethods.FillComboBoxEntry(comboFrameRate,frameRates,m.FrameRate.ToString(),true,Editable);
+					} else 
+					{
+						SupportMethods.ClearCombo(comboFrameRate);
+					}
+					comboFrameRate.Sensitive = MovieInfo.EditFrameRate;
+
+
+					if (MovieInfo.EditBitRate) 
+					{
+						SupportMethods.FillComboBoxEntry(comboBitRate,MediaInfo.DefaultVideoBitRates,m.BitrateKbps,Editable);
+					} else 
+					{
+						SupportMethods.ClearCombo(comboBitRate);
+					}
+					comboBitRate.Sensitive = MovieInfo.EditBitRate;
 
 					SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),Editable,(int)MovieInfo.TargetContainer);
 
 					if (Editable)
 					{
+						chBoxesVisible = true;
+
 						SupportMethods.FillComboBox(comboCodec,typeof(VideoCodecEnum),Editable,(int)MovieInfo.TargetVideoCodec);
 					} else
 					{
@@ -110,7 +152,7 @@ namespace MediaConvertGUI
 					m.ReComputeStreamSizeByBitrate();
 					labelTrackSize.Text = m.HumanReadableStreamSize;
 				} else
-				{
+				{				
 					entryWidth.Text = String.Empty;
 					entryRealWidth.Text = String.Empty;
 					entryHeight.Text = String.Empty;
@@ -133,6 +175,8 @@ namespace MediaConvertGUI
 					(MovieInfo != null) && 
 					(MovieInfo.FirstVideoTrack!=null) && 
 					( ((Editable) && (comboCodec.Active > 0)) || !Editable );
+
+				chBoxAspect.Visible = chBoxResolution.Visible = chBoxBitRate.Visible = chBoxFrameRate.Visible = chBoxesVisible;
 
 				_eventLock.Unlock();
 			}
@@ -209,22 +253,50 @@ namespace MediaConvertGUI
 			if (Editable && MovieInfo != null && MovieInfo.FirstVideoTrack != null)
 			{
 				if (_eventLock.Lock())
-				{
+				{	
 					var m = MovieInfo.FirstVideoTrack;
 
-					var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboBitRate.ActiveText,MediaInfo.DefaultVideoBitRates);
-					m.Bitrate = bitRateTypedValue*1000;
+					// reactivating disabled?
+					if (chBoxResolution.Active && !MovieInfo.EditResolution) 
+					{
+						entryWidth.Text = m.Width.ToString ();
+						entryHeight.Text = m.Height.ToString ();
+					}
+					if (chBoxBitRate.Active && !MovieInfo.EditBitRate)
+						comboBitRate.Entry.Text = (m.BitrateKbps).ToString ();
+					if (chBoxAspect.Active && !MovieInfo.EditAspect)
+						comboAspect.Entry.Text = m.Aspect;
+					if (chBoxFrameRate.Active && !MovieInfo.EditFrameRate)
+						comboFrameRate.Entry.Text = m.FrameRate.ToString ();
 
-					if (SupportMethods.IsNumeric(entryHeight.Text))					
-					m.Height = Convert.ToInt32(entryHeight.Text);
 
-					if (SupportMethods.IsNumeric(entryWidth.Text))					
-					m.Width = Convert.ToInt32(entryWidth.Text);
+					MovieInfo.EditResolution = chBoxResolution.Active;
+					MovieInfo.EditAspect = chBoxAspect.Active;
+					MovieInfo.EditBitRate = chBoxBitRate.Active;
+					MovieInfo.EditFrameRate = chBoxFrameRate.Active;
 
-					m.Aspect = comboAspect.ActiveText;
+					if (chBoxBitRate.Active) 
+					{
+						var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue (comboBitRate.ActiveText, MediaInfo.DefaultVideoBitRates);
+						m.Bitrate = bitRateTypedValue * 1000;
+					}
 
-					if (SupportMethods.IsNumeric(comboFrameRate.ActiveText))					
-					m.FrameRate = SupportMethods.ToDecimal(comboFrameRate.ActiveText);
+					if (chBoxResolution.Active) 
+					{
+						if (SupportMethods.IsNumeric(entryWidth.Text))					
+							m.Width = Convert.ToInt32(entryWidth.Text);
+
+						if (SupportMethods.IsNumeric (entryHeight.Text))					
+							m.Height = Convert.ToInt32 (entryHeight.Text);
+					}
+
+					if (chBoxBitRate.Active) m.Aspect = comboAspect.ActiveText;
+
+					if (chBoxFrameRate.Active) 
+					{
+						if (SupportMethods.IsNumeric (comboFrameRate.ActiveText))					
+							m.FrameRate = SupportMethods.ToDecimal (comboFrameRate.ActiveText);
+					}
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;
 					MovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
@@ -288,7 +360,26 @@ namespace MediaConvertGUI
 			}
 		}
 
+		protected void OnChBoxResolutionClicked (object sender, EventArgs e)
+		{	
+			OnAnyValueChanged();
+		}
 
+
+		protected void OnChBoxAspectClicked (object sender, EventArgs e)
+		{
+			OnAnyValueChanged();
+		}
+
+		protected void OnChBoxBitRateClicked (object sender, EventArgs e)
+		{
+			OnAnyValueChanged();
+		}
+
+		protected void OnChBoxFrameRateClicked (object sender, EventArgs e)
+		{
+			OnAnyValueChanged();
+		}
 		#endregion
 
 	}

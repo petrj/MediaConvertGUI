@@ -471,10 +471,16 @@ public partial class MainWindow: Gtk.Window
 					var aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
 					var	scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
 					var	bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;	
+					var frameRate = " -r " + targetMovie.FirstVideoTrack.FrameRate.ToString().Replace(",","."); // TODO: invariant culture
 
 					var pass = String.Format(" -pass {0} -passlogfile \"{1}\"",currentPass,targetFile + ".passlog");
 
-					videoSettings = aspect + scale + bitrate + container + pass;	
+					if (targetMovie.EditAspect)	videoSettings += aspect;
+					if (targetMovie.EditResolution) videoSettings += scale;
+					if (targetMovie.EditBitRate) videoSettings += bitrate;
+					if (targetMovie.EditFrameRate) videoSettings += frameRate;
+
+					videoSettings += container + pass;	
 					
 					switch (targetMovie.TargetVideoCodec)
 					{
@@ -778,6 +784,11 @@ public partial class MainWindow: Gtk.Window
 				MoviesInfo[m.Value].ClearTracks();
 				widgetTargetMovieTrack.MovieInfo.AppendTracksTo(MoviesInfo[m.Value],tmpDuration,"Video");
 				widgetTargetAudioTracks.Info.AppendTracksTo(MoviesInfo[m.Value],tmpDuration,"Audio");
+
+				MoviesInfo [m.Value].EditAspect = widgetTargetMovieTrack.MovieInfo.EditAspect;
+				MoviesInfo [m.Value].EditResolution = widgetTargetMovieTrack.MovieInfo.EditResolution;
+				MoviesInfo [m.Value].EditFrameRate = widgetTargetMovieTrack.MovieInfo.EditFrameRate;
+				MoviesInfo [m.Value].EditBitRate = widgetTargetMovieTrack.MovieInfo.EditBitRate;
 			}
 		//}
 

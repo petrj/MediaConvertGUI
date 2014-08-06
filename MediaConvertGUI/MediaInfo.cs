@@ -10,6 +10,11 @@ namespace MediaConvertGUI
 	{
 		#region fileds && properties
 
+		public bool EditResolution { get; set; }
+		public bool EditAspect { get; set; }
+		public bool EditBitRate { get; set; }
+		public bool EditFrameRate { get; set; }
+
 		private string _fileName;
 		public string  FileName
 		{ 
@@ -218,6 +223,11 @@ namespace MediaConvertGUI
 		public MediaInfo ()
 		{
 			LoadSchemes();
+
+			EditResolution = true;
+			EditAspect = true;
+			EditBitRate = true;
+			EditFrameRate = true;
 		}
 
 		#region methods
@@ -293,6 +303,10 @@ namespace MediaConvertGUI
 			mInfo.FileName = FileName;
 			mInfo.FileSize = FileSize;
 			mInfo.SelectedScheme = SelectedScheme;
+			mInfo.EditAspect = EditAspect;
+			mInfo.EditBitRate = EditBitRate;
+			mInfo.EditFrameRate = EditFrameRate;
+			mInfo.EditResolution = EditResolution;
 		}
 
 		public void ClearTracks()
