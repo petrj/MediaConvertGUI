@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace MediaConvertGUI
 {
-
 	#region audio && video enums
 
 	public enum AudioCodecEnum
@@ -95,6 +94,31 @@ namespace MediaConvertGUI
 			{VideoCodecEnum.vp8,"VP8 libvpx"},
 		};
 
+
+		public static Dictionary<VideoContainerEnum,string> VideoContainerToExtension = new Dictionary<VideoContainerEnum, string> () 
+		{
+			{VideoContainerEnum.avi,".avi"},
+			{VideoContainerEnum.flv,".flv"},
+			{VideoContainerEnum.mp4,".mp4"},
+			{VideoContainerEnum.mpeg,".mpeg"},
+			{VideoContainerEnum.ogg,".ogv"},
+			{VideoContainerEnum.mkv,".mkv"},
+			{VideoContainerEnum.webm,".webm"},
+			{VideoContainerEnum._3gp,".3gp"},
+		};
+
+		public static Dictionary<VideoContainerEnum,string> VideoContainerToFFMpegContainer = new Dictionary<VideoContainerEnum, string> () 
+		{
+			{VideoContainerEnum.avi,"avi"},
+			{VideoContainerEnum.flv,"flv"},
+			{VideoContainerEnum.mp4,"mp4"},
+			{VideoContainerEnum.mpeg,"mpg"},
+			{VideoContainerEnum.ogg,"ogg"},
+			{VideoContainerEnum.mkv,"mkv"},
+			{VideoContainerEnum.webm,"webm"},
+			{VideoContainerEnum._3gp,"3gp"},
+		};
+
 		public static Dictionary<decimal,string> DefaultVideoBitRates = new Dictionary<decimal, string>()
 		{
 			{1500m,"VCD (1.5 Mb)"},
@@ -126,6 +150,146 @@ namespace MediaConvertGUI
 		#endregion
 
 		#region static Methods
+		
+		public static List<string> MakeFFMpegCommands(Dictionary<MediaInfo,MediaInfo> MoviesInfo)
+		{
+			var commands = new List<string>();
+
+			foreach (var kvp in MoviesInfo)
+			{
+				commands.Add(MakeFFMpegCommand(kvp.Key,kvp.Value,1));
+				commands.Add(MakeFFMpegCommand(kvp.Key,kvp.Value,2));
+			}
+
+			return commands;
+		}
+
+		public static string MakeFFMpegCommandsAsString(Dictionary<MediaInfo,MediaInfo> moviesInfo)
+		{
+			var commands = new System.Text.StringBuilder();
+
+			foreach (var cmd in MakeFFMpegCommands(moviesInfo))
+			{
+				commands.Append(cmd);
+				commands.Append(System.Environment.NewLine);
+			}
+
+			return commands.ToString();
+		}
+
+		public static string MakeFFMpegCommand(MediaInfo sourceMovie, MediaInfo targetMovie, int currentPass)
+		{		
+			// single audio convert? 
+			if ( (targetMovie.AudioTracks.Count > 0) && 
+			    (targetMovie.FirstAudioTrack.TargetAudioCodec!= AudioCodecEnum.none) &&
+			    ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none)) &&
+			    (currentPass>1))
+			{
+				return string.Empty;					
+			} 		
+
+			var res= String.Empty;
+
+			var sourceFile = " -i \"" + sourceMovie.FileName+"\"";				
+			var ext = System.IO.Path.GetExtension(sourceMovie.FileName);
+			var targetFile = sourceMovie.FileName+".converted" + ext;
+			var video = " -vn";  // disable video								
+
+			var audio = " -an "; // disable audio				
+
+			var map = String.Empty;
+
+			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=VideoCodecEnum.none)
+			{
+				var videoSettings= String.Empty;					
+				var container = String.Empty;														
+
+				container = " -f " + MediaInfoBase.VideoContainerToFFMpegContainer [targetMovie.TargetContainer];
+				ext = MediaInfoBase.VideoContainerToExtension[targetMovie.TargetContainer];
+
+				targetFile = sourceMovie.FileName+".converted" + ext;
+
+				var aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
+				var	scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
+				var	bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;	
+				var frameRate = " -r " + targetMovie.FirstVideoTrack.FrameRate.ToString().Replace(",","."); // TODO: invariant culture
+
+				var pass = String.Format(" -pass {0} -passlogfile \"{1}\"",currentPass,targetFile + ".passlog");
+
+				if (targetMovie.EditAspect)	videoSettings += aspect;
+				if (targetMovie.EditResolution) videoSettings += scale;
+				if (targetMovie.EditBitRate) videoSettings += bitrate;
+				if (targetMovie.EditFrameRate) videoSettings += frameRate;
+
+				videoSettings += container + pass;	
+
+				switch (targetMovie.TargetVideoCodec)
+				{
+					case VideoCodecEnum.copy: video = " -vcodec copy"; break;
+					case VideoCodecEnum.xvid: video = " -vcodec libxvid"+videoSettings; break;
+					case VideoCodecEnum.flv: video = " -vcodec flv"+videoSettings; break;
+					case VideoCodecEnum.h263: video = " -vcodec h263"+videoSettings; break;
+					case VideoCodecEnum.h264: video = " -vcodec h264"+videoSettings; break;
+					case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"+videoSettings; break;
+					case VideoCodecEnum.theora: video = " -vcodec theora"+videoSettings; break;
+					case VideoCodecEnum.vp8: video = " -vcodec libvpx"+videoSettings; break;
+				}
+			}
+
+
+			// only first Audio Track!
+			if (targetMovie.AudioTracks.Count>0)
+			{
+				var targetAudioTrack = targetMovie.FirstAudioTrack;
+
+				var audioQuality = String.Format(" -ac {0} -ar {1} -ab {2}",	
+				                                 targetAudioTrack.Channels,
+				                                 targetAudioTrack.SamplingRateHz,
+				                                 targetAudioTrack.Bitrate);
+
+
+				switch (targetAudioTrack.TargetAudioCodec)
+				{
+					case AudioCodecEnum.copy:audio = " -acodec copy "; break;
+					case AudioCodecEnum.mp3: audio = String.Format(" -acodec libmp3lame"+audioQuality); ext = ".mp3"; break;
+					case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis "+audioQuality); ext = ".ogg"; break;
+					case AudioCodecEnum.aac: audio = String.Format(" -acodec libfaac "+audioQuality); ext = ".aac"; break;
+					case AudioCodecEnum.flac: audio = String.Format(" -acodec flac "+audioQuality); ext = ".flac"; break;
+					case AudioCodecEnum.ac3: audio = String.Format(" -acodec ac3 "+audioQuality); ext = ".ac3"; break;
+					default: audio = " -an "; break;
+				}
+
+
+				if ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none))
+				{
+					// converting single audio
+					targetFile = sourceMovie.FileName+".converted" + ext;
+				}
+			}		
+
+			// more audio tracks? supporting only the first one					
+			if (sourceMovie.AudioTracks.Count > 1 && sourceMovie.FirstVideoTrack != null)
+			{
+				map = " -map 0:0 -map 0:1";
+			} 		
+
+			targetMovie.FFMPEGOutputFileName = targetFile + ".log";
+			targetMovie.FFMPEGPassLogFileName = targetFile + ".passlog";					
+			targetMovie.FileName = targetFile;
+
+			/*
+			if (File.Exists(targetMovie.FFMPEGOutputFileName))
+					File.Delete(targetMovie.FFMPEGOutputFileName);
+			if (File.Exists(targetMovie.FFMPEGPassLogFileName))
+					File.Delete(targetMovie.FFMPEGPassLogFileName);			
+			*/
+
+			targetFile = String.Format(" \"{0}\"",targetFile);
+
+			res = "ffmpeg -y -dump " + sourceFile + map + video + audio + targetFile;
+
+			return res;
+		}
 
 		public static VideoContainerEnum DetectContainerByExt(string fileName)
 		{

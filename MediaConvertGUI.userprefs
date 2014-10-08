@@ -1,27 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/WidgetMovieTrack.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/MainWindow.cs">
     <Files>
-      <File FileName="MediaConvertGUI/MainWindow.cs" Line="592" Column="6" />
-      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="95" Column="4" />
-      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI/SupportMethods.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="90" Column="36" />
-      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="214" Column="26" />
-      <File FileName="MediaConvertGUI/WidgetGeneralMediaInfo.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI/TrackInfo.cs" Line="76" Column="30" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI\MainWindow.cs">
-    <Files>
-      <File FileName="MediaConvertGUI\MainWindow.cs" Line="794" Column="1" />
-      <File FileName="MediaConvertGUI\WidgetMovieTrack.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\WidgetAudioTracks.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\SupportMethods.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\MediaInfoBase.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI\MediaInfo.cs" Line="1" Column="1" />
->>>>>>> 4e36a371192993f77da1301665855147c78356d4
+      <File FileName="MediaConvertGUI/MainWindow.cs" Line="431" Column="28" />
+      <File FileName="MediaConvertGUI/Main.cs" Line="20" Column="33" />
+      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="99" Column="80" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="MediaConvertGUI" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="UserInterface" expanded="True">
+              <Node name="MainWindow" expanded="True" />
+            </Node>
+            <Node name="MainWindow.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>

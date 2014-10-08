@@ -13,7 +13,7 @@
       <action id="FiAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Fi</property>
-        <property name="ShortLabel" translatable="yes">Fi</property>
+        <property name="ShortLabel" translatable="yes">File</property>
       </action>
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -67,6 +67,80 @@
         <property name="StockId">gtk-apply</property>
         <signal name="Activated" handler="OnButtonGoConvertClicked" />
       </action>
+      <action id="openAction3">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">File</property>
+        <property name="ShortLabel" translatable="yes">File</property>
+        <property name="StockId">gtk-open</property>
+      </action>
+      <action id="openAction4">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open ..</property>
+        <property name="ShortLabel" translatable="yes">Open ..</property>
+        <property name="StockId">gtk-open</property>
+        <signal name="Activated" handler="OnButtonAddClicked" />
+      </action>
+      <action id="openAction2">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open directory ..</property>
+        <property name="ShortLabel" translatable="yes">Open directory ..</property>
+        <property name="StockId">gtk-open</property>
+        <signal name="Activated" handler="OnButtonAddFolderClicked" />
+      </action>
+      <action id="removeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Remove</property>
+        <property name="ShortLabel" translatable="yes">Remove</property>
+        <property name="StockId">gtk-remove</property>
+      </action>
+      <action id="removeAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Remove selected</property>
+        <property name="ShortLabel" translatable="yes">Remove selected</property>
+        <property name="StockId">gtk-remove</property>
+        <signal name="Activated" handler="OnButtonRemoveClicked" />
+      </action>
+      <action id="removeAction2">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Remove all</property>
+        <property name="ShortLabel" translatable="yes">Remove all</property>
+        <property name="StockId">gtk-remove</property>
+        <signal name="Activated" handler="OnButtonRemoveAllClicked" />
+      </action>
+      <action id="executeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Actions</property>
+        <property name="ShortLabel" translatable="yes">Actions</property>
+        <property name="StockId">gtk-execute</property>
+      </action>
+      <action id="dialogInfoAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Preview ...</property>
+        <property name="ShortLabel" translatable="yes">Preview</property>
+        <property name="StockId">gtk-dialog-info</property>
+        <signal name="Activated" handler="OnPreviwButtonClicked" />
+      </action>
+      <action id="goForwardAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Go convert</property>
+        <property name="ShortLabel" translatable="yes">Go convert</property>
+        <property name="StockId">gtk-go-forward</property>
+        <signal name="Activated" handler="OnButtonGoConvertClicked" />
+      </action>
+      <action id="floppyAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Save convert scheme to xml ...</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Save convert scheme to xml</property>
+        <property name="StockId">gtk-floppy</property>
+      </action>
+      <action id="editAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Show log ...</property>
+        <property name="ShortLabel" translatable="yes">Show log ...</property>
+        <property name="StockId">gtk-edit</property>
+        <signal name="Activated" handler="OnShowLogActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Media Convert</property>
@@ -82,28 +156,6 @@
         </child>
         <child>
           <placeholder />
-        </child>
-        <child>
-          <widget class="Gtk.MenuBar" id="menubar2">
-            <property name="MemberName" />
-<<<<<<< HEAD
-            <node name="menubar2" type="Menubar">
-              <node type="Menu" action="FiAction" />
-=======
-            <node name="__gtksharp_121_Stetic_Editor_ActionMenuBar" type="Menubar">
->>>>>>> 4e36a371192993f77da1301665855147c78356d4
-              <node type="Menu" action="FileAction">
-                <node type="Menuitem" action="newAction" />
-                <node type="Menuitem" action="openAction" />
-                <node type="Menuitem" action="closeAction" />
-                <node type="Menuitem" action="cancelAction" />
-              </node>
-              <node type="Menu" action="ActionsAction">
-                <node type="Menuitem" action="indexAction" />
-                <node type="Menuitem" action="applyAction" />
-              </node>
-            </node>
-          </widget>
         </child>
         <child>
           <widget class="Gtk.Frame" id="frameFileList">
@@ -335,6 +387,32 @@
           <packing>
             <property name="X">5</property>
             <property name="Y">390</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.MenuBar" id="menubar1">
+            <property name="MemberName" />
+            <node name="__gtksharp_83_Stetic_Editor_ActionMenuBar" type="Menubar">
+              <node type="Menu" action="openAction3">
+                <node type="Menuitem" action="openAction4" />
+                <node type="Menuitem" action="openAction2" />
+              </node>
+              <node type="Menu" action="removeAction">
+                <node type="Menuitem" action="removeAction1" />
+                <node type="Menuitem" action="removeAction2" />
+              </node>
+              <node type="Menu" action="executeAction">
+                <node type="Menuitem" action="floppyAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="dialogInfoAction" />
+                <node type="Menuitem" action="editAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="goForwardAction" />
+              </node>
+            </node>
+          </widget>
+          <packing>
+            <property name="X">5</property>
           </packing>
         </child>
       </widget>
