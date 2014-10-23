@@ -109,6 +109,7 @@ namespace MediaConvertGUI
 
 		public static Dictionary<VideoContainerEnum,string> VideoContainerToFFMpegContainer = new Dictionary<VideoContainerEnum, string> () 
 		{
+			{VideoContainerEnum.none,""},
 			{VideoContainerEnum.avi,"avi"},
 			{VideoContainerEnum.flv,"flv"},
 			{VideoContainerEnum.mp4,"mp4"},

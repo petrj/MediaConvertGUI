@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="1008 604">
+  <widget class="Gtk.Window" id="MainWindow" design-size="1080 604">
     <action-group name="Default">
       <action id="FiAction">
         <property name="Type">Action</property>
@@ -130,9 +130,9 @@
       <action id="floppyAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Save convert scheme to xml ...</property>
-        <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Save convert scheme to xml</property>
         <property name="StockId">gtk-floppy</property>
+        <signal name="Activated" handler="OnButtonSaveSchemeActivated" />
       </action>
       <action id="editAction">
         <property name="Type">Action</property>
@@ -140,6 +140,19 @@
         <property name="ShortLabel" translatable="yes">Show log ...</property>
         <property name="StockId">gtk-edit</property>
         <signal name="Activated" handler="OnShowLogActivated" />
+      </action>
+      <action id="openAction5">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Import shceme from xml</property>
+        <property name="ShortLabel" translatable="yes">Import shceme from xml</property>
+        <property name="StockId">gtk-open</property>
+      </action>
+      <action id="copyAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Import scheme from xml ...</property>
+        <property name="ShortLabel" translatable="yes">Import scheme from xml ...</property>
+        <property name="StockId">gtk-copy</property>
+        <signal name="Activated" handler="OnCopyActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -160,7 +173,7 @@
         <child>
           <widget class="Gtk.Frame" id="frameFileList">
             <property name="MemberName" />
-            <property name="WidthRequest">260</property>
+            <property name="WidthRequest">340</property>
             <property name="HeightRequest">350</property>
             <property name="ShadowType">None</property>
             <child>
@@ -234,7 +247,7 @@
             </child>
           </widget>
           <packing>
-            <property name="X">265</property>
+            <property name="X">350</property>
             <property name="Y">32</property>
           </packing>
         </child>
@@ -270,7 +283,7 @@
             </child>
           </widget>
           <packing>
-            <property name="X">625</property>
+            <property name="X">700</property>
             <property name="Y">32</property>
           </packing>
         </child>
@@ -306,7 +319,7 @@
             </child>
           </widget>
           <packing>
-            <property name="X">625</property>
+            <property name="X">700</property>
             <property name="Y">340</property>
           </packing>
         </child>
@@ -342,14 +355,14 @@
             </child>
           </widget>
           <packing>
-            <property name="X">265</property>
+            <property name="X">350</property>
             <property name="Y">340</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Button" id="buttonApply">
             <property name="MemberName" />
-            <property name="WidthRequest">250</property>
+            <property name="WidthRequest">330</property>
             <property name="HeightRequest">25</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextAndIcon</property>
@@ -365,7 +378,7 @@
         <child>
           <widget class="Gtk.Frame" id="frameGeneral">
             <property name="MemberName" />
-            <property name="WidthRequest">250</property>
+            <property name="WidthRequest">330</property>
             <property name="HeightRequest">135</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment16">
@@ -403,6 +416,7 @@
               </node>
               <node type="Menu" action="executeAction">
                 <node type="Menuitem" action="floppyAction" />
+                <node type="Menuitem" action="copyAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="dialogInfoAction" />
                 <node type="Menuitem" action="editAction" />

@@ -1,4 +1,6 @@
 using System;
+using System.Xml;
+using System.IO;
 using System.IO;
 using System.Threading;
 using System.Text;
@@ -533,7 +535,10 @@ public partial class MainWindow: Gtk.Window
 				widgetTargetAudioTracks.Info.FirstAudioTrack.TargetAudioCodec = scheme.AudioCodec;
 			}
 
-			OnButtonApplyClicked(this,null);
+			//OnButtonApplyClicked(this,null);
+
+			widgetTargetAudioTracks.Fill();
+			widgetTargetMovieTrack.Fill();
 		}
 	}
 
@@ -699,6 +704,56 @@ public partial class MainWindow: Gtk.Window
 			tw.Text = allLogs;
 			tw.Show();
 		}
+	}
+
+	protected void OnButtonSaveSchemeActivated(object sender, EventArgs e)
+	{
+		Gtk.FileChooserDialog fc=
+			new Gtk.FileChooserDialog("Choose filename to save",
+			                          this,
+			                          FileChooserAction.Save,
+			                          "Cancel",ResponseType.Cancel,
+			                          "Save",ResponseType.Ok);
+
+		//var appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+		//fc.ConfirmOverwrite = true;
+
+		fc.SetCurrentFolder(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+		//fc.SetFilename("scheme.xml");
+
+		if ((fc.Run() == (int)ResponseType.Ok))
+		{
+			widgetTargetMovieTrack.MovieInfo.SaveAsSchemeToXML(fc.Filename);
+		}
+		fc.Destroy();
+	}
+
+	protected void OnCopyActionActivated (object sender, EventArgs e)
+	{
+
+			Gtk.FileChooserDialog fc=
+				new Gtk.FileChooserDialog("Choose filename to import",
+				                          this,
+				                          FileChooserAction.Open,
+				                          "Cancel",ResponseType.Cancel,
+				                          "Import",ResponseType.Ok);
+
+			if ((fc.Run() == (int)ResponseType.Ok))
+			{
+			if (Dialogs.QuestionDialog("Are you sure to import scheme from " + System.IO.Path.GetFileName(fc.Filename)+"?") == ResponseType.Ok)
+				{				
+					widgetTargetMovieTrack.MovieInfo.OpenSchemeFromXML(fc.Filename);
+					widgetTargetMovieTrack.Fill();
+					
+					widgetTargetAudioTracks.Info.OpenSchemeFromXML(fc.Filename);
+					widgetTargetAudioTracks.Fill();
+					
+					//OnButtonApplyClicked(this,null);
+					
+				}
+				fc.Destroy();
+
+			}
 	}
 
 	#endregion

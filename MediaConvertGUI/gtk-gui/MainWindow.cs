@@ -23,6 +23,8 @@ public partial class MainWindow
 	private global::Gtk.Action goForwardAction;
 	private global::Gtk.Action floppyAction;
 	private global::Gtk.Action editAction;
+	private global::Gtk.Action openAction5;
+	private global::Gtk.Action copyAction;
 	private global::Gtk.Fixed @fixed;
 	private global::Gtk.Frame frameFileList;
 	private global::Gtk.Alignment GtkAlignment10;
@@ -112,12 +114,17 @@ public partial class MainWindow
 		this.goForwardAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Go convert");
 		w1.Add (this.goForwardAction, null);
 		this.floppyAction = new global::Gtk.Action ("floppyAction", global::Mono.Unix.Catalog.GetString ("Save convert scheme to xml ..."), null, "gtk-floppy");
-		this.floppyAction.Sensitive = false;
 		this.floppyAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Save convert scheme to xml");
 		w1.Add (this.floppyAction, null);
 		this.editAction = new global::Gtk.Action ("editAction", global::Mono.Unix.Catalog.GetString ("Show log ..."), null, "gtk-edit");
 		this.editAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Show log ...");
 		w1.Add (this.editAction, null);
+		this.openAction5 = new global::Gtk.Action ("openAction5", global::Mono.Unix.Catalog.GetString ("Import shceme from xml"), null, "gtk-open");
+		this.openAction5.ShortLabel = global::Mono.Unix.Catalog.GetString ("Import shceme from xml");
+		w1.Add (this.openAction5, null);
+		this.copyAction = new global::Gtk.Action ("copyAction", global::Mono.Unix.Catalog.GetString ("Import scheme from xml ..."), null, "gtk-copy");
+		this.copyAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Import scheme from xml ...");
+		w1.Add (this.copyAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -130,7 +137,7 @@ public partial class MainWindow
 		this.@fixed.HasWindow = false;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameFileList = new global::Gtk.Frame ();
-		this.frameFileList.WidthRequest = 260;
+		this.frameFileList.WidthRequest = 340;
 		this.frameFileList.HeightRequest = 350;
 		this.frameFileList.Name = "frameFileList";
 		this.frameFileList.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -183,7 +190,7 @@ public partial class MainWindow
 		this.frameTargetVideo.LabelWidget = this.GtkLabelTargetFrameLabel;
 		this.@fixed.Add (this.frameTargetVideo);
 		global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetVideo]));
-		w8.X = 265;
+		w8.X = 350;
 		w8.Y = 32;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameVideo = new global::Gtk.Frame ();
@@ -208,7 +215,7 @@ public partial class MainWindow
 		this.frameVideo.LabelWidget = this.GtkLabelSourceVideoFrame;
 		this.@fixed.Add (this.frameVideo);
 		global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideo]));
-		w11.X = 625;
+		w11.X = 700;
 		w11.Y = 32;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameSourceAudioTracks = new global::Gtk.Frame ();
@@ -233,7 +240,7 @@ public partial class MainWindow
 		this.frameSourceAudioTracks.LabelWidget = this.GtkLabelAidoTracks;
 		this.@fixed.Add (this.frameSourceAudioTracks);
 		global::Gtk.Fixed.FixedChild w14 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameSourceAudioTracks]));
-		w14.X = 625;
+		w14.X = 700;
 		w14.Y = 340;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetAudio = new global::Gtk.Frame ();
@@ -258,11 +265,11 @@ public partial class MainWindow
 		this.frameTargetAudio.LabelWidget = this.GtkLabelTargetaudio;
 		this.@fixed.Add (this.frameTargetAudio);
 		global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
-		w17.X = 265;
+		w17.X = 350;
 		w17.Y = 340;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonApply = new global::Gtk.Button ();
-		this.buttonApply.WidthRequest = 250;
+		this.buttonApply.WidthRequest = 330;
 		this.buttonApply.HeightRequest = 25;
 		this.buttonApply.CanFocus = true;
 		this.buttonApply.Name = "buttonApply";
@@ -289,7 +296,7 @@ public partial class MainWindow
 		w26.Y = 535;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameGeneral = new global::Gtk.Frame ();
-		this.frameGeneral.WidthRequest = 250;
+		this.frameGeneral.WidthRequest = 330;
 		this.frameGeneral.HeightRequest = 135;
 		this.frameGeneral.Name = "frameGeneral";
 		// Container child frameGeneral.Gtk.Container+ContainerChild
@@ -309,7 +316,7 @@ public partial class MainWindow
 		w29.X = 5;
 		w29.Y = 390;
 		// Container child fixed.Gtk.Fixed+FixedChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='openAction3' action='openAction3'><menuitem name='openAction4' action='openAction4'/><menuitem name='openAction2' action='openAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction1' action='removeAction1'/><menuitem name='removeAction2' action='removeAction2'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='openAction3' action='openAction3'><menuitem name='openAction4' action='openAction4'/><menuitem name='openAction2' action='openAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction1' action='removeAction1'/><menuitem name='removeAction2' action='removeAction2'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.@fixed.Add (this.menubar1);
@@ -319,7 +326,7 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 1008;
+		this.DefaultWidth = 1080;
 		this.DefaultHeight = 604;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
@@ -335,6 +342,8 @@ public partial class MainWindow
 		this.removeAction2.Activated += new global::System.EventHandler (this.OnButtonRemoveAllClicked);
 		this.dialogInfoAction.Activated += new global::System.EventHandler (this.OnPreviwButtonClicked);
 		this.goForwardAction.Activated += new global::System.EventHandler (this.OnButtonGoConvertClicked);
+		this.floppyAction.Activated += new global::System.EventHandler (this.OnButtonSaveSchemeActivated);
 		this.editAction.Activated += new global::System.EventHandler (this.OnShowLogActivated);
+		this.copyAction.Activated += new global::System.EventHandler (this.OnCopyActionActivated);
 	}
 }

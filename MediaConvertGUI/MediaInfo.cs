@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.IO;
 using System.Collections.Generic;
@@ -357,6 +359,201 @@ namespace MediaConvertGUI
 				Console.WriteLine ("Error:"+ex.ToString());
 				return false;
 			}		
+		}
+
+
+		public void OpenSchemeFromXML(string fileName)
+		{
+			// http://stackoverflow.com/questions/243022/parsing-through-xml-elements-in-xmlreader
+
+			var xmlDoc = new XmlDocument();
+			xmlDoc.Load(fileName);
+			var xmlRoot = xmlDoc.DocumentElement;
+
+			foreach (XmlNode item in xmlRoot.SelectNodes(@"/MultimediaScheme"))
+			{
+				VideoContainerEnum container;
+
+				var node = item.SelectSingleNode("Container");
+				if ((node != null) &&
+				    (node.FirstChild != null) &&
+				    (Enum.TryParse(node.FirstChild.Value,out container)))
+				{
+					TargetContainer =  container;
+				}
+			}			
+
+			var firstVideoTrack =  FirstVideoTrack;
+
+			if (firstVideoTrack != null) 
+			{
+				foreach (XmlNode item in xmlRoot.SelectNodes(@"/MultimediaScheme/Video"))
+				{
+					int width;
+					var widthNode = item.SelectSingleNode("Width");
+					if ((widthNode!= null) && (widthNode.FirstChild != null))
+					{
+						if (int.TryParse(widthNode.FirstChild.Value,out width))					
+							firstVideoTrack.Width = width;
+					}
+
+					int height;
+					var heightNode = item.SelectSingleNode("Height");
+					if ((heightNode!= null) && (heightNode.FirstChild != null))
+					{
+						if (int.TryParse(heightNode.FirstChild.Value,out height))
+							firstVideoTrack.Height = height;
+					}
+
+					int bitrate;
+					var bitrateNode = item.SelectSingleNode("Bitrate");
+					if ((bitrateNode!= null) && (bitrateNode.FirstChild != null))
+					{
+						if (int.TryParse(bitrateNode.FirstChild.Value,out bitrate))
+							firstVideoTrack.Bitrate = bitrate*1000;
+					}
+
+					decimal framerate;
+					var framerateNode = item.SelectSingleNode("Framerate");
+					if ((framerateNode!= null) && (framerateNode.FirstChild != null))
+					{
+						if (decimal.TryParse(framerateNode.FirstChild.Value,out framerate))
+							firstVideoTrack.FrameRate = framerate;
+					}
+
+					var aspectNode = item.SelectSingleNode("Aspect");
+					if ((aspectNode!= null) && (aspectNode.FirstChild != null))
+					{
+						if (Regex.IsMatch(aspectNode.FirstChild.Value,"^[0-9]+:[0-9]+$"))
+						{
+							firstVideoTrack.Aspect = aspectNode.FirstChild.Value;
+						}
+					}
+
+					var codecNode = item.SelectSingleNode("Codec");
+					if ((codecNode!= null) && (codecNode.FirstChild != null))
+					{
+						VideoCodecEnum codec;
+						if (Enum.TryParse<VideoCodecEnum>(codecNode.FirstChild.Value,out codec))
+						{
+							//firstVideoTrack.Codec = codec.ToString();
+							this.TargetVideoCodec = codec;
+						}
+					}
+				}
+			}
+
+			var firstAudioTrack =  FirstAudioTrack;
+
+			if (this.AudioTracks.Count>0) 
+			{
+				var actualTrackIndex = 1;
+				foreach (XmlNode trackNode in xmlRoot.SelectNodes(@"/MultimediaScheme/Audio/Track"))
+				{
+					var codecNode = trackNode.SelectSingleNode("Codec");
+					if ((codecNode!= null) && (codecNode.FirstChild != null))
+					{
+						AudioCodecEnum codec;
+						if (Enum.TryParse<AudioCodecEnum>(codecNode.FirstChild.Value,out codec))
+						{
+							AudioTracks[actualTrackIndex].TargetAudioCodec = codec;
+						}
+					}
+
+					int channels;
+					var channelsNode = trackNode.SelectSingleNode("Channels");
+					if ((channelsNode!= null) && (channelsNode.FirstChild != null))
+					{
+						if (int.TryParse(channelsNode.FirstChild.Value,out channels))
+							AudioTracks[actualTrackIndex].Channels = channels;
+					}
+
+					int bitrate;
+					var bitrateNode = trackNode.SelectSingleNode("Bitrate");
+					if ((bitrateNode!= null) && (bitrateNode.FirstChild != null))
+					{
+						if (int.TryParse(bitrateNode.FirstChild.Value,out bitrate))
+							AudioTracks[actualTrackIndex].Bitrate = bitrate*1000;
+					}
+
+					decimal sRate;
+					var sRateNode = trackNode.SelectSingleNode("SamplingRate");
+					if ((sRateNode!= null) && (sRateNode.FirstChild != null))
+					{
+						if (decimal.TryParse(sRateNode.FirstChild.Value,out sRate))
+							AudioTracks[actualTrackIndex].SamplingRateHz = sRate*1000;
+					}
+
+					actualTrackIndex ++;
+					if (actualTrackIndex > AudioTracks.Count)
+					{
+						break;
+					}
+
+				}
+			}
+
+		}
+
+		public void SaveAsSchemeToXML(string fileName)
+		{
+			// Create a new XmlTextWriter instance
+			XmlTextWriter writer = new 
+				XmlTextWriter(fileName, Encoding.UTF8);
+
+			writer.Formatting = Formatting.Indented;
+			writer.Indentation = 4;
+
+			// start writing!
+			writer.WriteStartDocument();
+			writer.WriteStartElement("MultimediaScheme");
+
+			writer.WriteElementString("Container", MediaInfoBase.VideoContainerToFFMpegContainer[TargetContainer]);				
+
+			// Video
+
+			writer.WriteStartElement("Video");						
+
+				writer.WriteElementString("Codec", TargetVideoCodec.ToString());
+
+				var firstVideoTrack =  FirstVideoTrack;
+
+				if (firstVideoTrack != null) 
+				{
+					writer.WriteElementString("Width", firstVideoTrack.Width.ToString());
+					writer.WriteElementString("Height", firstVideoTrack.Height.ToString());
+
+					writer.WriteElementString("Aspect", firstVideoTrack.Aspect);
+					writer.WriteElementString("Bitrate", firstVideoTrack.BitrateKbps.ToString());
+				writer.WriteElementString("Framerate", firstVideoTrack.FrameRate.ToString(System.Globalization.CultureInfo.InvariantCulture));
+				}
+
+			writer.WriteEndElement();
+
+			// Audio
+
+			writer.WriteStartElement("Audio");
+
+				foreach (var track in Tracks)
+				{
+					if (track.TrackType == "Audio")
+					{
+						writer.WriteStartElement("Track");
+
+							writer.WriteElementString("Codec", track.TargetAudioCodec.ToString());
+							writer.WriteElementString("Channels", track.Channels.ToString());
+							writer.WriteElementString("Bitrate", track.BitrateKbps.ToString());
+							writer.WriteElementString("SamplingRate", track.SamplingRateKHz.ToString());
+							
+						writer.WriteEndElement();
+					}
+				}
+
+
+			writer.WriteEndElement();
+
+			writer.WriteEndDocument();
+			writer.Close();    
 		}
 
 		#endregion
