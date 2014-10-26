@@ -35,7 +35,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		Build ();
 
-		var buffer = System.IO.File.ReadAllBytes (System.IO.Path.Combine(SupportMethods.AppPath+"/ico.ico"));
+		var buffer = System.IO.File.ReadAllBytes (System.IO.Path.Combine(SupportMethods.AppPath+System.IO.Path.DirectorySeparatorChar+"ico.ico"));
 		var pixbuf = new Gdk.Pixbuf (buffer);
 		Icon = pixbuf;
 
@@ -532,7 +532,7 @@ public partial class MainWindow: Gtk.Window
 
 		if (selectedScheme != "none")
 		{
-			var schemeFileName = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes/") + selectedScheme + ".xml";
+			var schemeFileName = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes"+System.IO.Path.DirectorySeparatorChar) + selectedScheme + ".xml";
 
 			widgetTargetMovieTrack.MovieInfo.OpenSchemeFromXML(schemeFileName);
 			widgetTargetMovieTrack.Fill();
