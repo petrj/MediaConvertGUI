@@ -1,13 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/MediaInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/MainWindow.cs">
     <Files>
-      <File FileName="MediaConvertGUI/MainWindow.cs" Line="781" Column="25" />
-      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="357" Column="6" />
-      <File FileName="MediaConvertGUI/TrackInfo.cs" Line="8" Column="3" />
-      <File FileName="MediaConvertGUI/WidgetGeneralMediaInfo.cs" Line="46" Column="3" />
-      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="35" Column="2" />
-      <File FileName="MediaConvertGUI/SupportMethods.cs" Line="325" Column="50" />
+      <File FileName="MediaConvertGUI/MainWindow.cs" Line="13" Column="44" />
+      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="19" Column="3" />
+      <File FileName="MediaConvertGUI/TrackInfo.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetGeneralMediaInfo.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/SupportMethods.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,7 +18,7 @@
               <Node name="MainWindow" expanded="True" />
             </Node>
             <Node name="Schemes" expanded="True" />
-            <Node name="MediaInfo.cs" selected="True" />
+            <Node name="ico.ico" selected="True" />
           </Node>
         </State>
       </Pad>

@@ -73,9 +73,7 @@
     <Compile Include="MediaInfo.cs" />
     <Compile Include="SupportMethods.cs" />
     <Compile Include="TreeViewData.cs" />
-    <Compile Include="WidgetGeneralMediaInfo.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="WidgetGeneralMediaInfo.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.WidgetGeneralMediaInfo.cs" />
     <Compile Include="WidgetMovieTrack.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.WidgetMovieTrack.cs" />
@@ -108,6 +106,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Schemes\Webm-vorbis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ico.ico" >
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

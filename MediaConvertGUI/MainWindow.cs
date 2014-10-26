@@ -35,6 +35,10 @@ public partial class MainWindow: Gtk.Window
 	{
 		Build ();
 
+		var buffer = System.IO.File.ReadAllBytes (System.IO.Path.Combine(SupportMethods.AppPath+"/ico.ico"));
+		var pixbuf = new Gdk.Pixbuf (buffer);
+		Icon = pixbuf;
+
 		TestPrerequisites();
 
 		_fileTreeViewData = new TreeViewData(tree); 
