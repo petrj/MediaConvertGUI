@@ -320,6 +320,11 @@ namespace MediaConvertGUI
 			Process.Start(command);
 		}
 
+		public static void Execute(string command,string arguments)
+		{
+			ExecuteAndReturnOutputAsList(command,arguments);
+		}
+
 		public static string ExecuteAndReturnOutput(string command,string arguments)
 		{
 			return (String.Join(String.Empty,ExecuteAndReturnOutputAsList(command,arguments)));

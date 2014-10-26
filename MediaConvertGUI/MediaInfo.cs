@@ -348,10 +348,12 @@ namespace MediaConvertGUI
 
 				var node = item.SelectSingleNode("Container");
 				if ((node != null) &&
-				    (node.FirstChild != null) &&
-				    (Enum.TryParse(node.FirstChild.Value,out container)))
+				    (node.FirstChild != null)) 
 				{
-					TargetContainer =  container;
+					if (Enum.TryParse(node.FirstChild.Value,out container))					
+						TargetContainer =  container;
+					if (Enum.TryParse("_" + node.FirstChild.Value,out container))
+						TargetContainer =  container;
 				}
 			}			
 
@@ -488,16 +490,22 @@ namespace MediaConvertGUI
 
 				writer.WriteElementString("Codec", TargetVideoCodec.ToString());
 
-				var firstVideoTrack =  FirstVideoTrack;
-
-				if (firstVideoTrack != null) 
+				if  ((TargetVideoCodec != VideoCodecEnum.copy) && (TargetVideoCodec != VideoCodecEnum.none) )
 				{
-					writer.WriteElementString("Width", firstVideoTrack.Width.ToString());
-					writer.WriteElementString("Height", firstVideoTrack.Height.ToString());
+					var firstVideoTrack =  FirstVideoTrack;
 
-					writer.WriteElementString("Aspect", firstVideoTrack.Aspect);
-					writer.WriteElementString("Bitrate", firstVideoTrack.BitrateKbps.ToString());
-				writer.WriteElementString("Framerate", firstVideoTrack.FrameRate.ToString(System.Globalization.CultureInfo.InvariantCulture));
+					if (firstVideoTrack != null) 
+					{
+						if (EditResolution) 
+						{
+							writer.WriteElementString("Width", firstVideoTrack.Width.ToString());
+							writer.WriteElementString("Height", firstVideoTrack.Height.ToString());
+						}				    
+
+						if (EditAspect) writer.WriteElementString("Aspect", firstVideoTrack.Aspect);
+						if (EditBitRate) writer.WriteElementString("Bitrate", firstVideoTrack.BitrateKbps.ToString());
+						if (EditFrameRate) writer.WriteElementString("Framerate", firstVideoTrack.FrameRate.ToString(System.Globalization.CultureInfo.InvariantCulture));
+					}
 				}
 
 			writer.WriteEndElement();
@@ -513,9 +521,13 @@ namespace MediaConvertGUI
 						writer.WriteStartElement("Track");
 
 							writer.WriteElementString("Codec", track.TargetAudioCodec.ToString());
-							writer.WriteElementString("Channels", track.Channels.ToString());
-							writer.WriteElementString("Bitrate", track.BitrateKbps.ToString());
-							writer.WriteElementString("SamplingRate", track.SamplingRateKHz.ToString());
+
+							if  ((track.TargetAudioCodec != AudioCodecEnum.none) && (track.TargetAudioCodec != AudioCodecEnum.copy) )
+							{
+								writer.WriteElementString("Channels", track.Channels.ToString());
+								writer.WriteElementString("Bitrate", track.BitrateKbps.ToString());
+								writer.WriteElementString("SamplingRate", track.SamplingRateKHz.ToString());
+							}
 							
 						writer.WriteEndElement();
 					}

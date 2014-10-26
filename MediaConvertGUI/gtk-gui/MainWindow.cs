@@ -153,6 +153,7 @@ public partial class MainWindow
 		this.tree = new global::Gtk.TreeView ();
 		this.tree.WidthRequest = 300;
 		this.tree.CanFocus = true;
+		this.tree.Events = ((global::Gdk.EventMask)(3840));
 		this.tree.Name = "tree";
 		this.tree.Reorderable = true;
 		this.tree.HoverExpand = true;
@@ -345,5 +346,7 @@ public partial class MainWindow
 		this.floppyAction.Activated += new global::System.EventHandler (this.OnButtonSaveSchemeActivated);
 		this.editAction.Activated += new global::System.EventHandler (this.OnShowLogActivated);
 		this.copyAction.Activated += new global::System.EventHandler (this.OnImportShcemeActionActivated);
+		this.frameFileList.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnFrameFileListButtonPressEvent);
+		this.tree.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnTreeButtonPressEvent);
 	}
 }

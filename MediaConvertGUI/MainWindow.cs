@@ -50,8 +50,6 @@ public partial class MainWindow: Gtk.Window
 
 		tree.CursorChanged += OnTreeCursorChanged;
 
-
-
 		buttonApply.Clicked+=OnButtonApplyClicked;
 
 		FillTree();
@@ -229,8 +227,9 @@ public partial class MainWindow: Gtk.Window
 
     public void FillTree()
     {
-	   _fileTreeViewData.Data.Clear();
+		_fileTreeViewData.Data.Clear();
 
+		// fill tree
 		foreach(var info in MoviesInfo.Keys)
 		{
 			var name = System.IO.Path.GetFileName (info.FileName);
@@ -707,11 +706,7 @@ public partial class MainWindow: Gtk.Window
 			                          "Cancel",ResponseType.Cancel,
 			                          "Save",ResponseType.Ok);
 
-		//var appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-		//fc.ConfirmOverwrite = true;
-
-		fc.SetCurrentFolder(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
-		//fc.SetFilename("scheme.xml");
+		fc.SetCurrentFolder(SupportMethods.AppPath);
 
 		if ((fc.Run() == (int)ResponseType.Ok))
 		{
@@ -745,6 +740,67 @@ public partial class MainWindow: Gtk.Window
 			}
 	}
 
+
+	protected void OnFrameFileListButtonPressEvent (object o, ButtonPressEventArgs args)
+	{
+	}
+
+	[GLib.ConnectBefore]
+	protected void OnTreeButtonPressEvent (object o, ButtonPressEventArgs args)
+	{
+		if(args.Event.Button == 3) 
+		{
+			var selectedMovies = GetSelectedMediaFiles();
+			if (selectedMovies.Count == 0)
+				return;
+
+			var cmd = String.Empty;
+			foreach (var f in selectedMovies)
+			{
+				cmd += "\"" + f.FileName + "\"";
+				break; // only first 
+			}
+
+			// creating popup menu 
+
+			Gtk.Menu popupMenu = new Gtk.Menu();
+
+			Gtk.Menu openWithSubMenu = new Gtk.Menu();
+
+			Gtk.MenuItem menuOpenWithVlc = new MenuItem("vlc");
+			openWithSubMenu.Add(menuOpenWithVlc);
+			menuOpenWithVlc.Activated+= delegate { SupportMethods.Execute("vlc",cmd); };
+
+			Gtk.MenuItem menuOpenWithAviDemux = new MenuItem("avidemux");
+			openWithSubMenu.Add(menuOpenWithAviDemux);
+			menuOpenWithAviDemux.Activated+= delegate { SupportMethods.Execute("avidemux",cmd); };
+
+
+			Gtk.MenuItem menuOpenWithMediainfo = new MenuItem("mediainfo-gui");
+			openWithSubMenu.Add(menuOpenWithMediainfo);
+			menuOpenWithMediainfo.Activated+= delegate { SupportMethods.Execute("mediainfo-gui",cmd); };
+
+
+			Gtk.MenuItem menuItemPlay = new MenuItem("Play...");
+			popupMenu.Add(menuItemPlay);    
+			menuItemPlay.Activated+= delegate { SupportMethods.ExecuteInShell(cmd);	};
+
+			MenuItem menuitemOpenWith = new MenuItem("Open with.");
+			menuitemOpenWith.Submenu = openWithSubMenu;
+
+			popupMenu.Add(menuitemOpenWith);
+
+
+			popupMenu.ShowAll();
+			popupMenu.Popup();
+		}
+
+		base.OnButtonPressEvent(args.Event);
+	}
+
+	protected void OnTreePopupMenu (object o, PopupMenuArgs args)
+	{
+	}
 	#endregion
 
 }
