@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MultimediaScheme>
+    <Container>flv</Container>
+    <Video>
+        <Codec>flv</Codec>
+    </Video>
+    <Audio>
+        <Track>
+            <Codec>mp3</Codec>
+            <Channels>2</Channels>
+            <Bitrate>64</Bitrate>
+            <SamplingRate>48</SamplingRate>
+        </Track>
+    </Audio>
+</MultimediaScheme>

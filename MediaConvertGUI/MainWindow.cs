@@ -518,27 +518,24 @@ public partial class MainWindow: Gtk.Window
 	protected void OnSchemeChanged(object sender, EventArgs e)
 	{
 
-		if (widgetGenera.TargetMovieInfo == null || 
-		    widgetTargetAudioTracks.Info == null || 
-		    widgetTargetMovieTrack.MovieInfo == null)
-			return;	
-
-		var selectedScheme = widgetGenera.TargetMovieInfo.SelectedScheme;
-		if (widgetGenera.TargetMovieInfo.SelectedScheme != "none" && widgetGenera.TargetMovieInfo.Schemes.ContainsKey(widgetGenera.TargetMovieInfo.SelectedScheme))
+		var selectedMovies = GetSelectedMediaFiles();
+		if ((selectedMovies.Count == 0) || ((!(e is StringEventArgs))))
 		{
-			var scheme = widgetGenera.TargetMovieInfo.Schemes[widgetGenera.TargetMovieInfo.SelectedScheme];
-			widgetTargetMovieTrack.MovieInfo.TargetVideoCodec = scheme.VideoCodec;
-			widgetTargetMovieTrack.MovieInfo.TargetContainer = scheme.Container;
-			widgetGenera.TargetMovieInfo.SelectedScheme = widgetGenera.TargetMovieInfo.SelectedScheme;
-			if (widgetTargetAudioTracks.Info.FirstAudioTrack != null)
-			{
-				widgetTargetAudioTracks.Info.FirstAudioTrack.TargetAudioCodec = scheme.AudioCodec;
-			}
+			widgetGenera.ReloadSchemes();
+			return;
+		}
 
-			//OnButtonApplyClicked(this,null);
+		var selectedScheme = (e as StringEventArgs).StringData;
 
-			widgetTargetAudioTracks.Fill();
+		if (selectedScheme != "none")
+		{
+			var schemeFileName = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes/") + selectedScheme + ".xml";
+
+			widgetTargetMovieTrack.MovieInfo.OpenSchemeFromXML(schemeFileName);
 			widgetTargetMovieTrack.Fill();
+
+			widgetTargetAudioTracks.Info.OpenSchemeFromXML(schemeFileName);
+			widgetTargetAudioTracks.Fill();
 		}
 	}
 
@@ -647,11 +644,6 @@ public partial class MainWindow: Gtk.Window
 				MoviesInfo[m.Value].TargetVideoCodec = widgetTargetMovieTrack.MovieInfo.TargetVideoCodec;
 				MoviesInfo[m.Value].TargetContainer = widgetTargetMovieTrack.MovieInfo.TargetContainer;
 
-				if (widgetGenera.TargetMovieInfo != null)
-				{
-					MoviesInfo[m.Value].SelectedScheme = widgetGenera.TargetMovieInfo.SelectedScheme;
-				}
-
 				var tmpDuration = MoviesInfo[m.Value].DurationMS;
 				MoviesInfo[m.Value].ClearTracks();
 				widgetTargetMovieTrack.MovieInfo.AppendTracksTo(MoviesInfo[m.Value],tmpDuration,"Video");
@@ -728,7 +720,7 @@ public partial class MainWindow: Gtk.Window
 		fc.Destroy();
 	}
 
-	protected void OnCopyActionActivated (object sender, EventArgs e)
+	protected void OnImportShcemeActionActivated (object sender, EventArgs e)
 	{
 
 			Gtk.FileChooserDialog fc=
@@ -747,9 +739,6 @@ public partial class MainWindow: Gtk.Window
 					
 					widgetTargetAudioTracks.Info.OpenSchemeFromXML(fc.Filename);
 					widgetTargetAudioTracks.Fill();
-					
-					//OnButtonApplyClicked(this,null);
-					
 				}
 				fc.Destroy();
 

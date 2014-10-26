@@ -380,8 +380,8 @@ namespace MediaConvertGUI
 		{
 			OnAnyValueChanged();
 		}
-		#endregion
 
+		#endregion
 	}
 }
 

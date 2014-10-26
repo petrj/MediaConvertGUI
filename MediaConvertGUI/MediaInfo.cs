@@ -38,21 +38,6 @@ namespace MediaConvertGUI
 			}
 		}
 
-		public Dictionary<string,MediaInfoScheme> Schemes = new Dictionary<string,MediaInfoScheme> ();
-		private string _selectedScheme = "none";
-		public string SelectedScheme
-		{
-			get 
-			{
-				return _selectedScheme;
-			}
-			set 
-			{
-				if (_selectedScheme != value) NotifyChange("SelectedScheme",value);
-				_selectedScheme = value;
-			}
-		}
-
 		private List<TrackInfo> _tracks = new List<TrackInfo>();
 		public List<TrackInfo> Tracks
 		{
@@ -224,8 +209,6 @@ namespace MediaConvertGUI
 
 		public MediaInfo ()
 		{
-			LoadSchemes();
-
 			EditResolution = true;
 			EditAspect = true;
 			EditBitRate = true;
@@ -255,16 +238,6 @@ namespace MediaConvertGUI
 			{
 				track.UnChanged();
 			}
-		}
-
-		private void LoadSchemes()
-		{
-			Schemes.Clear();
-
-			Schemes.Add( "Flash video", new MediaInfoScheme(VideoContainerEnum.flv, VideoCodecEnum.flv,AudioCodecEnum.mp3) );
-			Schemes.Add( "Ogg video", new MediaInfoScheme(VideoContainerEnum.ogg, VideoCodecEnum.theora,AudioCodecEnum.vorbis) );
-			Schemes.Add( "WebM video", new MediaInfoScheme(VideoContainerEnum.webm, VideoCodecEnum.vp8,AudioCodecEnum.vorbis) );
-			Schemes.Add( "3GP (h264)", new MediaInfoScheme(VideoContainerEnum._3gp, VideoCodecEnum.h264,AudioCodecEnum.aac) );
 		}
 
 		public void Clear()
@@ -304,7 +277,6 @@ namespace MediaConvertGUI
 			mInfo.TargetContainer = TargetContainer;
 			mInfo.FileName = FileName;
 			mInfo.FileSize = FileSize;
-			mInfo.SelectedScheme = SelectedScheme;
 			mInfo.EditAspect = EditAspect;
 			mInfo.EditBitRate = EditBitRate;
 			mInfo.EditFrameRate = EditFrameRate;

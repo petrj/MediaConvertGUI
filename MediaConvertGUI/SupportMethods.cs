@@ -35,6 +35,18 @@ namespace MediaConvertGUI
 
 		#endregion
 
+		#region path
+
+		public static string AppPath
+		{
+			get
+			{
+				return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+			}
+		}
+
+		#endregion
+
 		#region GTK 
 
 		public static void ClearCombo(Gtk.ComboBox combo)
@@ -387,6 +399,18 @@ namespace MediaConvertGUI
 		}
 
 		#endregion 
+	}
+
+	public class StringEventArgs : EventArgs
+	{
+		private string stringData;
+
+		public StringEventArgs(string _data)
+		{
+			stringData = _data;
+		}
+
+		public string StringData {get{return stringData; } }
 	}
 }
 

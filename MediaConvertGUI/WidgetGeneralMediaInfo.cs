@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace MediaConvertGUI
@@ -37,10 +38,28 @@ namespace MediaConvertGUI
 			_sourceMovieInfo = new MediaInfo();
 			_targetMovieInfo = new MediaInfo();
 
+			ReloadSchemes();
+
 			comboScheme.Changed+=OnSchemeComboValueChanged;		
 		}
 
 		#region methods
+
+		public void ReloadSchemes(string selectedScheme = "none")
+		{
+			var schemesPath = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes/");
+			var schemes = Directory.GetFiles(schemesPath,"*.xml");
+
+			var schemeStrings = new List<string>();
+			schemeStrings.Add("none");
+
+			foreach (var sch in schemes)
+			{
+				schemeStrings.Add(System.IO.Path.GetFileNameWithoutExtension(sch));
+			}
+
+			SupportMethods.FillComboBox(comboScheme,schemeStrings,true, selectedScheme);
+		}
 
 		public void FillFrom(MediaInfo sourceInfo, MediaInfo targetInfo)
 		{
@@ -66,20 +85,6 @@ namespace MediaConvertGUI
 					labelBitRate.Text = String.Empty;
 				}
 
-				if (TargetMovieInfo!= null)
-				{
-					var schemeStrings = new List<string>();
-					schemeStrings.Add("none");
-					foreach (var scheme in TargetMovieInfo.Schemes.Keys)
-					{
-						schemeStrings.Add(scheme);
-					}
-					SupportMethods.FillComboBox(comboScheme,schemeStrings,true,TargetMovieInfo.SelectedScheme);
-				} else
-				{				
-					SupportMethods.ClearCombo(comboScheme);
-				}
-
 				_eventLock.Unlock();
 			}
 		}
@@ -92,9 +97,7 @@ namespace MediaConvertGUI
 		{
 			if (_eventLock.Lock())
 			{
-				_targetMovieInfo.SelectedScheme = comboScheme.ActiveText;
-
-				OnSchemeChanged(EventArgs.Empty);
+				OnSchemeChanged(new StringEventArgs(comboScheme.ActiveText));
 
 				_eventLock.Unlock();
 
@@ -102,10 +105,10 @@ namespace MediaConvertGUI
 			}
 		}
 
-  		public delegate void  ChangedSchemeEventHandler(object sender, EventArgs e);
+		public delegate void  ChangedSchemeEventHandler(object sender, EventArgs e);
 	  	public event ChangedSchemeEventHandler SchemeChanged;
 
-	  	protected virtual void OnSchemeChanged(EventArgs e) 
+		protected virtual void OnSchemeChanged(StringEventArgs e) 
       	{
         	 if (SchemeChanged != null)
             	SchemeChanged(this, e);

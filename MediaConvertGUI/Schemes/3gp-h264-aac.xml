@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MultimediaScheme>
+    <Container>3gp</Container>
+    <Video>
+        <Codec>h264</Codec>
+    </Video>
+    <Audio>
+        <Track>
+            <Codec>aac</Codec>
+        </Track>
+    </Audio>
+</MultimediaScheme>

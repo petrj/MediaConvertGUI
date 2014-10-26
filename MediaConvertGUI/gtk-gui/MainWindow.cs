@@ -344,6 +344,6 @@ public partial class MainWindow
 		this.goForwardAction.Activated += new global::System.EventHandler (this.OnButtonGoConvertClicked);
 		this.floppyAction.Activated += new global::System.EventHandler (this.OnButtonSaveSchemeActivated);
 		this.editAction.Activated += new global::System.EventHandler (this.OnShowLogActivated);
-		this.copyAction.Activated += new global::System.EventHandler (this.OnCopyActionActivated);
+		this.copyAction.Activated += new global::System.EventHandler (this.OnImportShcemeActionActivated);
 	}
 }

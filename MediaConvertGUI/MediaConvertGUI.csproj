@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
+    <Commandlineparameters>/temp/record.ts.mpg</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -73,7 +74,9 @@
     <Compile Include="MediaInfo.cs" />
     <Compile Include="SupportMethods.cs" />
     <Compile Include="TreeViewData.cs" />
-    <Compile Include="WidgetGeneralMediaInfo.cs" />
+    <Compile Include="WidgetGeneralMediaInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="gtk-gui\MediaConvertGUI.WidgetGeneralMediaInfo.cs" />
     <Compile Include="WidgetMovieTrack.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.WidgetMovieTrack.cs" />
@@ -83,11 +86,30 @@
     <Compile Include="ProgressWin.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.ProgressWin.cs" />
     <Compile Include="EventLock.cs" />
-    <Compile Include="MediaInfoScheme.cs" />
     <Compile Include="MediaInfoBase.cs" />
     <Compile Include="TrackInfo.cs" />
     <Compile Include="TextWin.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.TextWin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Schemes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Schemes\Avi-Xvid-mp3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemes\3gp-h264-aac.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemes\Flv-mp3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemes\Ogg-theora-vorbis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Schemes\Webm-vorbis.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -152,7 +152,7 @@
         <property name="Label" translatable="yes">Import scheme from xml ...</property>
         <property name="ShortLabel" translatable="yes">Import scheme from xml ...</property>
         <property name="StockId">gtk-copy</property>
-        <signal name="Activated" handler="OnCopyActionActivated" />
+        <signal name="Activated" handler="OnImportShcemeActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -405,7 +405,7 @@
         <child>
           <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
-            <node name="__gtksharp_83_Stetic_Editor_ActionMenuBar" type="Menubar">
+            <node name="menubar1" type="Menubar">
               <node type="Menu" action="openAction3">
                 <node type="Menuitem" action="openAction4" />
                 <node type="Menuitem" action="openAction2" />
