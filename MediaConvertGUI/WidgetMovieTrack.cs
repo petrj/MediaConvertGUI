@@ -264,8 +264,10 @@ namespace MediaConvertGUI
 					}
 					if (chBoxBitRate.Active && !MovieInfo.EditBitRate)
 						comboBitRate.Entry.Text = (m.BitrateKbps).ToString ();
+
 					if (chBoxAspect.Active && !MovieInfo.EditAspect)
 						comboAspect.Entry.Text = m.Aspect;
+
 					if (chBoxFrameRate.Active && !MovieInfo.EditFrameRate)
 						comboFrameRate.Entry.Text = m.FrameRate.ToString ();
 
@@ -290,12 +292,15 @@ namespace MediaConvertGUI
 							m.Height = Convert.ToInt32 (entryHeight.Text);
 					}
 
-					if (chBoxBitRate.Active) m.Aspect = comboAspect.ActiveText;
-
 					if (chBoxFrameRate.Active) 
 					{
 						if (SupportMethods.IsNumeric (comboFrameRate.ActiveText))					
 							m.FrameRate = SupportMethods.ToDecimal (comboFrameRate.ActiveText);
+					}
+
+					if (chBoxAspect.Active) 
+					{
+						m.Aspect = comboAspect.ActiveText;var i = "Choosing ascpect!";
 					}
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;

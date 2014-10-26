@@ -490,7 +490,7 @@ namespace MediaConvertGUI
 
 				writer.WriteElementString("Codec", TargetVideoCodec.ToString());
 
-				if  ((TargetVideoCodec != VideoCodecEnum.copy) && (TargetVideoCodec != VideoCodecEnum.none) )
+				if  (TargetVideoCodec != VideoCodecEnum.none)
 				{
 					var firstVideoTrack =  FirstVideoTrack;
 

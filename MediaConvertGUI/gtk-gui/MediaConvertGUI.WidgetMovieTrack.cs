@@ -351,6 +351,7 @@ namespace MediaConvertGUI
 			this.Hide ();
 			this.comboCodec.Changed += new global::System.EventHandler (this.OnComboCodecChanged);
 			this.comboBitRate.Changed += new global::System.EventHandler (this.OnComboBitRateChanged);
+			this.comboAspect.Changed += new global::System.EventHandler (this.OnComboAspectChanged);
 			this.entryWidth.Changed += new global::System.EventHandler (this.OnEntryWidthChanged);
 			this.entryHeight.Changed += new global::System.EventHandler (this.OnEntryHeightChanged);
 			this.comboFrameRate.Changed += new global::System.EventHandler (this.OnComboFrameRateChanged);

@@ -178,18 +178,32 @@ namespace MediaConvertGUI
 			return commands.ToString();
 		}
 
+		/// <summary>
+		/// Makes the FF MPEG command.
+		/// </summary>
+		/// <returns>The FF MPEG command.</returns>
+		/// <param name="sourceMovie">Source movie.</param>
+		/// <param name="targetMovie">Target movie.</param>
+		/// <param name="currentPass">Current pass.</param>
 		public static string MakeFFMpegCommand(MediaInfo sourceMovie, MediaInfo targetMovie, int currentPass)
 		{		
+			var res= String.Empty;
+
 			// single audio convert? 
 			if ( (targetMovie.AudioTracks.Count > 0) && 
 			    (targetMovie.FirstAudioTrack.TargetAudioCodec!= AudioCodecEnum.none) &&
 			    ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none)) &&
 			    (currentPass>1))
 			{
-				return string.Empty;					
+				return res;
 			} 		
 
-			var res= String.Empty;
+			// codec copy  - single pass
+			if ( (targetMovie.FirstVideoTrack != null) && (targetMovie.TargetVideoCodec==VideoCodecEnum.copy) &&
+			    (currentPass>1))
+			{
+				return res;
+			} 	
 
 			var sourceFile = " -i \"" + sourceMovie.FileName+"\"";				
 			var ext = System.IO.Path.GetExtension(sourceMovie.FileName);
@@ -210,23 +224,27 @@ namespace MediaConvertGUI
 
 				targetFile = sourceMovie.FileName+".converted" + ext;
 
+				videoSettings += container;
+
 				var aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
 				var	scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
 				var	bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;	
 				var frameRate = " -r " + targetMovie.FirstVideoTrack.FrameRate.ToString().Replace(",","."); // TODO: invariant culture
-
-				var pass = String.Format(" -pass {0} -passlogfile \"{1}\"",currentPass,targetFile + ".passlog");
 
 				if (targetMovie.EditAspect)	videoSettings += aspect;
 				if (targetMovie.EditResolution) videoSettings += scale;
 				if (targetMovie.EditBitRate) videoSettings += bitrate;
 				if (targetMovie.EditFrameRate) videoSettings += frameRate;
 
-				videoSettings += container + pass;	
+				if (targetMovie.TargetVideoCodec!=VideoCodecEnum.copy)
+				{
+					var pass = String.Format(" -pass {0} -passlogfile \"{1}\"",currentPass,targetFile + ".passlog");
+					videoSettings += pass;
+				}
 
 				switch (targetMovie.TargetVideoCodec)
 				{
-					case VideoCodecEnum.copy: video = " -vcodec copy"; break;
+					case VideoCodecEnum.copy: video = " -vcodec copy"+videoSettings; break;
 					case VideoCodecEnum.xvid: video = " -vcodec libxvid"+videoSettings; break;
 					case VideoCodecEnum.flv: video = " -vcodec flv"+videoSettings; break;
 					case VideoCodecEnum.h263: video = " -vcodec h263"+videoSettings; break;
@@ -236,7 +254,6 @@ namespace MediaConvertGUI
 					case VideoCodecEnum.vp8: video = " -vcodec libvpx"+videoSettings; break;
 				}
 			}
-
 
 			// only first Audio Track!
 			if (targetMovie.AudioTracks.Count>0)
