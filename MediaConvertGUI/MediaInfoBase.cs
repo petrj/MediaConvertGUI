@@ -304,7 +304,7 @@ namespace MediaConvertGUI
 
 			targetFile = String.Format(" \"{0}\"",targetFile);
 
-			res = "ffmpeg -y -dump " + sourceFile + map + video + audio + targetFile;
+			res = MediaConvertGUIConfiguration.FFMpegPath+" -y -dump " + sourceFile + map + video + audio + targetFile;
 
 			return res;
 		}

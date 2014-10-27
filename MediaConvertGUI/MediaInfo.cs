@@ -310,7 +310,7 @@ namespace MediaConvertGUI
 
 				TargetContainer = MediaInfoBase.DetectContainerByExt(fileName);
 
-				var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput("mediainfo","-f --Output=XML \"" + fileName + "\"");
+				var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput(MediaConvertGUIConfiguration.MediaInfoPath,"-f --Output=XML \"" + fileName + "\"");
 				RawMediaInfoOutput = mediaInfoXML;			
 
 				var xmlDoc = new System.Xml.XmlDocument();

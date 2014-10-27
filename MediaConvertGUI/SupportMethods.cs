@@ -320,9 +320,21 @@ namespace MediaConvertGUI
 			Process.Start(command);
 		}
 
-		public static void Execute(string command,string arguments)
+		public static void Execute(string command,string arguments, bool noErrors=true)
 		{
-			ExecuteAndReturnOutputAsList(command,arguments);
+			try
+			{
+				ExecuteAndReturnOutputAsList(command,arguments);
+			} catch (Exception ex)
+			{
+				if (noErrors)
+				{
+					Dialogs.InfoDialog("Error while executing: " + command+" "+arguments+" "+Environment.NewLine+ex.ToString(),MessageType.Error);
+				} else
+				{
+					throw;
+				}
+			}
 		}
 
 		public static string ExecuteAndReturnOutput(string command,string arguments)

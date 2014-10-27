@@ -9,6 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>MediaConvertGUI</RootNamespace>
     <AssemblyName>MediaConvertGUI</AssemblyName>
+    <ReleaseVersion>0.2</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -87,6 +88,8 @@
     <Compile Include="TrackInfo.cs" />
     <Compile Include="TextWin.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.TextWin.cs" />
+    <Compile Include="MediaConvertGUIConfiguration.cs" />
+    <Compile Include="EnhancedXmlDocument.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -108,7 +111,10 @@
     <None Include="Schemes\Webm-vorbis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ico.ico" >
+    <None Include="ico.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

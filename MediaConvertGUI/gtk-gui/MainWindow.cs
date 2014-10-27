@@ -346,7 +346,6 @@ public partial class MainWindow
 		this.floppyAction.Activated += new global::System.EventHandler (this.OnButtonSaveSchemeActivated);
 		this.editAction.Activated += new global::System.EventHandler (this.OnShowLogActivated);
 		this.copyAction.Activated += new global::System.EventHandler (this.OnImportShcemeActionActivated);
-		this.frameFileList.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnFrameFileListButtonPressEvent);
 		this.tree.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnTreeButtonPressEvent);
 	}
 }

@@ -1,0 +1,12 @@
+<MediaConvertGUIConfiguration>
+  <MediaInfoPath>mediainfo</MediaInfoPath>
+  <FFMpegPath>ffmpeg</FFMpegPath>
+  <Applications>
+    <OpenWith>
+      <!-- <Application>vlc</Application> -->
+      <Application>vlc</Application>
+      <Application>avidemux</Application>
+      <Application>mediainfo-gui</Application>
+    </OpenWith>
+  </Applications>
+</MediaConvertGUIConfiguration>

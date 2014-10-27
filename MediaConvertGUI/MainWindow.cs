@@ -35,9 +35,13 @@ public partial class MainWindow: Gtk.Window
 	{
 		Build ();
 
+		// iapp icon
 		var buffer = System.IO.File.ReadAllBytes (System.IO.Path.Combine(SupportMethods.AppPath+System.IO.Path.DirectorySeparatorChar+"ico.ico"));
 		var pixbuf = new Gdk.Pixbuf (buffer);
 		Icon = pixbuf;
+
+		// Loading configuration
+		MediaConvertGUIConfiguration.Load("config.xml");
 
 		TestPrerequisites();
 
@@ -177,7 +181,7 @@ public partial class MainWindow: Gtk.Window
 
 		try
 		{
-			var ffmpegOutput = SupportMethods.ExecuteAndReturnOutput ("ffmpeg", "-version");
+			var ffmpegOutput = SupportMethods.ExecuteAndReturnOutput (MediaConvertGUIConfiguration.FFMpegPath, "-version");
 			if (!string.IsNullOrEmpty(ffmpegOutput))
 			{
 				if (ffmpegOutput.Contains("version "))
@@ -192,7 +196,7 @@ public partial class MainWindow: Gtk.Window
 
 		try
 		{
-			var mediaInfoOutput = SupportMethods.ExecuteAndReturnOutput ("mediainfo", "--version");
+			var mediaInfoOutput = SupportMethods.ExecuteAndReturnOutput (MediaConvertGUIConfiguration.MediaInfoPath, "--version");
 			if (!string.IsNullOrEmpty(mediaInfoOutput))
 			{
 				if (mediaInfoOutput.Contains("MediaInfo Command line"))
@@ -771,19 +775,12 @@ public partial class MainWindow: Gtk.Window
 
 			Gtk.Menu openWithSubMenu = new Gtk.Menu();
 
-			Gtk.MenuItem menuOpenWithVlc = new MenuItem("vlc");
-			openWithSubMenu.Add(menuOpenWithVlc);
-			menuOpenWithVlc.Activated+= delegate { SupportMethods.Execute("vlc",cmd); };
-
-			Gtk.MenuItem menuOpenWithAviDemux = new MenuItem("avidemux");
-			openWithSubMenu.Add(menuOpenWithAviDemux);
-			menuOpenWithAviDemux.Activated+= delegate { SupportMethods.Execute("avidemux",cmd); };
-
-
-			Gtk.MenuItem menuOpenWithMediainfo = new MenuItem("mediainfo-gui");
-			openWithSubMenu.Add(menuOpenWithMediainfo);
-			menuOpenWithMediainfo.Activated+= delegate { SupportMethods.Execute("mediainfo-gui",cmd); };
-
+			foreach (var app in MediaConvertGUIConfiguration.OpenWithApplications)
+			{
+				var btn = new MenuItem(app);
+				openWithSubMenu.Add(btn);
+				btn.Activated+= delegate { SupportMethods.Execute(app,cmd); };
+			}
 
 			Gtk.MenuItem menuItemPlay = new MenuItem("Play...");
 			popupMenu.Add(menuItemPlay);    
