@@ -219,7 +219,6 @@ namespace MediaConvertGUI
 
 		public override bool IsChanged ()
 		{
-			var anyTrackChanged = false;
 			foreach (var track in Tracks)
 			{
 				if (track.IsChanged())
@@ -245,6 +244,7 @@ namespace MediaConvertGUI
 			TargetVideoCodec = VideoCodecEnum.xvid;
 			TargetContainer = VideoContainerEnum.avi;
 			Tracks.Clear();
+			FileSize = 0;
 		}
 
 		public void AppendTracksTo(MediaInfo mInfo,decimal durationMS, string onlyType="")
@@ -305,7 +305,6 @@ namespace MediaConvertGUI
 				var fi = new System.IO.FileInfo(fileName);
 				FileSize = fi.Length;
 
-				var raw = String.Empty;
 				Tracks.Clear();
 
 				TargetContainer = MediaInfoBase.DetectContainerByExt(fileName);
@@ -384,7 +383,7 @@ namespace MediaConvertGUI
 					if ((bitrateNode!= null) && (bitrateNode.FirstChild != null))
 					{
 						if (int.TryParse(bitrateNode.FirstChild.Value,out bitrate))
-							firstVideoTrack.Bitrate = bitrate*1000;
+							firstVideoTrack.Bitrate = bitrate;
 					}
 
 					decimal framerate;
@@ -447,7 +446,7 @@ namespace MediaConvertGUI
 					if ((bitrateNode!= null) && (bitrateNode.FirstChild != null))
 					{
 						if (int.TryParse(bitrateNode.FirstChild.Value,out bitrate))
-							AudioTracks[actualTrackIndex].Bitrate = bitrate*1000;
+							AudioTracks[actualTrackIndex].Bitrate = bitrate;
 					}
 
 					decimal sRate;
@@ -455,7 +454,7 @@ namespace MediaConvertGUI
 					if ((sRateNode!= null) && (sRateNode.FirstChild != null))
 					{
 						if (decimal.TryParse(sRateNode.FirstChild.Value,out sRate))
-							AudioTracks[actualTrackIndex].SamplingRateHz = sRate*1000;
+							AudioTracks[actualTrackIndex].SamplingRateHz = sRate;
 					}
 
 					actualTrackIndex ++;
@@ -503,7 +502,7 @@ namespace MediaConvertGUI
 						}				    
 
 						if (EditAspect) writer.WriteElementString("Aspect", firstVideoTrack.Aspect);
-						if (EditBitRate) writer.WriteElementString("Bitrate", firstVideoTrack.BitrateKbps.ToString());
+						if (EditBitRate) writer.WriteElementString("Bitrate", firstVideoTrack.Bitrate.ToString());
 						if (EditFrameRate) writer.WriteElementString("Framerate", firstVideoTrack.FrameRate.ToString(System.Globalization.CultureInfo.InvariantCulture));
 					}
 				}
@@ -525,8 +524,8 @@ namespace MediaConvertGUI
 							if  ((track.TargetAudioCodec != AudioCodecEnum.none) && (track.TargetAudioCodec != AudioCodecEnum.copy) )
 							{
 								writer.WriteElementString("Channels", track.Channels.ToString());
-								writer.WriteElementString("Bitrate", track.BitrateKbps.ToString());
-								writer.WriteElementString("SamplingRate", track.SamplingRateKHz.ToString());
+								writer.WriteElementString("Bitrate", track.Bitrate.ToString());
+								writer.WriteElementString("SamplingRate", track.SamplingRateHz.ToString());
 							}
 							
 						writer.WriteEndElement();

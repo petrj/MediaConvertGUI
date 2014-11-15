@@ -6,7 +6,7 @@ namespace MediaConvertGUI
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow;
 		private global::Gtk.TextView textView;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -28,8 +28,8 @@ namespace MediaConvertGUI
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 577;
-			this.DefaultHeight = 512;
+			this.DefaultWidth = 1024;
+			this.DefaultHeight = 199;
 			this.Show ();
 		}
 	}

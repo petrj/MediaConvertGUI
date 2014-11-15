@@ -8,8 +8,8 @@
         <Track>
             <Codec>mp3</Codec>
             <Channels>2</Channels>
-            <Bitrate>64</Bitrate>
-            <SamplingRate>48</SamplingRate>
+            <Bitrate>64000</Bitrate>
+            <SamplingRate>48000</SamplingRate>
         </Track>
     </Audio>
 </MultimediaScheme>

@@ -19,7 +19,6 @@ namespace MediaConvertGUI
 			global::Stetic.Gui.Initialize (this);
 			// Widget MediaConvertGUI.WidgetGeneralMediaInfo
 			global::Stetic.BinContainer.Attach (this);
-			this.WidthRequest = 350;
 			this.Name = "MediaConvertGUI.WidgetGeneralMediaInfo";
 			// Container child MediaConvertGUI.WidgetGeneralMediaInfo.Gtk.Container+ContainerChild
 			this.@fixed = new global::Gtk.Fixed ();

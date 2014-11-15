@@ -271,8 +271,7 @@ namespace MediaConvertGUI
 	    }
 
 		public static decimal ToDecimal(this string s)
-	    {
-	        decimal output;
+	    {	       
 			var sep = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 			s = s.Replace(".",sep).Replace(",",sep);
 			return decimal.Parse(s);

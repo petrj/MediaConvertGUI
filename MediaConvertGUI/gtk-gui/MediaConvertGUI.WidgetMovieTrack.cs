@@ -69,7 +69,6 @@ namespace MediaConvertGUI
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.frameVideooptions = new global::Gtk.Frame ();
 			this.frameVideooptions.WidthRequest = 315;
-			this.frameVideooptions.HeightRequest = 210;
 			this.frameVideooptions.Name = "frameVideooptions";
 			this.frameVideooptions.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child frameVideooptions.Gtk.Container+ContainerChild
@@ -111,7 +110,7 @@ namespace MediaConvertGUI
 			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
 			this.labelFrameRate = new global::Gtk.Label ();
 			this.labelFrameRate.Name = "labelFrameRate";
-			this.labelFrameRate.LabelProp = global::Mono.Unix.Catalog.GetString ("Frame Rate");
+			this.labelFrameRate.LabelProp = global::Mono.Unix.Catalog.GetString ("Frame rate");
 			this.fixedVideoptions.Add (this.labelFrameRate);
 			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.labelFrameRate]));
 			w7.Y = 125;
@@ -221,8 +220,8 @@ namespace MediaConvertGUI
 			this.labelFps.LabelProp = global::Mono.Unix.Catalog.GetString ("fps");
 			this.fixedVideoptions.Add (this.labelFps);
 			global::Gtk.Fixed.FixedChild w19 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.labelFps]));
-			w19.X = 215;
-			w19.Y = 155;
+			w19.X = 220;
+			w19.Y = 125;
 			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
 			this.labelTrackSize = new global::Gtk.Label ();
 			this.labelTrackSize.Name = "labelTrackSize";

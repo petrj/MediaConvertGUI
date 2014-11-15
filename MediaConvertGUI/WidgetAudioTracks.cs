@@ -197,7 +197,9 @@ namespace MediaConvertGUI
 			if (mInfo != null)
 			{
 				mInfo.Copyto(_info,false);
-			}
+			} else
+				_info.ClearTracks();
+
 			Fill();
 			SelectFirstAudioTrack();
 		}

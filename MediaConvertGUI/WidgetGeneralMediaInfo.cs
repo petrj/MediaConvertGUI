@@ -12,7 +12,6 @@ namespace MediaConvertGUI
 		private EventLock _eventLock = new EventLock();
 
 		public MediaInfo _sourceMovieInfo;
-		public MediaInfo _targetMovieInfo;
 
 		public MediaInfo SourceMovieInfo 
 		{ 
@@ -22,21 +21,12 @@ namespace MediaConvertGUI
 			}
 		}
 
-		public MediaInfo TargetMovieInfo 
-		{ 
-			get
-			{
-				return _targetMovieInfo;
-			}
-		}
-
 		#endregion
 
 		public WidgetGeneralMediaInfo ()
 		{
 			this.Build ();
 			_sourceMovieInfo = new MediaInfo();
-			_targetMovieInfo = new MediaInfo();
 
 			ReloadSchemes();
 
@@ -61,10 +51,15 @@ namespace MediaConvertGUI
 			SupportMethods.FillComboBox(comboScheme,schemeStrings,true, selectedScheme);
 		}
 
-		public void FillFrom(MediaInfo sourceInfo, MediaInfo targetInfo)
+		public void FillFrom(MediaInfo sourceInfo)
 		{
-			if (sourceInfo != null) sourceInfo.Copyto(_sourceMovieInfo,false);
-			if (targetInfo != null) targetInfo.Copyto(_targetMovieInfo,false);
+			if (sourceInfo != null) 
+			{
+				sourceInfo.Copyto(_sourceMovieInfo,false);
+			} else
+			{
+				SourceMovieInfo.Clear();
+			}
 
 			Fill();
 		}

@@ -25,7 +25,7 @@ namespace MediaConvertGUI
 		private global::Gtk.Label GtkLabel;
 		private global::Gtk.EventBox eventBox;
 		private global::Gtk.Image image;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

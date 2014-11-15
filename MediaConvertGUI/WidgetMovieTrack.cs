@@ -68,7 +68,9 @@ namespace MediaConvertGUI
 			if (mInfo != null)
 			{
 				mInfo.Copyto(_movieInfo,false);
-			}
+			} else
+				_movieInfo.ClearTracks();
+
 			Fill();
 		}
 
@@ -300,7 +302,7 @@ namespace MediaConvertGUI
 
 					if (chBoxAspect.Active) 
 					{
-						m.Aspect = comboAspect.ActiveText;var i = "Choosing ascpect!";
+						m.Aspect = comboAspect.ActiveText;
 					}
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;

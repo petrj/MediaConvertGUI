@@ -12,12 +12,12 @@ public partial class MainWindow
 	private global::Gtk.Action ActionsAction;
 	private global::Gtk.Action indexAction;
 	private global::Gtk.Action applyAction;
-	private global::Gtk.Action openAction3;
-	private global::Gtk.Action openAction4;
-	private global::Gtk.Action openAction2;
+	private global::Gtk.Action addAction;
+	private global::Gtk.Action addAction1;
+	private global::Gtk.Action addAction2;
 	private global::Gtk.Action removeAction;
-	private global::Gtk.Action removeAction1;
-	private global::Gtk.Action removeAction2;
+	private global::Gtk.Action removeAction3;
+	private global::Gtk.Action removeAction4;
 	private global::Gtk.Action executeAction;
 	private global::Gtk.Action dialogInfoAction;
 	private global::Gtk.Action goForwardAction;
@@ -25,6 +25,8 @@ public partial class MainWindow
 	private global::Gtk.Action editAction;
 	private global::Gtk.Action openAction5;
 	private global::Gtk.Action copyAction;
+	private global::Gtk.Action applyAction1;
+	private global::Gtk.Action applyAction2;
 	private global::Gtk.Fixed @fixed;
 	private global::Gtk.Frame frameFileList;
 	private global::Gtk.Alignment GtkAlignment10;
@@ -47,11 +49,11 @@ public partial class MainWindow
 	private global::Gtk.Alignment GtkAlignment14;
 	private global::MediaConvertGUI.WidgetAudioTracks widgetTargetAudioTracks;
 	private global::Gtk.Label GtkLabelTargetaudio;
-	private global::Gtk.Button buttonApply;
 	private global::Gtk.Frame frameGeneral;
 	private global::Gtk.Alignment GtkAlignment16;
 	private global::MediaConvertGUI.WidgetGeneralMediaInfo widgetGenera;
 	private global::Gtk.MenuBar menubar1;
+	private global::Gtk.Button buttonApply;
 
 	protected virtual void Build ()
 	{
@@ -86,24 +88,24 @@ public partial class MainWindow
 		this.applyAction = new global::Gtk.Action ("applyAction", global::Mono.Unix.Catalog.GetString ("Convert ..."), null, "gtk-apply");
 		this.applyAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Convert ...");
 		w1.Add (this.applyAction, null);
-		this.openAction3 = new global::Gtk.Action ("openAction3", global::Mono.Unix.Catalog.GetString ("File"), null, "gtk-open");
-		this.openAction3.ShortLabel = global::Mono.Unix.Catalog.GetString ("File");
-		w1.Add (this.openAction3, null);
-		this.openAction4 = new global::Gtk.Action ("openAction4", global::Mono.Unix.Catalog.GetString ("Open .."), null, "gtk-open");
-		this.openAction4.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open ..");
-		w1.Add (this.openAction4, null);
-		this.openAction2 = new global::Gtk.Action ("openAction2", global::Mono.Unix.Catalog.GetString ("Open directory .."), null, "gtk-open");
-		this.openAction2.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open directory ..");
-		w1.Add (this.openAction2, null);
+		this.addAction = new global::Gtk.Action ("addAction", global::Mono.Unix.Catalog.GetString ("Add"), null, "gtk-add");
+		this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Add");
+		w1.Add (this.addAction, null);
+		this.addAction1 = new global::Gtk.Action ("addAction1", global::Mono.Unix.Catalog.GetString ("Add file ..."), null, "gtk-add");
+		this.addAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open ..");
+		w1.Add (this.addAction1, null);
+		this.addAction2 = new global::Gtk.Action ("addAction2", global::Mono.Unix.Catalog.GetString ("Add folder ..."), null, "gtk-add");
+		this.addAction2.ShortLabel = global::Mono.Unix.Catalog.GetString ("Open directory ..");
+		w1.Add (this.addAction2, null);
 		this.removeAction = new global::Gtk.Action ("removeAction", global::Mono.Unix.Catalog.GetString ("Remove"), null, "gtk-remove");
 		this.removeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Remove");
 		w1.Add (this.removeAction, null);
-		this.removeAction1 = new global::Gtk.Action ("removeAction1", global::Mono.Unix.Catalog.GetString ("Remove selected"), null, "gtk-remove");
-		this.removeAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Remove selected");
-		w1.Add (this.removeAction1, null);
-		this.removeAction2 = new global::Gtk.Action ("removeAction2", global::Mono.Unix.Catalog.GetString ("Remove all"), null, "gtk-remove");
-		this.removeAction2.ShortLabel = global::Mono.Unix.Catalog.GetString ("Remove all");
-		w1.Add (this.removeAction2, null);
+		this.removeAction3 = new global::Gtk.Action ("removeAction3", global::Mono.Unix.Catalog.GetString ("Selected"), null, "gtk-remove");
+		this.removeAction3.ShortLabel = global::Mono.Unix.Catalog.GetString ("Remove selected");
+		w1.Add (this.removeAction3, null);
+		this.removeAction4 = new global::Gtk.Action ("removeAction4", global::Mono.Unix.Catalog.GetString ("All"), null, "gtk-remove");
+		this.removeAction4.ShortLabel = global::Mono.Unix.Catalog.GetString ("Remove all");
+		w1.Add (this.removeAction4, null);
 		this.executeAction = new global::Gtk.Action ("executeAction", global::Mono.Unix.Catalog.GetString ("Actions"), null, "gtk-execute");
 		this.executeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Actions");
 		w1.Add (this.executeAction, null);
@@ -125,6 +127,12 @@ public partial class MainWindow
 		this.copyAction = new global::Gtk.Action ("copyAction", global::Mono.Unix.Catalog.GetString ("Import scheme from xml ..."), null, "gtk-copy");
 		this.copyAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Import scheme from xml ...");
 		w1.Add (this.copyAction, null);
+		this.applyAction1 = new global::Gtk.Action ("applyAction1", global::Mono.Unix.Catalog.GetString ("Apply changes"), null, "gtk-apply");
+		this.applyAction1.ShortLabel = global::Mono.Unix.Catalog.GetString ("Apply changes");
+		w1.Add (this.applyAction1, null);
+		this.applyAction2 = new global::Gtk.Action ("applyAction2", global::Mono.Unix.Catalog.GetString ("Apply"), null, "gtk-apply");
+		this.applyAction2.ShortLabel = global::Mono.Unix.Catalog.GetString ("Apply");
+		w1.Add (this.applyAction2, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -137,8 +145,8 @@ public partial class MainWindow
 		this.@fixed.HasWindow = false;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameFileList = new global::Gtk.Frame ();
-		this.frameFileList.WidthRequest = 340;
-		this.frameFileList.HeightRequest = 350;
+		this.frameFileList.WidthRequest = 370;
+		this.frameFileList.HeightRequest = 310;
 		this.frameFileList.Name = "frameFileList";
 		this.frameFileList.ShadowType = ((global::Gtk.ShadowType)(0));
 		// Container child frameFileList.Gtk.Container+ContainerChild
@@ -162,12 +170,13 @@ public partial class MainWindow
 		this.frameFileList.Add (this.GtkAlignment10);
 		this.GtkLabelFileList = new global::Gtk.Label ();
 		this.GtkLabelFileList.Name = "GtkLabelFileList";
-		this.GtkLabelFileList.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>File list</b>");
+		this.GtkLabelFileList.LabelProp = global::Mono.Unix.Catalog.GetString ("<b></b>");
 		this.GtkLabelFileList.UseMarkup = true;
 		this.frameFileList.LabelWidget = this.GtkLabelFileList;
 		this.@fixed.Add (this.frameFileList);
 		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameFileList]));
-		w5.Y = 32;
+		w5.X = 370;
+		w5.Y = 40;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetVideo = new global::Gtk.Frame ();
 		this.frameTargetVideo.WidthRequest = 355;
@@ -191,8 +200,7 @@ public partial class MainWindow
 		this.frameTargetVideo.LabelWidget = this.GtkLabelTargetFrameLabel;
 		this.@fixed.Add (this.frameTargetVideo);
 		global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetVideo]));
-		w8.X = 350;
-		w8.Y = 32;
+		w8.X = 750;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameVideo = new global::Gtk.Frame ();
 		this.frameVideo.WidthRequest = 355;
@@ -216,8 +224,7 @@ public partial class MainWindow
 		this.frameVideo.LabelWidget = this.GtkLabelSourceVideoFrame;
 		this.@fixed.Add (this.frameVideo);
 		global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideo]));
-		w11.X = 700;
-		w11.Y = 32;
+		w11.X = 5;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameSourceAudioTracks = new global::Gtk.Frame ();
 		this.frameSourceAudioTracks.WidthRequest = 355;
@@ -241,8 +248,8 @@ public partial class MainWindow
 		this.frameSourceAudioTracks.LabelWidget = this.GtkLabelAidoTracks;
 		this.@fixed.Add (this.frameSourceAudioTracks);
 		global::Gtk.Fixed.FixedChild w14 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameSourceAudioTracks]));
-		w14.X = 700;
-		w14.Y = 340;
+		w14.X = 5;
+		w14.Y = 310;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameTargetAudio = new global::Gtk.Frame ();
 		this.frameTargetAudio.WidthRequest = 355;
@@ -266,38 +273,11 @@ public partial class MainWindow
 		this.frameTargetAudio.LabelWidget = this.GtkLabelTargetaudio;
 		this.@fixed.Add (this.frameTargetAudio);
 		global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
-		w17.X = 350;
-		w17.Y = 340;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.buttonApply = new global::Gtk.Button ();
-		this.buttonApply.WidthRequest = 330;
-		this.buttonApply.HeightRequest = 25;
-		this.buttonApply.CanFocus = true;
-		this.buttonApply.Name = "buttonApply";
-		this.buttonApply.UseUnderline = true;
-		// Container child buttonApply.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w18 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w19 = new global::Gtk.HBox ();
-		w19.Spacing = 2;
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w20 = new global::Gtk.Image ();
-		w20.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-		w19.Add (w20);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w22 = new global::Gtk.Label ();
-		w22.LabelProp = global::Mono.Unix.Catalog.GetString ("Apply");
-		w22.UseUnderline = true;
-		w19.Add (w22);
-		w18.Add (w19);
-		this.buttonApply.Add (w18);
-		this.@fixed.Add (this.buttonApply);
-		global::Gtk.Fixed.FixedChild w26 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
-		w26.X = 5;
-		w26.Y = 535;
+		w17.X = 750;
+		w17.Y = 310;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameGeneral = new global::Gtk.Frame ();
-		this.frameGeneral.WidthRequest = 330;
+		this.frameGeneral.WidthRequest = 370;
 		this.frameGeneral.HeightRequest = 135;
 		this.frameGeneral.Name = "frameGeneral";
 		// Container child frameGeneral.Gtk.Container+ContainerChild
@@ -313,22 +293,50 @@ public partial class MainWindow
 		this.GtkAlignment16.Add (this.widgetGenera);
 		this.frameGeneral.Add (this.GtkAlignment16);
 		this.@fixed.Add (this.frameGeneral);
-		global::Gtk.Fixed.FixedChild w29 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameGeneral]));
-		w29.X = 5;
-		w29.Y = 390;
+		global::Gtk.Fixed.FixedChild w20 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameGeneral]));
+		w20.X = 370;
+		w20.Y = 360;
 		// Container child fixed.Gtk.Fixed+FixedChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='openAction3' action='openAction3'><menuitem name='openAction4' action='openAction4'/><menuitem name='openAction2' action='openAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction1' action='removeAction1'/><menuitem name='removeAction2' action='removeAction2'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='addAction' action='addAction'><menuitem name='addAction1' action='addAction1'/><menuitem name='addAction2' action='addAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction3' action='removeAction3'/><menuitem name='removeAction4' action='removeAction4'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu><menuitem/></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.@fixed.Add (this.menubar1);
-		global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.menubar1]));
-		w30.X = 5;
+		global::Gtk.Fixed.FixedChild w21 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.menubar1]));
+		w21.X = 370;
+		w21.Y = 10;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.buttonApply = new global::Gtk.Button ();
+		this.buttonApply.WidthRequest = 370;
+		this.buttonApply.HeightRequest = 25;
+		this.buttonApply.CanFocus = true;
+		this.buttonApply.Name = "buttonApply";
+		this.buttonApply.UseUnderline = true;
+		// Container child buttonApply.Gtk.Container+ContainerChild
+		global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+		// Container child GtkAlignment.Gtk.Container+ContainerChild
+		global::Gtk.HBox w23 = new global::Gtk.HBox ();
+		w23.Spacing = 2;
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Image w24 = new global::Gtk.Image ();
+		w24.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
+		w23.Add (w24);
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Label w26 = new global::Gtk.Label ();
+		w26.LabelProp = global::Mono.Unix.Catalog.GetString ("Apply");
+		w26.UseUnderline = true;
+		w23.Add (w26);
+		w22.Add (w23);
+		this.buttonApply.Add (w22);
+		this.@fixed.Add (this.buttonApply);
+		global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
+		w30.X = 370;
+		w30.Y = 505;
 		this.Add (this.@fixed);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 1080;
-		this.DefaultHeight = 604;
+		this.DefaultWidth = 1112;
+		this.DefaultHeight = 537;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.newAction.Activated += new global::System.EventHandler (this.OnButtonAddClicked);
@@ -337,15 +345,16 @@ public partial class MainWindow
 		this.cancelAction.Activated += new global::System.EventHandler (this.OnButtonRemoveAllClicked);
 		this.indexAction.Activated += new global::System.EventHandler (this.OnPreviwButtonClicked);
 		this.applyAction.Activated += new global::System.EventHandler (this.OnButtonGoConvertClicked);
-		this.openAction4.Activated += new global::System.EventHandler (this.OnButtonAddClicked);
-		this.openAction2.Activated += new global::System.EventHandler (this.OnButtonAddFolderClicked);
-		this.removeAction1.Activated += new global::System.EventHandler (this.OnButtonRemoveClicked);
-		this.removeAction2.Activated += new global::System.EventHandler (this.OnButtonRemoveAllClicked);
+		this.addAction1.Activated += new global::System.EventHandler (this.OnButtonAddClicked);
+		this.addAction2.Activated += new global::System.EventHandler (this.OnButtonAddFolderClicked);
+		this.removeAction3.Activated += new global::System.EventHandler (this.OnButtonRemoveClicked);
+		this.removeAction4.Activated += new global::System.EventHandler (this.OnButtonRemoveAllClicked);
 		this.dialogInfoAction.Activated += new global::System.EventHandler (this.OnPreviwButtonClicked);
 		this.goForwardAction.Activated += new global::System.EventHandler (this.OnButtonGoConvertClicked);
 		this.floppyAction.Activated += new global::System.EventHandler (this.OnButtonSaveSchemeActivated);
 		this.editAction.Activated += new global::System.EventHandler (this.OnShowLogActivated);
 		this.copyAction.Activated += new global::System.EventHandler (this.OnImportShcemeActionActivated);
+		this.applyAction2.Activated += new global::System.EventHandler (this.OnButtonApplyClicked);
 		this.tree.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnTreeButtonPressEvent);
 	}
 }

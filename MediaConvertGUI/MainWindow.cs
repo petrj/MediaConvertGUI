@@ -1,7 +1,6 @@
 using System;
 using System.Xml;
 using System.IO;
-using System.IO;
 using System.Threading;
 using System.Text;
 using System.Diagnostics;
@@ -515,7 +514,7 @@ public partial class MainWindow: Gtk.Window
 			parametres = String.Format ("/C " + cmd + " 2> \"{0}\" ", _outputFile);
 		}		
 
-		var output = SupportMethods.ExecuteAndReturnOutput (processToExecute, parametres);
+		SupportMethods.ExecuteAndReturnOutput (processToExecute, parametres);
 	}        
 
 	#endregion
@@ -573,7 +572,7 @@ public partial class MainWindow: Gtk.Window
 		widgetTargetMovieTrack.FillFrom(target);
 		widgetTargetAudioTracks.FillFrom(target);
 
-		widgetGenera.FillFrom(source,target);
+		widgetGenera.FillFrom(source);
 	}
 
 	protected void OnButtonGoConvertClicked (object sender, EventArgs e)
@@ -610,11 +609,6 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnButtonAddFolderClicked (object sender, EventArgs e)
 	{
-		// creating supported extensions dictionary
-		var supportedExtensions = new Dictionary<string,string>();
-		foreach (var val in Enum.GetNames(typeof(VideoContainerEnum))) 
-				supportedExtensions.Add("." + val.ToUpper(),null);
-
 		var dirName = Dialogs.OpenDirectoryDialog("Open all files in directory:");
 		if (dirName != null)
 		{
@@ -622,11 +616,7 @@ public partial class MainWindow: Gtk.Window
 			{
 				if (File.Exists(fName))
 				{
-					var ext = System.IO.Path.GetExtension(fName).ToUpper();
-					if (supportedExtensions.ContainsKey(ext))
-					{
 						AddMediaInfo(fName);
-					}
 				}
 			}
 		}
@@ -758,39 +748,81 @@ public partial class MainWindow: Gtk.Window
 	{
 		if(args.Event.Button == 3) 
 		{
-			var selectedMovies = GetSelectedMediaFiles();
-			if (selectedMovies.Count == 0)
-				return;
-
-			var cmd = String.Empty;
-			foreach (var f in selectedMovies)
-			{
-				cmd += "\"" + f.FileName + "\"";
-				break; // only first 
-			}
-
 			// creating popup menu 
 
 			Gtk.Menu popupMenu = new Gtk.Menu();
 
-			Gtk.Menu openWithSubMenu = new Gtk.Menu();
+			// Add 
 
-			foreach (var app in MediaConvertGUIConfiguration.OpenWithApplications)
+			Gtk.MenuItem menuItemAddFile = new MenuItem("Add file...");
+			menuItemAddFile.Activated+= delegate { OnButtonAddClicked(this,null); };
+			popupMenu.Add(menuItemAddFile);    
+
+			Gtk.MenuItem menuItemAddFolder = new MenuItem("Add folder...");
+			menuItemAddFolder.Activated+= delegate { OnButtonAddFolderClicked(this,null); };
+			popupMenu.Add(menuItemAddFolder);    
+
+			// play and open with buttons for first selected media
+
+			var selectedMovies = GetSelectedMediaFiles();
+			if (selectedMovies.Count >0)			
 			{
-				var btn = new MenuItem(app);
-				openWithSubMenu.Add(btn);
-				btn.Activated+= delegate { SupportMethods.Execute(app,cmd); };
+				popupMenu.Append(new SeparatorMenuItem());
+
+				// getting first selected media
+				var cmd = String.Empty;
+				foreach (var f in selectedMovies)
+				{
+					cmd += "\"" + f.FileName + "\"";
+					break; // only first 
+				}
+
+				Gtk.Menu openWithSubMenu = new Gtk.Menu();
+
+				foreach (var app in MediaConvertGUIConfiguration.OpenWithApplications)
+				{
+					var btn = new MenuItem(app);
+					openWithSubMenu.Add(btn);
+					btn.Activated+= delegate { SupportMethods.Execute(app,cmd); };
+				}
+
+				MenuItem menuitemOpenWith = new MenuItem("Open with.");
+				menuitemOpenWith.Submenu = openWithSubMenu;
+
+				popupMenu.Add(menuitemOpenWith);
+
+				// Play (open in shell) menu
+
+				Gtk.MenuItem menuItemPlay = new MenuItem("Play...");
+				menuItemPlay.Activated+= delegate { SupportMethods.ExecuteInShell(cmd);	};
+
+				popupMenu.Add(menuItemPlay);    
 			}
 
-			Gtk.MenuItem menuItemPlay = new MenuItem("Play...");
-			popupMenu.Add(menuItemPlay);    
-			menuItemPlay.Activated+= delegate { SupportMethods.ExecuteInShell(cmd);	};
+			// remove all
 
-			MenuItem menuitemOpenWith = new MenuItem("Open with.");
-			menuitemOpenWith.Submenu = openWithSubMenu;
+			if (MoviesInfo.Count>0)
+			{
+				popupMenu.Append(new SeparatorMenuItem());
 
-			popupMenu.Add(menuitemOpenWith);
+				var removeSubMenu = new Gtk.Menu();
 
+				var menuItemRemove = new MenuItem("Remove");
+				menuItemRemove.Submenu = removeSubMenu;
+
+				if (selectedMovies.Count >0)			
+				{
+					var removeSelectedMenuItem = new MenuItem("Selected");
+					removeSubMenu.Add(removeSelectedMenuItem);
+					removeSelectedMenuItem.Activated+= delegate { OnButtonRemoveClicked(this,null); };
+				}
+
+				var removeAllMenuItem = new MenuItem("All");
+				removeSubMenu.Add(removeAllMenuItem);
+				removeAllMenuItem.Activated+= delegate { OnButtonRemoveAllClicked(this,null); };
+
+				popupMenu.Add(menuItemRemove);
+			}
 
 			popupMenu.ShowAll();
 			popupMenu.Popup();
@@ -802,6 +834,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnTreePopupMenu (object o, PopupMenuArgs args)
 	{
 	}
+
 	#endregion
 
 }

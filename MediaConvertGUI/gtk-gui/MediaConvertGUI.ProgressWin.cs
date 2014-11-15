@@ -26,7 +26,7 @@ namespace MediaConvertGUI
 		private global::Gtk.ProgressBar progressCurrentPass;
 		private global::Gtk.Label labelCurrentPassPercents;
 		private global::Gtk.Label labelTotalPercents;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
