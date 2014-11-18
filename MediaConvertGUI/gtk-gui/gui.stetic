@@ -167,6 +167,12 @@
         <property name="StockId">gtk-apply</property>
         <signal name="Activated" handler="OnButtonApplyClicked" />
       </action>
+      <action id="saveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export screenshot</property>
+        <property name="ShortLabel" translatable="yes">Export Screenshot</property>
+        <property name="StockId">gtk-save</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Media Convert</property>
@@ -417,6 +423,7 @@
                 <node type="Menuitem" action="copyAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="dialogInfoAction" />
+                <node type="Menuitem" action="saveAction" />
                 <node type="Menuitem" action="editAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="goForwardAction" />

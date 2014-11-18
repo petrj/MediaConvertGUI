@@ -261,6 +261,14 @@ namespace MediaConvertGUI
 			}
 		}
 
+		public void ScreenShot()
+		{
+			if (File.Exists(FileName))
+			{
+				MediaInfoBase.MakeFFMpegScreenShot(this);
+			}
+		}
+
 		public void Copyto(MediaInfo mInfo,bool videoOnly)
 		{
 			mInfo.ClearTracks();

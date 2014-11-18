@@ -628,6 +628,19 @@ public partial class MainWindow: Gtk.Window
 		FillTree();
 	}
 
+
+	protected void OnScreenShotClicked (object sender, EventArgs e)
+	{
+		var selectedMovies = GetSelectedMediaFiles();
+		if (selectedMovies.Count == 0)
+			return;
+
+		foreach (var m in selectedMovies)
+		{
+			m.ScreenShot();
+		}
+	}
+
 	protected void OnButtonApplyClicked (object sender, EventArgs e)
 	{
 		var selectedMovies = GetSelectedMediaFilesWithIndices();
@@ -797,6 +810,14 @@ public partial class MainWindow: Gtk.Window
 				menuItemPlay.Activated+= delegate { SupportMethods.ExecuteInShell(cmd);	};
 
 				popupMenu.Add(menuItemPlay);    
+
+
+				// Export ScreenShot
+
+				Gtk.ImageMenuItem menuItemScreenShot = new ImageMenuItem("Export screenshot");
+				menuItemScreenShot.Activated+= delegate { OnScreenShotClicked(this,null); };
+
+				popupMenu.Add(menuItemScreenShot);    
 			}
 
 			// remove all

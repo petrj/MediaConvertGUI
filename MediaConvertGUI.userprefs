@@ -2,14 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/MainWindow.cs">
     <Files>
-      <File FileName="MediaConvertGUI/MainWindow.cs" Line="738" Column="1" />
-      <File FileName="MediaConvertGUI/Main.cs" Line="24" Column="18" />
-      <File FileName="MediaConvertGUI/config.xml" Line="3" Column="34" />
-      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="222" Column="1" />
-      <File FileName="MediaConvertGUI/SupportMethods.cs" Line="264" Column="3" />
-      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="291" Column="38" />
-      <File FileName="MediaConvertGUI/ProgressWin.cs" Line="24" Column="23" />
-      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="2" Column="17" />
+      <File FileName="MediaConvertGUI/MainWindow.cs" Line="183" Column="14" />
+      <File FileName="MediaConvertGUI/Main.cs" Line="19" Column="7" />
+      <File FileName="MediaConvertGUI/config.xml" Line="12" Column="32" />
+      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="268" Column="15" />
+      <File FileName="MediaConvertGUI/SupportMethods.cs" Line="242" Column="5" />
+      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/ProgressWin.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="180" Column="3" />
+      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetGeneralMediaInfo.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,9 +20,9 @@
             <Node name="References" expanded="True" />
             <Node name="UserInterface" expanded="True">
               <Node name="MainWindow" expanded="True" />
-              <Node name="MediaConvertGUI.TextWin" selected="True" />
             </Node>
             <Node name="Schemes" expanded="True" />
+            <Node name="MainWindow.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -33,6 +35,7 @@
     <BreakpointStore>
       <Breakpoint file="/mnt/data/Develop/git/MediaConvertGUI/MediaConvertGUI/WidgetTargetAudioTrack.cs" line="150" column="1" />
       <Breakpoint file="C:\Users\pjanousek\Documents\GitHub\MediaConvertGUI\MediaConvertGUI\ProgressWin.cs" line="94" column="1" />
+      <Breakpoint file="/mnt/data/Develop/git/MediaConvertGUI/MediaConvertGUI/MediaConvertGUI/MediaInfo.cs" line="268" column="15" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>

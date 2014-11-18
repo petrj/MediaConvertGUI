@@ -27,6 +27,7 @@ public partial class MainWindow
 	private global::Gtk.Action copyAction;
 	private global::Gtk.Action applyAction1;
 	private global::Gtk.Action applyAction2;
+	private global::Gtk.Action saveAction;
 	private global::Gtk.Fixed @fixed;
 	private global::Gtk.Frame frameFileList;
 	private global::Gtk.Alignment GtkAlignment10;
@@ -133,6 +134,9 @@ public partial class MainWindow
 		this.applyAction2 = new global::Gtk.Action ("applyAction2", global::Mono.Unix.Catalog.GetString ("Apply"), null, "gtk-apply");
 		this.applyAction2.ShortLabel = global::Mono.Unix.Catalog.GetString ("Apply");
 		w1.Add (this.applyAction2, null);
+		this.saveAction = new global::Gtk.Action ("saveAction", global::Mono.Unix.Catalog.GetString ("Export screenshot"), null, "gtk-save");
+		this.saveAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export Screenshot");
+		w1.Add (this.saveAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -297,7 +301,7 @@ public partial class MainWindow
 		w20.X = 370;
 		w20.Y = 360;
 		// Container child fixed.Gtk.Fixed+FixedChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='addAction' action='addAction'><menuitem name='addAction1' action='addAction1'/><menuitem name='addAction2' action='addAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction3' action='removeAction3'/><menuitem name='removeAction4' action='removeAction4'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu><menuitem/></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='addAction' action='addAction'><menuitem name='addAction1' action='addAction1'/><menuitem name='addAction2' action='addAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction3' action='removeAction3'/><menuitem name='removeAction4' action='removeAction4'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='saveAction' action='saveAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu><menuitem/></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.@fixed.Add (this.menubar1);

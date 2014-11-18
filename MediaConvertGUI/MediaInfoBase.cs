@@ -151,6 +151,40 @@ namespace MediaConvertGUI
 		#endregion
 
 		#region static Methods
+
+		public static void MakeFFMpegScreenShot(MediaInfo sourceMovie, int secondsDelay = 0)
+		{
+			if (sourceMovie.FirstVideoTrack != null && File.Exists(sourceMovie.FileName))
+			{
+				var ffmpegCommandArgs = String.Empty;
+
+				var timeSpan = TimeSpan.FromSeconds(secondsDelay);
+				//var timeAsStrig = timeSpan.ToString("hh:mm:ss");
+				var timeAsString = string.Format("{0}:{1}", 
+				                                 timeSpan.Minutes.ToString().PadLeft(2,'0'),
+				                                 timeSpan.Seconds.ToString().PadLeft(2,'0'));
+
+				var picFileName = sourceMovie.FileName + ".jpg";
+
+				var counter = 0;
+				while (File.Exists(picFileName))
+				{
+					counter++;
+					picFileName = sourceMovie.FileName + "." + counter.ToString().PadLeft(2,'0')+".jpg";
+				}
+
+				// https://trac.ffmpeg.org/wiki/Create%20a%20thumbnail%20image%20every%20X%20seconds%20of%20the%20video
+				// ffmpeg -i input.flv -ss 00:00:14.435 -f image2 -vframes 1 out.png
+
+				ffmpegCommandArgs = " -i {filename} -ss {time} -f image2 -vframes 1 {pic}";
+
+				ffmpegCommandArgs = ffmpegCommandArgs.Replace("{filename}","\"" + sourceMovie.FileName + "\"");
+				ffmpegCommandArgs = ffmpegCommandArgs.Replace("{time}",timeAsString);
+				ffmpegCommandArgs = ffmpegCommandArgs.Replace("{pic}","\"" + picFileName + "\"");
+
+				SupportMethods.ExecuteAndReturnOutput("ffmpeg",ffmpegCommandArgs);
+			}
+		}
 		
 		public static List<string> MakeFFMpegCommands(Dictionary<MediaInfo,MediaInfo> MoviesInfo)
 		{
