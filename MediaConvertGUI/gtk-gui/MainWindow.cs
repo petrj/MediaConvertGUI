@@ -18,7 +18,7 @@ public partial class MainWindow
 	private global::Gtk.Action removeAction;
 	private global::Gtk.Action removeAction3;
 	private global::Gtk.Action removeAction4;
-	private global::Gtk.Action executeAction;
+	private global::Gtk.Action SchemeAction;
 	private global::Gtk.Action dialogInfoAction;
 	private global::Gtk.Action goForwardAction;
 	private global::Gtk.Action floppyAction;
@@ -28,12 +28,8 @@ public partial class MainWindow
 	private global::Gtk.Action applyAction1;
 	private global::Gtk.Action applyAction2;
 	private global::Gtk.Action saveAction;
+	private global::Gtk.Action MenuAction;
 	private global::Gtk.Fixed @fixed;
-	private global::Gtk.Frame frameFileList;
-	private global::Gtk.Alignment GtkAlignment10;
-	private global::Gtk.ScrolledWindow GtkScrolledWindow;
-	private global::Gtk.TreeView tree;
-	private global::Gtk.Label GtkLabelFileList;
 	private global::Gtk.Frame frameTargetVideo;
 	private global::Gtk.Alignment GtkAlignment8;
 	private global::MediaConvertGUI.WidgetMovieTrack widgetTargetMovieTrack;
@@ -52,9 +48,16 @@ public partial class MainWindow
 	private global::Gtk.Label GtkLabelTargetaudio;
 	private global::Gtk.Frame frameGeneral;
 	private global::Gtk.Alignment GtkAlignment16;
-	private global::MediaConvertGUI.WidgetGeneralMediaInfo widgetGenera;
-	private global::Gtk.MenuBar menubar1;
+	private global::MediaConvertGUI.WidgetGeneralMediaInfo widgetGeneral;
+	private global::Gtk.Frame frameFileList;
+	private global::Gtk.Alignment GtkAlignment10;
+	private global::Gtk.ScrolledWindow GtkScrolledWindow;
+	private global::Gtk.TreeView tree;
+	private global::Gtk.Label GtkLabelFileList;
 	private global::Gtk.Button buttonApply;
+	private global::Gtk.MenuBar menubarScheme;
+	private global::Gtk.ComboBox comboScheme1;
+	private global::Gtk.Button btnMenu;
 
 	protected virtual void Build ()
 	{
@@ -107,9 +110,9 @@ public partial class MainWindow
 		this.removeAction4 = new global::Gtk.Action ("removeAction4", global::Mono.Unix.Catalog.GetString ("All"), null, "gtk-remove");
 		this.removeAction4.ShortLabel = global::Mono.Unix.Catalog.GetString ("Remove all");
 		w1.Add (this.removeAction4, null);
-		this.executeAction = new global::Gtk.Action ("executeAction", global::Mono.Unix.Catalog.GetString ("Actions"), null, "gtk-execute");
-		this.executeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Actions");
-		w1.Add (this.executeAction, null);
+		this.SchemeAction = new global::Gtk.Action ("SchemeAction", global::Mono.Unix.Catalog.GetString ("Scheme:"), null, null);
+		this.SchemeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Scheme:");
+		w1.Add (this.SchemeAction, null);
 		this.dialogInfoAction = new global::Gtk.Action ("dialogInfoAction", global::Mono.Unix.Catalog.GetString ("Preview ..."), null, "gtk-dialog-info");
 		this.dialogInfoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Preview");
 		w1.Add (this.dialogInfoAction, null);
@@ -137,6 +140,10 @@ public partial class MainWindow
 		this.saveAction = new global::Gtk.Action ("saveAction", global::Mono.Unix.Catalog.GetString ("Export screenshot"), null, "gtk-save");
 		this.saveAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export Screenshot");
 		w1.Add (this.saveAction, null);
+		this.MenuAction = new global::Gtk.Action ("MenuAction", global::Mono.Unix.Catalog.GetString ("Menu"), null, null);
+		this.MenuAction.IsImportant = true;
+		this.MenuAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Menu");
+		w1.Add (this.MenuAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -148,9 +155,128 @@ public partial class MainWindow
 		this.@fixed.Name = "fixed";
 		this.@fixed.HasWindow = false;
 		// Container child fixed.Gtk.Fixed+FixedChild
+		this.frameTargetVideo = new global::Gtk.Frame ();
+		this.frameTargetVideo.WidthRequest = 355;
+		this.frameTargetVideo.HeightRequest = 305;
+		this.frameTargetVideo.Name = "frameTargetVideo";
+		// Container child frameTargetVideo.Gtk.Container+ContainerChild
+		this.GtkAlignment8 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment8.Name = "GtkAlignment8";
+		this.GtkAlignment8.LeftPadding = ((uint)(5));
+		// Container child GtkAlignment8.Gtk.Container+ContainerChild
+		this.widgetTargetMovieTrack = new global::MediaConvertGUI.WidgetMovieTrack ();
+		this.widgetTargetMovieTrack.Events = ((global::Gdk.EventMask)(256));
+		this.widgetTargetMovieTrack.Name = "widgetTargetMovieTrack";
+		this.widgetTargetMovieTrack.Editable = false;
+		this.GtkAlignment8.Add (this.widgetTargetMovieTrack);
+		this.frameTargetVideo.Add (this.GtkAlignment8);
+		this.GtkLabelTargetFrameLabel = new global::Gtk.Label ();
+		this.GtkLabelTargetFrameLabel.Name = "GtkLabelTargetFrameLabel";
+		this.GtkLabelTargetFrameLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Target video track</b>");
+		this.GtkLabelTargetFrameLabel.UseMarkup = true;
+		this.frameTargetVideo.LabelWidget = this.GtkLabelTargetFrameLabel;
+		this.@fixed.Add (this.frameTargetVideo);
+		global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetVideo]));
+		w4.X = 750;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.frameVideo = new global::Gtk.Frame ();
+		this.frameVideo.WidthRequest = 355;
+		this.frameVideo.HeightRequest = 305;
+		this.frameVideo.Name = "frameVideo";
+		// Container child frameVideo.Gtk.Container+ContainerChild
+		this.GtkAlignment7 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment7.Name = "GtkAlignment7";
+		this.GtkAlignment7.LeftPadding = ((uint)(5));
+		// Container child GtkAlignment7.Gtk.Container+ContainerChild
+		this.widgetSourceMovieTrack = new global::MediaConvertGUI.WidgetMovieTrack ();
+		this.widgetSourceMovieTrack.Events = ((global::Gdk.EventMask)(256));
+		this.widgetSourceMovieTrack.Name = "widgetSourceMovieTrack";
+		this.widgetSourceMovieTrack.Editable = false;
+		this.GtkAlignment7.Add (this.widgetSourceMovieTrack);
+		this.frameVideo.Add (this.GtkAlignment7);
+		this.GtkLabelSourceVideoFrame = new global::Gtk.Label ();
+		this.GtkLabelSourceVideoFrame.Name = "GtkLabelSourceVideoFrame";
+		this.GtkLabelSourceVideoFrame.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Source video track</b>");
+		this.GtkLabelSourceVideoFrame.UseMarkup = true;
+		this.frameVideo.LabelWidget = this.GtkLabelSourceVideoFrame;
+		this.@fixed.Add (this.frameVideo);
+		global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideo]));
+		w7.X = 5;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.frameSourceAudioTracks = new global::Gtk.Frame ();
+		this.frameSourceAudioTracks.WidthRequest = 355;
+		this.frameSourceAudioTracks.HeightRequest = 220;
+		this.frameSourceAudioTracks.Name = "frameSourceAudioTracks";
+		// Container child frameSourceAudioTracks.Gtk.Container+ContainerChild
+		this.GtkAlignment6 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment6.Name = "GtkAlignment6";
+		this.GtkAlignment6.LeftPadding = ((uint)(5));
+		// Container child GtkAlignment6.Gtk.Container+ContainerChild
+		this.widgetSourceAudioTracks = new global::MediaConvertGUI.WidgetAudioTracks ();
+		this.widgetSourceAudioTracks.Events = ((global::Gdk.EventMask)(256));
+		this.widgetSourceAudioTracks.Name = "widgetSourceAudioTracks";
+		this.widgetSourceAudioTracks.Editable = false;
+		this.GtkAlignment6.Add (this.widgetSourceAudioTracks);
+		this.frameSourceAudioTracks.Add (this.GtkAlignment6);
+		this.GtkLabelAidoTracks = new global::Gtk.Label ();
+		this.GtkLabelAidoTracks.Name = "GtkLabelAidoTracks";
+		this.GtkLabelAidoTracks.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Source audio track(s)</b>");
+		this.GtkLabelAidoTracks.UseMarkup = true;
+		this.frameSourceAudioTracks.LabelWidget = this.GtkLabelAidoTracks;
+		this.@fixed.Add (this.frameSourceAudioTracks);
+		global::Gtk.Fixed.FixedChild w10 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameSourceAudioTracks]));
+		w10.X = 5;
+		w10.Y = 310;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.frameTargetAudio = new global::Gtk.Frame ();
+		this.frameTargetAudio.WidthRequest = 355;
+		this.frameTargetAudio.HeightRequest = 220;
+		this.frameTargetAudio.Name = "frameTargetAudio";
+		// Container child frameTargetAudio.Gtk.Container+ContainerChild
+		this.GtkAlignment14 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment14.Name = "GtkAlignment14";
+		this.GtkAlignment14.LeftPadding = ((uint)(5));
+		// Container child GtkAlignment14.Gtk.Container+ContainerChild
+		this.widgetTargetAudioTracks = new global::MediaConvertGUI.WidgetAudioTracks ();
+		this.widgetTargetAudioTracks.Events = ((global::Gdk.EventMask)(256));
+		this.widgetTargetAudioTracks.Name = "widgetTargetAudioTracks";
+		this.widgetTargetAudioTracks.Editable = true;
+		this.GtkAlignment14.Add (this.widgetTargetAudioTracks);
+		this.frameTargetAudio.Add (this.GtkAlignment14);
+		this.GtkLabelTargetaudio = new global::Gtk.Label ();
+		this.GtkLabelTargetaudio.Name = "GtkLabelTargetaudio";
+		this.GtkLabelTargetaudio.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Target audio track</b>");
+		this.GtkLabelTargetaudio.UseMarkup = true;
+		this.frameTargetAudio.LabelWidget = this.GtkLabelTargetaudio;
+		this.@fixed.Add (this.frameTargetAudio);
+		global::Gtk.Fixed.FixedChild w13 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
+		w13.X = 750;
+		w13.Y = 310;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.frameGeneral = new global::Gtk.Frame ();
+		this.frameGeneral.WidthRequest = 370;
+		this.frameGeneral.HeightRequest = 100;
+		this.frameGeneral.Name = "frameGeneral";
+		// Container child frameGeneral.Gtk.Container+ContainerChild
+		this.GtkAlignment16 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+		this.GtkAlignment16.Name = "GtkAlignment16";
+		this.GtkAlignment16.LeftPadding = ((uint)(5));
+		this.GtkAlignment16.TopPadding = ((uint)(15));
+		// Container child GtkAlignment16.Gtk.Container+ContainerChild
+		this.widgetGeneral = new global::MediaConvertGUI.WidgetGeneralMediaInfo ();
+		this.widgetGeneral.WidthRequest = 350;
+		this.widgetGeneral.Events = ((global::Gdk.EventMask)(256));
+		this.widgetGeneral.Name = "widgetGeneral";
+		this.GtkAlignment16.Add (this.widgetGeneral);
+		this.frameGeneral.Add (this.GtkAlignment16);
+		this.@fixed.Add (this.frameGeneral);
+		global::Gtk.Fixed.FixedChild w16 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameGeneral]));
+		w16.X = 370;
+		w16.Y = 360;
+		// Container child fixed.Gtk.Fixed+FixedChild
 		this.frameFileList = new global::Gtk.Frame ();
 		this.frameFileList.WidthRequest = 370;
-		this.frameFileList.HeightRequest = 310;
+		this.frameFileList.HeightRequest = 320;
 		this.frameFileList.Name = "frameFileList";
 		this.frameFileList.ShadowType = ((global::Gtk.ShadowType)(0));
 		// Container child frameFileList.Gtk.Container+ContainerChild
@@ -178,136 +304,9 @@ public partial class MainWindow
 		this.GtkLabelFileList.UseMarkup = true;
 		this.frameFileList.LabelWidget = this.GtkLabelFileList;
 		this.@fixed.Add (this.frameFileList);
-		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameFileList]));
-		w5.X = 370;
-		w5.Y = 40;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.frameTargetVideo = new global::Gtk.Frame ();
-		this.frameTargetVideo.WidthRequest = 355;
-		this.frameTargetVideo.HeightRequest = 305;
-		this.frameTargetVideo.Name = "frameTargetVideo";
-		// Container child frameTargetVideo.Gtk.Container+ContainerChild
-		this.GtkAlignment8 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment8.Name = "GtkAlignment8";
-		this.GtkAlignment8.LeftPadding = ((uint)(5));
-		// Container child GtkAlignment8.Gtk.Container+ContainerChild
-		this.widgetTargetMovieTrack = new global::MediaConvertGUI.WidgetMovieTrack ();
-		this.widgetTargetMovieTrack.Events = ((global::Gdk.EventMask)(256));
-		this.widgetTargetMovieTrack.Name = "widgetTargetMovieTrack";
-		this.widgetTargetMovieTrack.Editable = false;
-		this.GtkAlignment8.Add (this.widgetTargetMovieTrack);
-		this.frameTargetVideo.Add (this.GtkAlignment8);
-		this.GtkLabelTargetFrameLabel = new global::Gtk.Label ();
-		this.GtkLabelTargetFrameLabel.Name = "GtkLabelTargetFrameLabel";
-		this.GtkLabelTargetFrameLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Target video track</b>");
-		this.GtkLabelTargetFrameLabel.UseMarkup = true;
-		this.frameTargetVideo.LabelWidget = this.GtkLabelTargetFrameLabel;
-		this.@fixed.Add (this.frameTargetVideo);
-		global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetVideo]));
-		w8.X = 750;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.frameVideo = new global::Gtk.Frame ();
-		this.frameVideo.WidthRequest = 355;
-		this.frameVideo.HeightRequest = 305;
-		this.frameVideo.Name = "frameVideo";
-		// Container child frameVideo.Gtk.Container+ContainerChild
-		this.GtkAlignment7 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment7.Name = "GtkAlignment7";
-		this.GtkAlignment7.LeftPadding = ((uint)(5));
-		// Container child GtkAlignment7.Gtk.Container+ContainerChild
-		this.widgetSourceMovieTrack = new global::MediaConvertGUI.WidgetMovieTrack ();
-		this.widgetSourceMovieTrack.Events = ((global::Gdk.EventMask)(256));
-		this.widgetSourceMovieTrack.Name = "widgetSourceMovieTrack";
-		this.widgetSourceMovieTrack.Editable = false;
-		this.GtkAlignment7.Add (this.widgetSourceMovieTrack);
-		this.frameVideo.Add (this.GtkAlignment7);
-		this.GtkLabelSourceVideoFrame = new global::Gtk.Label ();
-		this.GtkLabelSourceVideoFrame.Name = "GtkLabelSourceVideoFrame";
-		this.GtkLabelSourceVideoFrame.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Source video track</b>");
-		this.GtkLabelSourceVideoFrame.UseMarkup = true;
-		this.frameVideo.LabelWidget = this.GtkLabelSourceVideoFrame;
-		this.@fixed.Add (this.frameVideo);
-		global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideo]));
-		w11.X = 5;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.frameSourceAudioTracks = new global::Gtk.Frame ();
-		this.frameSourceAudioTracks.WidthRequest = 355;
-		this.frameSourceAudioTracks.HeightRequest = 220;
-		this.frameSourceAudioTracks.Name = "frameSourceAudioTracks";
-		// Container child frameSourceAudioTracks.Gtk.Container+ContainerChild
-		this.GtkAlignment6 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment6.Name = "GtkAlignment6";
-		this.GtkAlignment6.LeftPadding = ((uint)(5));
-		// Container child GtkAlignment6.Gtk.Container+ContainerChild
-		this.widgetSourceAudioTracks = new global::MediaConvertGUI.WidgetAudioTracks ();
-		this.widgetSourceAudioTracks.Events = ((global::Gdk.EventMask)(256));
-		this.widgetSourceAudioTracks.Name = "widgetSourceAudioTracks";
-		this.widgetSourceAudioTracks.Editable = false;
-		this.GtkAlignment6.Add (this.widgetSourceAudioTracks);
-		this.frameSourceAudioTracks.Add (this.GtkAlignment6);
-		this.GtkLabelAidoTracks = new global::Gtk.Label ();
-		this.GtkLabelAidoTracks.Name = "GtkLabelAidoTracks";
-		this.GtkLabelAidoTracks.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Source audio track(s)</b>");
-		this.GtkLabelAidoTracks.UseMarkup = true;
-		this.frameSourceAudioTracks.LabelWidget = this.GtkLabelAidoTracks;
-		this.@fixed.Add (this.frameSourceAudioTracks);
-		global::Gtk.Fixed.FixedChild w14 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameSourceAudioTracks]));
-		w14.X = 5;
-		w14.Y = 310;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.frameTargetAudio = new global::Gtk.Frame ();
-		this.frameTargetAudio.WidthRequest = 355;
-		this.frameTargetAudio.HeightRequest = 220;
-		this.frameTargetAudio.Name = "frameTargetAudio";
-		// Container child frameTargetAudio.Gtk.Container+ContainerChild
-		this.GtkAlignment14 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment14.Name = "GtkAlignment14";
-		this.GtkAlignment14.LeftPadding = ((uint)(5));
-		// Container child GtkAlignment14.Gtk.Container+ContainerChild
-		this.widgetTargetAudioTracks = new global::MediaConvertGUI.WidgetAudioTracks ();
-		this.widgetTargetAudioTracks.Events = ((global::Gdk.EventMask)(256));
-		this.widgetTargetAudioTracks.Name = "widgetTargetAudioTracks";
-		this.widgetTargetAudioTracks.Editable = true;
-		this.GtkAlignment14.Add (this.widgetTargetAudioTracks);
-		this.frameTargetAudio.Add (this.GtkAlignment14);
-		this.GtkLabelTargetaudio = new global::Gtk.Label ();
-		this.GtkLabelTargetaudio.Name = "GtkLabelTargetaudio";
-		this.GtkLabelTargetaudio.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Target audio track</b>");
-		this.GtkLabelTargetaudio.UseMarkup = true;
-		this.frameTargetAudio.LabelWidget = this.GtkLabelTargetaudio;
-		this.@fixed.Add (this.frameTargetAudio);
-		global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameTargetAudio]));
-		w17.X = 750;
-		w17.Y = 310;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.frameGeneral = new global::Gtk.Frame ();
-		this.frameGeneral.WidthRequest = 370;
-		this.frameGeneral.HeightRequest = 135;
-		this.frameGeneral.Name = "frameGeneral";
-		// Container child frameGeneral.Gtk.Container+ContainerChild
-		this.GtkAlignment16 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
-		this.GtkAlignment16.Name = "GtkAlignment16";
-		this.GtkAlignment16.LeftPadding = ((uint)(5));
-		this.GtkAlignment16.TopPadding = ((uint)(15));
-		// Container child GtkAlignment16.Gtk.Container+ContainerChild
-		this.widgetGenera = new global::MediaConvertGUI.WidgetGeneralMediaInfo ();
-		this.widgetGenera.WidthRequest = 350;
-		this.widgetGenera.Events = ((global::Gdk.EventMask)(256));
-		this.widgetGenera.Name = "widgetGenera";
-		this.GtkAlignment16.Add (this.widgetGenera);
-		this.frameGeneral.Add (this.GtkAlignment16);
-		this.@fixed.Add (this.frameGeneral);
-		global::Gtk.Fixed.FixedChild w20 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameGeneral]));
+		global::Gtk.Fixed.FixedChild w20 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameFileList]));
 		w20.X = 370;
-		w20.Y = 360;
-		// Container child fixed.Gtk.Fixed+FixedChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='addAction' action='addAction'><menuitem name='addAction1' action='addAction1'/><menuitem name='addAction2' action='addAction2'/></menu><menu name='removeAction' action='removeAction'><menuitem name='removeAction3' action='removeAction3'/><menuitem name='removeAction4' action='removeAction4'/></menu><menu name='executeAction' action='executeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/><separator/><menuitem name='dialogInfoAction' action='dialogInfoAction'/><menuitem name='saveAction' action='saveAction'/><menuitem name='editAction' action='editAction'/><separator/><menuitem name='goForwardAction' action='goForwardAction'/></menu><menuitem/></menubar></ui>");
-		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
-		this.menubar1.Name = "menubar1";
-		this.@fixed.Add (this.menubar1);
-		global::Gtk.Fixed.FixedChild w21 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.menubar1]));
-		w21.X = 370;
-		w21.Y = 10;
+		w20.Y = 30;
 		// Container child fixed.Gtk.Fixed+FixedChild
 		this.buttonApply = new global::Gtk.Button ();
 		this.buttonApply.WidthRequest = 370;
@@ -316,25 +315,50 @@ public partial class MainWindow
 		this.buttonApply.Name = "buttonApply";
 		this.buttonApply.UseUnderline = true;
 		// Container child buttonApply.Gtk.Container+ContainerChild
-		global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+		global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 		// Container child GtkAlignment.Gtk.Container+ContainerChild
-		global::Gtk.HBox w23 = new global::Gtk.HBox ();
-		w23.Spacing = 2;
+		global::Gtk.HBox w22 = new global::Gtk.HBox ();
+		w22.Spacing = 2;
 		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Image w24 = new global::Gtk.Image ();
-		w24.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
-		w23.Add (w24);
-		// Container child GtkHBox.Gtk.Container+ContainerChild
-		global::Gtk.Label w26 = new global::Gtk.Label ();
-		w26.LabelProp = global::Mono.Unix.Catalog.GetString ("Apply");
-		w26.UseUnderline = true;
-		w23.Add (w26);
+		global::Gtk.Image w23 = new global::Gtk.Image ();
+		w23.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
 		w22.Add (w23);
-		this.buttonApply.Add (w22);
+		// Container child GtkHBox.Gtk.Container+ContainerChild
+		global::Gtk.Label w25 = new global::Gtk.Label ();
+		w25.LabelProp = global::Mono.Unix.Catalog.GetString ("Apply");
+		w25.UseUnderline = true;
+		w22.Add (w25);
+		w21.Add (w22);
+		this.buttonApply.Add (w21);
 		this.@fixed.Add (this.buttonApply);
-		global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
-		w30.X = 370;
-		w30.Y = 505;
+		global::Gtk.Fixed.FixedChild w29 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.buttonApply]));
+		w29.X = 370;
+		w29.Y = 505;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.UIManager.AddUiFromString ("<ui><menubar name='menubarScheme'><menu name='SchemeAction' action='SchemeAction'><menuitem name='floppyAction' action='floppyAction'/><menuitem name='copyAction' action='copyAction'/></menu><menuitem/></menubar></ui>");
+		this.menubarScheme = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubarScheme")));
+		this.menubarScheme.Name = "menubarScheme";
+		this.@fixed.Add (this.menubarScheme);
+		global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.menubarScheme]));
+		w30.X = 369;
+		w30.Y = 470;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.comboScheme1 = global::Gtk.ComboBox.NewText ();
+		this.comboScheme1.Name = "comboScheme1";
+		this.@fixed.Add (this.comboScheme1);
+		global::Gtk.Fixed.FixedChild w31 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboScheme1]));
+		w31.X = 465;
+		w31.Y = 470;
+		// Container child fixed.Gtk.Fixed+FixedChild
+		this.btnMenu = new global::Gtk.Button ();
+		this.btnMenu.CanFocus = true;
+		this.btnMenu.Name = "btnMenu";
+		this.btnMenu.UseUnderline = true;
+		this.btnMenu.Label = global::Mono.Unix.Catalog.GetString ("Menu");
+		this.@fixed.Add (this.btnMenu);
+		global::Gtk.Fixed.FixedChild w32 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.btnMenu]));
+		w32.X = 373;
+		w32.Y = 10;
 		this.Add (this.@fixed);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
@@ -359,6 +383,7 @@ public partial class MainWindow
 		this.editAction.Activated += new global::System.EventHandler (this.OnShowLogActivated);
 		this.copyAction.Activated += new global::System.EventHandler (this.OnImportShcemeActionActivated);
 		this.applyAction2.Activated += new global::System.EventHandler (this.OnButtonApplyClicked);
-		this.tree.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnTreeButtonPressEvent);
+		this.MenuAction.Activated += new global::System.EventHandler (this.OnMenuActionActivated);
+		this.btnMenu.Clicked += new global::System.EventHandler (this.OnBtnMenuClicked);
 	}
 }

@@ -152,7 +152,7 @@ namespace MediaConvertGUI
 
 		#region static Methods
 
-		public static void MakeFFMpegScreenShot(MediaInfo sourceMovie, int secondsDelay = 0)
+		public static string MakeFFMpegScreenShot(MediaInfo sourceMovie, int secondsDelay = 0)
 		{
 			if (sourceMovie.FirstVideoTrack != null && File.Exists(sourceMovie.FileName))
 			{
@@ -183,7 +183,11 @@ namespace MediaConvertGUI
 				ffmpegCommandArgs = ffmpegCommandArgs.Replace("{pic}","\"" + picFileName + "\"");
 
 				SupportMethods.ExecuteAndReturnOutput("ffmpeg",ffmpegCommandArgs);
+
+				return picFileName;
 			}
+
+			return null;
 		}
 		
 		public static List<string> MakeFFMpegCommands(Dictionary<MediaInfo,MediaInfo> MoviesInfo)

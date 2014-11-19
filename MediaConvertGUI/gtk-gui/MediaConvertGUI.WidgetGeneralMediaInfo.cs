@@ -9,8 +9,6 @@ namespace MediaConvertGUI
 		private global::Gtk.Label labelBitRate;
 		private global::Gtk.Label labelDurationInfo;
 		private global::Gtk.Label labelDuration;
-		private global::Gtk.Label labelScheme;
-		private global::Gtk.ComboBox comboScheme;
 		private global::Gtk.Label labelSizeInfo;
 		private global::Gtk.Label labelSize;
 
@@ -57,36 +55,21 @@ namespace MediaConvertGUI
 			w4.X = 110;
 			w4.Y = 30;
 			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelScheme = new global::Gtk.Label ();
-			this.labelScheme.Name = "labelScheme";
-			this.labelScheme.LabelProp = global::Mono.Unix.Catalog.GetString ("Scheme");
-			this.@fixed.Add (this.labelScheme);
-			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelScheme]));
-			w5.X = 5;
-			w5.Y = 85;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.comboScheme = global::Gtk.ComboBox.NewText ();
-			this.comboScheme.Name = "comboScheme";
-			this.@fixed.Add (this.comboScheme);
-			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboScheme]));
-			w6.X = 110;
-			w6.Y = 77;
-			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelSizeInfo = new global::Gtk.Label ();
 			this.labelSizeInfo.Name = "labelSizeInfo";
 			this.labelSizeInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Size:");
 			this.@fixed.Add (this.labelSizeInfo);
-			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSizeInfo]));
-			w7.X = 5;
-			w7.Y = 55;
+			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSizeInfo]));
+			w5.X = 5;
+			w5.Y = 55;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelSize = new global::Gtk.Label ();
 			this.labelSize.Name = "labelSize";
 			this.labelSize.LabelProp = global::Mono.Unix.Catalog.GetString ("0 MB");
 			this.@fixed.Add (this.labelSize);
-			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSize]));
-			w8.X = 110;
-			w8.Y = 55;
+			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelSize]));
+			w6.X = 110;
+			w6.Y = 55;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

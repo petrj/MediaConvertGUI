@@ -265,7 +265,20 @@ namespace MediaConvertGUI
 		{
 			if (File.Exists(FileName))
 			{
-				MediaInfoBase.MakeFFMpegScreenShot(this);
+				var fName = MediaInfoBase.MakeFFMpegScreenShot(this);
+
+				if (fName != null)
+				{
+					SupportMethods.ExecuteInShell("\"" + fName + "\"");
+				} 
+			}
+		}
+
+		public void PlayInShell()
+		{
+			if (File.Exists(FileName))
+			{
+				SupportMethods.ExecuteInShell("\"" + FileName + "\"");
 			}
 		}
 

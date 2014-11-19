@@ -105,6 +105,35 @@ namespace MediaConvertGUI
 				md.Run();
 				md.Destroy();
 		}
+
+		public delegate void OnMenuClickEvent(object sender, EventArgs e);
+
+		public static ImageMenuItem AddImageMenuButton(string title, string imgName, Gtk.Menu parent,EventHandler OnMenuClicked)
+		{
+			var sep = System.IO.Path.DirectorySeparatorChar;
+			var menuItem = new ImageMenuItem(title);
+
+			if (imgName != null)
+			{
+				var picFileName = SupportMethods.AppPath + sep + "Icons" + sep + imgName;
+				if (System.IO.File.Exists(picFileName))
+				{
+					menuItem.Image = new Gtk.Image(picFileName);
+				}
+			}
+
+			if (OnMenuClicked != null)
+			{
+				menuItem.Activated+= OnMenuClicked;
+			}
+
+			if (parent != null)
+			{
+				parent.Add(menuItem);
+			}
+
+			return menuItem;
+		}
 	}
 }
 
