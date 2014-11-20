@@ -182,7 +182,7 @@ namespace MediaConvertGUI
 				ffmpegCommandArgs = ffmpegCommandArgs.Replace("{time}",timeAsString);
 				ffmpegCommandArgs = ffmpegCommandArgs.Replace("{pic}","\"" + picFileName + "\"");
 
-				SupportMethods.ExecuteAndReturnOutput("ffmpeg",ffmpegCommandArgs);
+				SupportMethods.ExecuteAndReturnOutput(MediaConvertGUIConfiguration.FFMpegPath,ffmpegCommandArgs);
 
 				return picFileName;
 			}
