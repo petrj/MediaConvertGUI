@@ -679,6 +679,8 @@ public partial class MainWindow: Gtk.Window
 				MoviesInfo [m.Value].EditResolution = widgetTargetMovieTrack.MovieInfo.EditResolution;
 				MoviesInfo [m.Value].EditFrameRate = widgetTargetMovieTrack.MovieInfo.EditFrameRate;
 				MoviesInfo [m.Value].EditBitRate = widgetTargetMovieTrack.MovieInfo.EditBitRate;
+				MoviesInfo [m.Value].EditRotation = widgetTargetMovieTrack.MovieInfo.EditRotation;
+				MoviesInfo [m.Value].AutoRotate = widgetTargetMovieTrack.MovieInfo.AutoRotate;
 			}
 		//}
 

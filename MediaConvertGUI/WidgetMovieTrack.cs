@@ -38,6 +38,10 @@ namespace MediaConvertGUI
 				SupportMethods.SetAvailability(comboCodec as Gtk.Widget,_editable);
 				SupportMethods.SetAvailability(comboAspect as Gtk.Widget,_editable);
 				SupportMethods.SetAvailability(comboFrameRate as Gtk.Widget,_editable);
+				
+				SupportMethods.SetAvailability(comboFrameRate as Gtk.Widget,_editable);
+				
+				SupportMethods.SetAvailability(comboRotation as Gtk.Widget,_editable);
 
 				SupportMethods.SetAvailability(entryRealWidth as Gtk.Widget,false);
 				SupportMethods.SetAvailability(entryPixelAspect as Gtk.Widget,false);
@@ -57,10 +61,30 @@ namespace MediaConvertGUI
 			_movieInfo = new MediaInfo();
 
 			comboContainer.Changed+=delegate { OnAnyValueChanged(); };
+			comboRotation.Changed += delegate { OnAnyValueChanged(); };
+			comboCodec.Changed += delegate { OnAnyValueChanged(); };
+			comboAspect.Changed += delegate { OnAnyValueChanged(); };
+			comboFrameRate.Changed += delegate { OnAnyValueChanged(); };
+			comboBitRate.Changed += delegate { OnAnyValueChanged(); };			
+			checkAutorotate.Toggled += delegate { OnAnyValueChanged(); };			
+			
+			//ComboBoxEntry
+			checkKeep.Toggled += delegate { OnAnyValueChanged(); };			
+			chBoxResolution.Toggled += delegate { OnAnyValueChanged(); };			
+			chBoxAspect.Toggled += delegate { OnAnyValueChanged(); };			
+			chBoxBitRate.Toggled += delegate { OnAnyValueChanged(); };			
+			chBoxFrameRate.Toggled += delegate { OnAnyValueChanged(); };
+			chBoxRotation.Toggled += delegate { OnAnyValueChanged(); };
+			
 			eventBoxCodec.ButtonPressEvent+= OnCodecEventBoxButtonPressEvent;
 			eventBocContainer.ButtonPressEvent += OnContainerEventBoxButtonPressEvent;
+			
+			entryWidth.Changed += OnEntryWidthChanged;
+			entryHeight.Changed += OnEntryHeightChanged;
+			
+			
 		}
-
+		
 		#region methods
 
 		public void FillFrom(MediaInfo mInfo)
@@ -92,6 +116,7 @@ namespace MediaConvertGUI
 					chBoxAspect.Active = MovieInfo.EditAspect;
 					chBoxBitRate.Active = MovieInfo.EditBitRate;
 					chBoxFrameRate.Active = MovieInfo.EditFrameRate;
+					chBoxRotation.Active = MovieInfo.EditRotation;					
 
 					if (MovieInfo.EditResolution) 
 					{
@@ -138,6 +163,18 @@ namespace MediaConvertGUI
 						SupportMethods.ClearCombo(comboBitRate);
 					}
 					comboBitRate.Sensitive = MovieInfo.EditBitRate;
+					
+					
+					if (MovieInfo.EditRotation) 
+					{
+						SupportMethods.FillComboBoxEntry(comboRotation,MediaInfo.DefaultRotationAngles,MovieInfo.FirstVideoTrack.RotatationAngle,Editable);
+					} else 
+					{
+						SupportMethods.ClearCombo(comboRotation);
+					}
+					comboRotation.Sensitive = MovieInfo.EditRotation && !MovieInfo.AutoRotate;
+					checkAutorotate.Active = MovieInfo.AutoRotate;	
+					chBoxRotation.Active = MovieInfo.EditRotation;
 
 					SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),Editable,(int)MovieInfo.TargetContainer);
 
@@ -168,6 +205,7 @@ namespace MediaConvertGUI
 					SupportMethods.ClearCombo(comboBitRate);
      				SupportMethods.ClearCombo(comboAspect);
 					SupportMethods.ClearCombo(comboFrameRate);			 
+					SupportMethods.ClearCombo(comboRotation);
 				}
 
 				imageCodec.Visible = comboCodec.Active>0;
@@ -178,7 +216,7 @@ namespace MediaConvertGUI
 					(MovieInfo.FirstVideoTrack!=null) && 
 					( ((Editable) && (comboCodec.Active > 0)) || !Editable );
 
-				chBoxAspect.Visible = chBoxResolution.Visible = chBoxBitRate.Visible = chBoxFrameRate.Visible = chBoxesVisible;
+				chBoxAspect.Visible = chBoxResolution.Visible = chBoxBitRate.Visible = chBoxFrameRate.Visible = chBoxRotation.Visible = checkAutorotate.Visible = chBoxesVisible;
 
 				_eventLock.Unlock();
 			}
@@ -186,12 +224,7 @@ namespace MediaConvertGUI
 
 		#endregion
 
-		#region events
-
-		protected void OnComboBitRateChanged (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}		
+		#region events	
 
 		protected void OnEntryWidthChanged (object sender, EventArgs e)
 		{
@@ -237,16 +270,6 @@ namespace MediaConvertGUI
 				}
 			}
 
-			OnAnyValueChanged();
-		}
-
-		protected void OnComboAspectChanged (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}
-
-		protected void OnComboFrameRateChanged (object sender, EventArgs e)
-		{
 			OnAnyValueChanged();
 		}
 
@@ -304,6 +327,22 @@ namespace MediaConvertGUI
 					{
 						m.Aspect = comboAspect.ActiveText;
 					}
+					
+					if (chBoxRotation.Active)
+					{
+						if (SupportMethods.IsNumeric(comboRotation.ActiveText))
+						{
+							m.RotatationAngle =  SupportMethods.ToDecimal (comboRotation.ActiveText);
+						}
+					}	
+					MovieInfo.EditRotation = chBoxRotation.Active;				
+					
+					MovieInfo.AutoRotate = checkAutorotate.Active;
+					if (checkAutorotate.Active)
+					{
+						// reseting Rotation angle to 0
+						m.RotatationAngle = 0;
+					}
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;
 					MovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
@@ -327,22 +366,6 @@ namespace MediaConvertGUI
 			}
 		}		
 
-		protected void OnComboCodecChanged (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}
-
-		protected void OnComboExtChanged (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}
-
-		protected void OnCheckKeepToggled (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}
-
-
 		protected void OnCodecEventBoxButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
 			if (Editable && MovieInfo!= null && comboCodec.Active>0)
@@ -353,7 +376,7 @@ namespace MediaConvertGUI
 					SupportMethods.ExecuteInShell(MediaInfoBase.WikiVideoCodecsLinks[codec]);
 				}
 			}
-		}
+		}		
 
 		protected void OnContainerEventBoxButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
@@ -365,27 +388,6 @@ namespace MediaConvertGUI
 					SupportMethods.ExecuteInShell(MediaInfoBase.WikiContainerCodecsLinks[container]);
 				}
 			}
-		}
-
-		protected void OnChBoxResolutionClicked (object sender, EventArgs e)
-		{	
-			OnAnyValueChanged();
-		}
-
-
-		protected void OnChBoxAspectClicked (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}
-
-		protected void OnChBoxBitRateClicked (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
-		}
-
-		protected void OnChBoxFrameRateClicked (object sender, EventArgs e)
-		{
-			OnAnyValueChanged();
 		}
 
 		#endregion

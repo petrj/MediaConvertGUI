@@ -471,7 +471,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetMovieTrack" design-size="339 261">
+  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetMovieTrack" design-size="339 282">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -514,7 +514,6 @@
             <property name="MemberName" />
             <property name="IsTextCombo">True</property>
             <property name="Items" translatable="yes" />
-            <signal name="Changed" handler="OnComboCodecChanged" />
           </widget>
           <packing>
             <property name="X">130</property>
@@ -587,7 +586,7 @@
                         <property name="LabelProp" translatable="yes">Track Size</property>
                       </widget>
                       <packing>
-                        <property name="Y">155</property>
+                        <property name="Y">185</property>
                       </packing>
                     </child>
                     <child>
@@ -596,7 +595,6 @@
                         <property name="WidthRequest">140</property>
                         <property name="IsTextCombo">True</property>
                         <property name="Items" translatable="yes" />
-                        <signal name="Changed" handler="OnComboBitRateChanged" />
                       </widget>
                       <packing>
                         <property name="X">110</property>
@@ -609,7 +607,6 @@
                         <property name="WidthRequest">100</property>
                         <property name="IsTextCombo">True</property>
                         <property name="Items" translatable="yes" />
-                        <signal name="Changed" handler="OnComboAspectChanged" />
                       </widget>
                       <packing>
                         <property name="X">110</property>
@@ -663,7 +660,6 @@
                         <property name="CanFocus">True</property>
                         <property name="IsEditable">True</property>
                         <property name="InvisibleChar">●</property>
-                        <signal name="Changed" handler="OnEntryWidthChanged" />
                       </widget>
                       <packing>
                         <property name="X">110</property>
@@ -676,7 +672,6 @@
                         <property name="CanFocus">True</property>
                         <property name="IsEditable">True</property>
                         <property name="InvisibleChar">●</property>
-                        <signal name="Changed" handler="OnEntryHeightChanged" />
                       </widget>
                       <packing>
                         <property name="X">170</property>
@@ -708,7 +703,6 @@
                         <property name="WidthRequest">100</property>
                         <property name="IsTextCombo">True</property>
                         <property name="Items" translatable="yes" />
-                        <signal name="Changed" handler="OnComboFrameRateChanged" />
                       </widget>
                       <packing>
                         <property name="X">110</property>
@@ -732,7 +726,7 @@
                       </widget>
                       <packing>
                         <property name="X">115</property>
-                        <property name="Y">155</property>
+                        <property name="Y">185</property>
                       </packing>
                     </child>
                     <child>
@@ -754,7 +748,6 @@
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnChBoxResolutionClicked" />
                       </widget>
                       <packing>
                         <property name="X">-25</property>
@@ -768,7 +761,6 @@
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnChBoxAspectClicked" />
                       </widget>
                       <packing>
                         <property name="X">-25</property>
@@ -783,7 +775,6 @@
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnChBoxFrameRateClicked" />
                       </widget>
                       <packing>
                         <property name="X">-25</property>
@@ -798,11 +789,70 @@
                         <property name="DrawIndicator">True</property>
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnChBoxBitRateClicked" />
                       </widget>
                       <packing>
                         <property name="X">-25</property>
                         <property name="Y">90</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.ComboBoxEntry" id="comboRotation">
+                        <property name="MemberName" />
+                        <property name="WidthRequest">70</property>
+                        <property name="IsTextCombo">True</property>
+                        <property name="Items" translatable="yes" />
+                      </widget>
+                      <packing>
+                        <property name="X">111</property>
+                        <property name="Y">150</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="labelAngle">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">°</property>
+                      </widget>
+                      <packing>
+                        <property name="X">185</property>
+                        <property name="Y">153</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="labelRotationAngle">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Rotation angle</property>
+                      </widget>
+                      <packing>
+                        <property name="Y">155</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="chBoxRotation">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">True</property>
+                        <property name="UseUnderline">True</property>
+                      </widget>
+                      <packing>
+                        <property name="X">-25</property>
+                        <property name="Y">152</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="checkAutorotate">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes">Fix angle
+(Auto rotate)</property>
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">True</property>
+                        <property name="UseUnderline">True</property>
+                      </widget>
+                      <packing>
+                        <property name="X">195</property>
+                        <property name="Y">150</property>
                       </packing>
                     </child>
                   </widget>

@@ -129,6 +129,14 @@ namespace MediaConvertGUI
 			{15000m,"HDTV (15 Mb)"},
 			{30000m,"HD DVD (30 Mb)"}
 		};
+		
+		public static Dictionary<decimal,string> DefaultRotationAngles = new Dictionary<decimal, string>()
+		{
+			{0,"0"},
+			{90,"90"},
+			{180,"180"},	
+			{270,"270"}
+		};		
 
 		public static Dictionary<decimal,string> DefaultSamplingRates = new Dictionary<decimal, string>()
 		{
@@ -238,7 +246,7 @@ namespace MediaConvertGUI
 
 			// codec copy  - single pass
 			if ( (targetMovie.FirstVideoTrack != null) && (targetMovie.TargetVideoCodec==VideoCodecEnum.copy) &&
-			    (currentPass>1))
+			    (currentPass>1)) 
 			{
 				return res;
 			} 	
@@ -267,12 +275,28 @@ namespace MediaConvertGUI
 				var aspect = " -aspect " + targetMovie.FirstVideoTrack.Aspect;
 				var	scale =   " -s " + targetMovie.FirstVideoTrack.Width.ToString() + "x"+targetMovie.FirstVideoTrack.Height.ToString();
 				var	bitrate = " -b:v " + targetMovie.FirstVideoTrack.Bitrate;	
-				var frameRate = " -r " + targetMovie.FirstVideoTrack.FrameRate.ToString().Replace(",","."); // TODO: invariant culture
+				var frameRate = " -r " + targetMovie.FirstVideoTrack.FrameRate.ToString().Replace(",","."); // TODO: invariant culture								
+				
+				// auto rotation
+				var rotation90AnglesCount = Convert.ToInt32(sourceMovie.FirstVideoTrack.RotatationAngle);
+				var autoRotate = " -vf ";
+				
+				if (rotation90AnglesCount == 90) autoRotate += " transpose=2"; // 90CounterClockwise
+				else
+				if (rotation90AnglesCount == 180) autoRotate += " transpose=1,transpose=1"; // 2*90Clockwise
+				else
+				if (rotation90AnglesCount == 270) autoRotate += " transpose=1"; // 90Clockwise				
+				else 
+				autoRotate = "";  // unsupported transposition
+					
+				var rotationAngle = " -metadata:s:v:0 rotate=" + Convert.ToInt32(targetMovie.FirstVideoTrack.RotatationAngle).ToString(); 
 
 				if (targetMovie.EditAspect)	videoSettings += aspect;
 				if (targetMovie.EditResolution) videoSettings += scale;
 				if (targetMovie.EditBitRate) videoSettings += bitrate;
 				if (targetMovie.EditFrameRate) videoSettings += frameRate;
+				if (targetMovie.EditRotation) videoSettings += rotationAngle;
+				if (targetMovie.AutoRotate) videoSettings += autoRotate;
 
 				if (targetMovie.TargetVideoCodec!=VideoCodecEnum.copy)
 				{

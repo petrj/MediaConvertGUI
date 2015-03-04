@@ -17,7 +17,26 @@ namespace MediaConvertGUI
 				_targetAudioCodec = value;
 			}
 		}
+		
+		private decimal _rotatationAngle = 0;
+		public decimal RotatationAngle 
+		{
+			get 
+			{
+				return _rotatationAngle;
+			}
+			set 
+			{
+				_rotatationAngle = value;
+			}
+		}
 
+ 
+
+		/*
+			"Audio"
+			"Video"
+		*/
 		public string _trackType;
 		public string TrackType
 		{ 
@@ -258,6 +277,7 @@ namespace MediaConvertGUI
 			track.Height = Height;
 			track.DurationMS = DurationMS;
 			track.TargetAudioCodec = TargetAudioCodec;
+			track.RotatationAngle = RotatationAngle;
 		}
 
 		public void Clear()
@@ -279,6 +299,7 @@ namespace MediaConvertGUI
 			DurationMS = DurationMS;
 
 			TargetAudioCodec = AudioCodecEnum.none;
+			RotatationAngle = 0;
 		}	
 
 		public void ParseFromXmlNode(XmlNode node)
@@ -319,6 +340,17 @@ namespace MediaConvertGUI
 
 				if (subNode.Name == "Codec")
 					Codec = subNode.InnerText;
+					
+				if (subNode.Name == "Rotation" && (SupportMethods.IsNumeric(subNode.InnerText)))
+				{	
+					decimal angle = 0;
+					var separator = System.Globalization.CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
+					var rotationAsString = subNode.InnerText.Replace(".",separator).Replace(",",separator);
+					if (Decimal.TryParse(rotationAsString, out angle))
+					{
+						RotatationAngle = angle;	
+					}						
+				}				
 
 				if (subNode.Name == "Duration" && (subNode.InnerText.Contains(":")))
 					Duration = subNode.InnerText;

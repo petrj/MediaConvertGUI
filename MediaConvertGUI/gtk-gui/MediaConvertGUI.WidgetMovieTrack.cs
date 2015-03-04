@@ -33,6 +33,11 @@ namespace MediaConvertGUI
 		private global::Gtk.CheckButton chBoxAspect;
 		private global::Gtk.CheckButton chBoxFrameRate;
 		private global::Gtk.CheckButton chBoxBitRate;
+		private global::Gtk.ComboBoxEntry comboRotation;
+		private global::Gtk.Label labelAngle;
+		private global::Gtk.Label labelRotationAngle;
+		private global::Gtk.CheckButton chBoxRotation;
+		private global::Gtk.CheckButton checkAutorotate;
 		private global::Gtk.Label GtkLabelVideoOptions;
 		private global::Gtk.Label labelContainerInfo;
 		private global::Gtk.ComboBox comboContainer;
@@ -120,7 +125,7 @@ namespace MediaConvertGUI
 			this.labelTrackSizeInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Track Size");
 			this.fixedVideoptions.Add (this.labelTrackSizeInfo);
 			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.labelTrackSizeInfo]));
-			w8.Y = 155;
+			w8.Y = 185;
 			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
 			this.comboBitRate = global::Gtk.ComboBoxEntry.NewText ();
 			this.comboBitRate.WidthRequest = 140;
@@ -229,7 +234,7 @@ namespace MediaConvertGUI
 			this.fixedVideoptions.Add (this.labelTrackSize);
 			global::Gtk.Fixed.FixedChild w20 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.labelTrackSize]));
 			w20.X = 115;
-			w20.Y = 155;
+			w20.Y = 185;
 			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
 			this.labelPixelAspect = new global::Gtk.Label ();
 			this.labelPixelAspect.Name = "labelPixelAspect";
@@ -282,6 +287,51 @@ namespace MediaConvertGUI
 			global::Gtk.Fixed.FixedChild w25 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.chBoxBitRate]));
 			w25.X = -25;
 			w25.Y = 90;
+			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
+			this.comboRotation = global::Gtk.ComboBoxEntry.NewText ();
+			this.comboRotation.WidthRequest = 70;
+			this.comboRotation.Name = "comboRotation";
+			this.fixedVideoptions.Add (this.comboRotation);
+			global::Gtk.Fixed.FixedChild w26 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.comboRotation]));
+			w26.X = 111;
+			w26.Y = 150;
+			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
+			this.labelAngle = new global::Gtk.Label ();
+			this.labelAngle.Name = "labelAngle";
+			this.labelAngle.LabelProp = global::Mono.Unix.Catalog.GetString ("°");
+			this.fixedVideoptions.Add (this.labelAngle);
+			global::Gtk.Fixed.FixedChild w27 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.labelAngle]));
+			w27.X = 185;
+			w27.Y = 153;
+			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
+			this.labelRotationAngle = new global::Gtk.Label ();
+			this.labelRotationAngle.Name = "labelRotationAngle";
+			this.labelRotationAngle.LabelProp = global::Mono.Unix.Catalog.GetString ("Rotation angle");
+			this.fixedVideoptions.Add (this.labelRotationAngle);
+			global::Gtk.Fixed.FixedChild w28 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.labelRotationAngle]));
+			w28.Y = 155;
+			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
+			this.chBoxRotation = new global::Gtk.CheckButton ();
+			this.chBoxRotation.CanFocus = true;
+			this.chBoxRotation.Name = "chBoxRotation";
+			this.chBoxRotation.Label = "";
+			this.chBoxRotation.DrawIndicator = true;
+			this.chBoxRotation.UseUnderline = true;
+			this.fixedVideoptions.Add (this.chBoxRotation);
+			global::Gtk.Fixed.FixedChild w29 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.chBoxRotation]));
+			w29.X = -25;
+			w29.Y = 152;
+			// Container child fixedVideoptions.Gtk.Fixed+FixedChild
+			this.checkAutorotate = new global::Gtk.CheckButton ();
+			this.checkAutorotate.CanFocus = true;
+			this.checkAutorotate.Name = "checkAutorotate";
+			this.checkAutorotate.Label = global::Mono.Unix.Catalog.GetString ("Fix angle\n(Auto rotate)");
+			this.checkAutorotate.DrawIndicator = true;
+			this.checkAutorotate.UseUnderline = true;
+			this.fixedVideoptions.Add (this.checkAutorotate);
+			global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.fixedVideoptions [this.checkAutorotate]));
+			w30.X = 195;
+			w30.Y = 150;
 			this.GtkAlignment.Add (this.fixedVideoptions);
 			this.frameVideooptions.Add (this.GtkAlignment);
 			this.GtkLabelVideoOptions = new global::Gtk.Label ();
@@ -290,24 +340,24 @@ namespace MediaConvertGUI
 			this.GtkLabelVideoOptions.UseMarkup = true;
 			this.frameVideooptions.LabelWidget = this.GtkLabelVideoOptions;
 			this.@fixed.Add (this.frameVideooptions);
-			global::Gtk.Fixed.FixedChild w28 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideooptions]));
-			w28.X = 20;
-			w28.Y = 65;
+			global::Gtk.Fixed.FixedChild w33 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideooptions]));
+			w33.X = 20;
+			w33.Y = 65;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.labelContainerInfo = new global::Gtk.Label ();
 			this.labelContainerInfo.Name = "labelContainerInfo";
 			this.labelContainerInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Container");
 			this.@fixed.Add (this.labelContainerInfo);
-			global::Gtk.Fixed.FixedChild w29 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelContainerInfo]));
-			w29.X = 20;
-			w29.Y = 10;
+			global::Gtk.Fixed.FixedChild w34 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelContainerInfo]));
+			w34.X = 20;
+			w34.Y = 10;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboContainer = global::Gtk.ComboBox.NewText ();
 			this.comboContainer.Name = "comboContainer";
 			this.@fixed.Add (this.comboContainer);
-			global::Gtk.Fixed.FixedChild w30 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
-			w30.X = 130;
-			w30.Y = 6;
+			global::Gtk.Fixed.FixedChild w35 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
+			w35.X = 130;
+			w35.Y = 6;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.eventBocContainer = new global::Gtk.EventBox ();
 			this.eventBocContainer.WidthRequest = 30;
@@ -322,9 +372,9 @@ namespace MediaConvertGUI
 			this.imageContainer.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
 			this.eventBocContainer.Add (this.imageContainer);
 			this.@fixed.Add (this.eventBocContainer);
-			global::Gtk.Fixed.FixedChild w32 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBocContainer]));
-			w32.X = 98;
-			w32.Y = 5;
+			global::Gtk.Fixed.FixedChild w37 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBocContainer]));
+			w37.X = 98;
+			w37.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.eventBoxCodec = new global::Gtk.EventBox ();
 			this.eventBoxCodec.WidthRequest = 30;
@@ -339,25 +389,15 @@ namespace MediaConvertGUI
 			this.imageCodec.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
 			this.eventBoxCodec.Add (this.imageCodec);
 			this.@fixed.Add (this.eventBoxCodec);
-			global::Gtk.Fixed.FixedChild w34 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBoxCodec]));
-			w34.X = 98;
-			w34.Y = 35;
+			global::Gtk.Fixed.FixedChild w39 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBoxCodec]));
+			w39.X = 98;
+			w39.Y = 35;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.eventBoxCodec.Hide ();
 			this.Hide ();
-			this.comboCodec.Changed += new global::System.EventHandler (this.OnComboCodecChanged);
-			this.comboBitRate.Changed += new global::System.EventHandler (this.OnComboBitRateChanged);
-			this.comboAspect.Changed += new global::System.EventHandler (this.OnComboAspectChanged);
-			this.entryWidth.Changed += new global::System.EventHandler (this.OnEntryWidthChanged);
-			this.entryHeight.Changed += new global::System.EventHandler (this.OnEntryHeightChanged);
-			this.comboFrameRate.Changed += new global::System.EventHandler (this.OnComboFrameRateChanged);
-			this.chBoxResolution.Clicked += new global::System.EventHandler (this.OnChBoxResolutionClicked);
-			this.chBoxAspect.Clicked += new global::System.EventHandler (this.OnChBoxAspectClicked);
-			this.chBoxFrameRate.Clicked += new global::System.EventHandler (this.OnChBoxFrameRateClicked);
-			this.chBoxBitRate.Clicked += new global::System.EventHandler (this.OnChBoxBitRateClicked);
 		}
 	}
 }

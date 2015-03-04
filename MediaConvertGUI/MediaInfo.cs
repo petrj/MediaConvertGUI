@@ -13,6 +13,7 @@ namespace MediaConvertGUI
 		#region fileds && properties
 
 		public bool EditResolution { get; set; }
+		public bool EditRotation { get; set; }
 		public bool EditAspect { get; set; }
 		public bool EditBitRate { get; set; }
 		public bool EditFrameRate { get; set; }
@@ -177,6 +178,8 @@ namespace MediaConvertGUI
 		}
 
 		#endregion
+		
+		public bool AutoRotate { get; set; }
 
 		public string RawMediaInfoOutput { get; set; }
 
@@ -210,6 +213,7 @@ namespace MediaConvertGUI
 		public MediaInfo ()
 		{
 			EditResolution = true;
+			EditRotation = true;
 			EditAspect = true;
 			EditBitRate = true;
 			EditFrameRate = true;
@@ -243,6 +247,7 @@ namespace MediaConvertGUI
 		{
 			TargetVideoCodec = VideoCodecEnum.xvid;
 			TargetContainer = VideoContainerEnum.avi;
+			AutoRotate = false;
 			Tracks.Clear();
 			FileSize = 0;
 		}
@@ -302,6 +307,7 @@ namespace MediaConvertGUI
 			mInfo.EditBitRate = EditBitRate;
 			mInfo.EditFrameRate = EditFrameRate;
 			mInfo.EditResolution = EditResolution;
+			mInfo.EditRotation = EditRotation;
 		}
 
 		public void ClearTracks()
