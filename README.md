@@ -3,8 +3,8 @@ MediaConvertGUI
 
 FFmpeg frontend
 
-- Simple GUI for FFMmpeg
-- Video & Audio
+- simple GUI for FFMpeg
+- video & audio
 
-![](https://www.dropbox.com/s/grcjqflevvwrnzh/MediaConvertVideo.png)
+![](https://www.dropbox.com/s/grcjqflevvwrnzh/MediaConvertVideo.png?dl=0)
 
