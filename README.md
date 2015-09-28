@@ -6,6 +6,11 @@ FFmpeg frontend
 - simple GUI for FFMpeg
 - video & audio
 
+- Multiplatform (Linux & Windows)
+
+- Mono & .NET
+- Gtk# 
+
 ![Video](https://raw.github.com/petrj/MediaConvertGUI/master/Screens/MediaConvertVideo.png)
 ![Audio](https://raw.github.com/petrj/MediaConvertGUI/master/Screens/MediaConvertAudio.png)
 ![Progress](https://raw.github.com/petrj/MediaConvertGUI/master/Screens/MediaConvertProgress.png)
