@@ -125,6 +125,7 @@ namespace MediaConvertGUI
 			{1500m,"VCD (1.5 Mb)"},
 			{2000m,"Standard (2 Mb)"},
 			{3500m,"TV  (3.5 Mb)"},	
+			{5000m,"High (5 Mb)"},
 			{9000m,"DVD (9 Mb)"},
 			{15000m,"HDTV (15 Mb)"},
 			{30000m,"HD DVD (30 Mb)"}
@@ -154,6 +155,7 @@ namespace MediaConvertGUI
 			{32m,"32"},
 			{64m,"64"},		
 			{128m,"128"},
+			{192m,"192"},
 		};
 
 		#endregion
