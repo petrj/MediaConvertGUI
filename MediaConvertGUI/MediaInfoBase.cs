@@ -240,7 +240,11 @@ namespace MediaConvertGUI
 			// single audio convert? 
 			if ( (targetMovie.AudioTracks.Count > 0) && 
 			    (targetMovie.FirstAudioTrack.TargetAudioCodec!= AudioCodecEnum.none) &&
-			    ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none)) &&
+			    ( 	(targetMovie.FirstVideoTrack == null) || 
+			    	(targetMovie.TargetVideoCodec == VideoCodecEnum.none) || 
+			    	(targetMovie.TargetContainer == null) || 	
+			    	(targetMovie.TargetContainer == VideoContainerEnum.none)			    	
+			    ) &&
 			    (currentPass>1))
 			{
 				return res;
@@ -262,7 +266,8 @@ namespace MediaConvertGUI
 
 			var map = String.Empty;
 
-			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=VideoCodecEnum.none)
+			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=VideoCodecEnum.none &&
+				targetMovie.TargetContainer != null && targetMovie.TargetContainer != VideoContainerEnum.none)
 			{
 				var videoSettings= String.Empty;					
 				var container = String.Empty;														
@@ -342,7 +347,10 @@ namespace MediaConvertGUI
 				}
 
 
-				if ( (targetMovie.FirstVideoTrack == null) || (targetMovie.TargetVideoCodec == VideoCodecEnum.none))
+				if ( (targetMovie.FirstVideoTrack == null) || 
+					 (targetMovie.TargetVideoCodec == VideoCodecEnum.none) ||					 
+					 (targetMovie.TargetContainer == VideoContainerEnum.none)
+					)									
 				{
 					// converting single audio
 					targetFile = sourceMovie.FileName+".converted" + ext;
