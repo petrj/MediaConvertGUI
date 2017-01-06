@@ -39,10 +39,6 @@ namespace MediaConvertGUI
 		private global::Gtk.CheckButton chBoxRotation;
 		private global::Gtk.CheckButton checkAutorotate;
 		private global::Gtk.Label GtkLabelVideoOptions;
-		private global::Gtk.Label labelContainerInfo;
-		private global::Gtk.ComboBox comboContainer;
-		private global::Gtk.EventBox eventBocContainer;
-		private global::Gtk.Image imageContainer;
 		private global::Gtk.EventBox eventBoxCodec;
 		private global::Gtk.Image imageCodec;
 
@@ -62,15 +58,15 @@ namespace MediaConvertGUI
 			this.labelCodecInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Codec");
 			this.@fixed.Add (this.labelCodecInfo);
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelCodecInfo]));
-			w1.X = 20;
-			w1.Y = 40;
+			w1.X = 35;
+			w1.Y = 10;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.comboCodec = global::Gtk.ComboBox.NewText ();
 			this.comboCodec.Name = "comboCodec";
 			this.@fixed.Add (this.comboCodec);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboCodec]));
-			w2.X = 130;
-			w2.Y = 35;
+			w2.X = 145;
+			w2.Y = 5;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.frameVideooptions = new global::Gtk.Frame ();
 			this.frameVideooptions.WidthRequest = 315;
@@ -342,39 +338,7 @@ namespace MediaConvertGUI
 			this.@fixed.Add (this.frameVideooptions);
 			global::Gtk.Fixed.FixedChild w33 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameVideooptions]));
 			w33.X = 20;
-			w33.Y = 65;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelContainerInfo = new global::Gtk.Label ();
-			this.labelContainerInfo.Name = "labelContainerInfo";
-			this.labelContainerInfo.LabelProp = global::Mono.Unix.Catalog.GetString ("Container");
-			this.@fixed.Add (this.labelContainerInfo);
-			global::Gtk.Fixed.FixedChild w34 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelContainerInfo]));
-			w34.X = 20;
-			w34.Y = 10;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.comboContainer = global::Gtk.ComboBox.NewText ();
-			this.comboContainer.Name = "comboContainer";
-			this.@fixed.Add (this.comboContainer);
-			global::Gtk.Fixed.FixedChild w35 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
-			w35.X = 130;
-			w35.Y = 6;
-			// Container child fixed.Gtk.Fixed+FixedChild
-			this.eventBocContainer = new global::Gtk.EventBox ();
-			this.eventBocContainer.WidthRequest = 30;
-			this.eventBocContainer.HeightRequest = 30;
-			this.eventBocContainer.Events = ((global::Gdk.EventMask)(256));
-			this.eventBocContainer.Name = "eventBocContainer";
-			// Container child eventBocContainer.Gtk.Container+ContainerChild
-			this.imageContainer = new global::Gtk.Image ();
-			this.imageContainer.WidthRequest = 25;
-			this.imageContainer.HeightRequest = 25;
-			this.imageContainer.Name = "imageContainer";
-			this.imageContainer.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
-			this.eventBocContainer.Add (this.imageContainer);
-			this.@fixed.Add (this.eventBocContainer);
-			global::Gtk.Fixed.FixedChild w37 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBocContainer]));
-			w37.X = 98;
-			w37.Y = 5;
+			w33.Y = 35;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.eventBoxCodec = new global::Gtk.EventBox ();
 			this.eventBoxCodec.WidthRequest = 30;
@@ -389,9 +353,9 @@ namespace MediaConvertGUI
 			this.imageCodec.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
 			this.eventBoxCodec.Add (this.imageCodec);
 			this.@fixed.Add (this.eventBoxCodec);
-			global::Gtk.Fixed.FixedChild w39 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBoxCodec]));
-			w39.X = 98;
-			w39.Y = 35;
+			global::Gtk.Fixed.FixedChild w35 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBoxCodec]));
+			w35.X = 110;
+			w35.Y = 5;
 			this.Add (this.@fixed);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

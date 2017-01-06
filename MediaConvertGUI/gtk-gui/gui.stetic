@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="1112 537">
+  <widget class="Gtk.Window" id="MainWindow" design-size="1111 587">
     <action-group name="Default">
       <action id="FiAction">
         <property name="Type">Action</property>
@@ -199,7 +199,7 @@
           <widget class="Gtk.Frame" id="frameTargetVideo">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">305</property>
+            <property name="HeightRequest">270</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment8">
                 <property name="MemberName" />
@@ -218,7 +218,7 @@
             <child>
               <widget class="Gtk.Label" id="GtkLabelTargetFrameLabel">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Target video track&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Video&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -228,13 +228,14 @@
           </widget>
           <packing>
             <property name="X">750</property>
+            <property name="Y">50</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Frame" id="frameVideo">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">305</property>
+            <property name="HeightRequest">270</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment7">
                 <property name="MemberName" />
@@ -253,7 +254,7 @@
             <child>
               <widget class="Gtk.Label" id="GtkLabelSourceVideoFrame">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Source video track&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Video&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -263,6 +264,7 @@
           </widget>
           <packing>
             <property name="X">5</property>
+            <property name="Y">50</property>
           </packing>
         </child>
         <child>
@@ -288,7 +290,7 @@
             <child>
               <widget class="Gtk.Label" id="GtkLabelAidoTracks">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Source audio track(s)&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Audio&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -298,7 +300,7 @@
           </widget>
           <packing>
             <property name="X">5</property>
-            <property name="Y">310</property>
+            <property name="Y">325</property>
           </packing>
         </child>
         <child>
@@ -324,7 +326,7 @@
             <child>
               <widget class="Gtk.Label" id="GtkLabelTargetaudio">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Target audio track&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Audio&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -334,7 +336,7 @@
           </widget>
           <packing>
             <property name="X">750</property>
-            <property name="Y">310</property>
+            <property name="Y">325</property>
           </packing>
         </child>
         <child>
@@ -361,14 +363,14 @@
           </widget>
           <packing>
             <property name="X">370</property>
-            <property name="Y">360</property>
+            <property name="Y">415</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Frame" id="frameFileList">
             <property name="MemberName" />
             <property name="WidthRequest">370</property>
-            <property name="HeightRequest">320</property>
+            <property name="HeightRequest">380</property>
             <property name="ShadowType">None</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment10">
@@ -412,22 +414,6 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Button" id="buttonApply">
-            <property name="MemberName" />
-            <property name="WidthRequest">370</property>
-            <property name="HeightRequest">25</property>
-            <property name="CanFocus">True</property>
-            <property name="Type">TextAndIcon</property>
-            <property name="Icon">stock:gtk-apply Menu</property>
-            <property name="Label" translatable="yes">Apply</property>
-            <property name="UseUnderline">True</property>
-          </widget>
-          <packing>
-            <property name="X">370</property>
-            <property name="Y">505</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.MenuBar" id="menubarScheme">
             <property name="MemberName" />
             <node name="menubarScheme" type="Menubar">
@@ -439,8 +425,8 @@
             </node>
           </widget>
           <packing>
-            <property name="X">369</property>
-            <property name="Y">470</property>
+            <property name="X">370</property>
+            <property name="Y">520</property>
           </packing>
         </child>
         <child>
@@ -451,7 +437,7 @@
           </widget>
           <packing>
             <property name="X">465</property>
-            <property name="Y">470</property>
+            <property name="Y">520</property>
           </packing>
         </child>
         <child>
@@ -466,6 +452,92 @@
           <packing>
             <property name="X">373</property>
             <property name="Y">10</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Frame" id="frameTargetContainer">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">45</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment5">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetContainer" id="widgetTargetContainer">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">False</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelTargetContainer">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Target&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">750</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Frame" id="frameSourceContainer">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">45</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment9">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetContainer" id="widgetSourceContainer">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">False</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelSourceContainer">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Source&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">5</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="buttonApply">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">25</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextAndIcon</property>
+            <property name="Icon">stock:gtk-apply Menu</property>
+            <property name="Label" translatable="yes">Apply</property>
+            <property name="UseUnderline">True</property>
+          </widget>
+          <packing>
+            <property name="X">749</property>
+            <property name="Y">555</property>
           </packing>
         </child>
       </widget>
@@ -505,8 +577,8 @@
             <property name="LabelProp" translatable="yes">Codec</property>
           </widget>
           <packing>
-            <property name="X">20</property>
-            <property name="Y">40</property>
+            <property name="X">35</property>
+            <property name="Y">10</property>
           </packing>
         </child>
         <child>
@@ -516,8 +588,8 @@
             <property name="Items" translatable="yes" />
           </widget>
           <packing>
-            <property name="X">130</property>
-            <property name="Y">35</property>
+            <property name="X">145</property>
+            <property name="Y">5</property>
           </packing>
         </child>
         <child>
@@ -872,48 +944,7 @@
           </widget>
           <packing>
             <property name="X">20</property>
-            <property name="Y">65</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="labelContainerInfo">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Container</property>
-          </widget>
-          <packing>
-            <property name="X">20</property>
-            <property name="Y">10</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.ComboBox" id="comboContainer">
-            <property name="MemberName" />
-            <property name="IsTextCombo">True</property>
-            <property name="Items" translatable="yes" />
-          </widget>
-          <packing>
-            <property name="X">130</property>
-            <property name="Y">6</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.EventBox" id="eventBocContainer">
-            <property name="MemberName" />
-            <property name="WidthRequest">30</property>
-            <property name="HeightRequest">30</property>
-            <property name="Events">ButtonPressMask</property>
-            <child>
-              <widget class="Gtk.Image" id="imageContainer">
-                <property name="MemberName" />
-                <property name="WidthRequest">25</property>
-                <property name="HeightRequest">25</property>
-                <property name="Pixbuf">stock:gtk-dialog-info Menu</property>
-              </widget>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">98</property>
-            <property name="Y">5</property>
+            <property name="Y">35</property>
           </packing>
         </child>
         <child>
@@ -933,8 +964,8 @@
             </child>
           </widget>
           <packing>
-            <property name="X">98</property>
-            <property name="Y">35</property>
+            <property name="X">110</property>
+            <property name="Y">5</property>
           </packing>
         </child>
       </widget>
@@ -1461,6 +1492,53 @@
             <property name="CanFocus">True</property>
             <property name="Text" translatable="yes" />
           </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetContainer" design-size="323 31">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.Fixed" id="fixed">
+        <property name="MemberName" />
+        <property name="HasWindow">False</property>
+        <child>
+          <widget class="Gtk.Label" id="labelContainer">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Container</property>
+          </widget>
+          <packing>
+            <property name="X">35</property>
+            <property name="Y">7</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.EventBox" id="eventBoxContainer">
+            <property name="MemberName" />
+            <child>
+              <widget class="Gtk.Image" id="imageContainer">
+                <property name="MemberName" />
+                <property name="WidthRequest">16</property>
+                <property name="HeightRequest">16</property>
+                <property name="Pixbuf">stock:gtk-dialog-info Menu</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">115</property>
+            <property name="Y">7</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.ComboBox" id="comboContainer">
+            <property name="MemberName" />
+            <property name="IsTextCombo">True</property>
+            <property name="Items" translatable="yes" />
+          </widget>
+          <packing>
+            <property name="X">145</property>
+          </packing>
         </child>
       </widget>
     </child>

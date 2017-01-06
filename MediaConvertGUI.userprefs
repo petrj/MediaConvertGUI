@@ -1,22 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/Schemes/MPEG-DVB-T-record-xvid-mp3.xml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/WidgetContainer.cs">
     <Files>
       <File FileName="MediaConvertGUI/MainWindow.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/MediaInfo.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/TrackInfo.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/MediaInfoBase.cs" Line="1" Column="1" />
-      <File FileName="MediaConvertGUI/Schemes/MPEG-DVB-T-record-xvid-mp3.xml" Line="20" Column="20" />
+      <File FileName="MediaConvertGUI/Schemes/MPEG-DVB-T-record-xvid-mp3.xml" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetContainer.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="MediaConvertGUI" expanded="True">
             <Node name="Icons" expanded="True" />
-            <Node name="Schemes" expanded="True">
-              <Node name="MPEG-DVB-T-record-xvid-mp3.xml" selected="True" />
-            </Node>
+            <Node name="Schemes" expanded="True" />
+            <Node name="WidgetContainer.cs" selected="True" />
           </Node>
         </State>
       </Pad>

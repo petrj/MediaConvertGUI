@@ -32,7 +32,7 @@ namespace MediaConvertGUI
 		vp8
 	}
 
-	public enum VideoContainerEnum
+	public enum ContainerEnum
 	{
 		none,
 		avi,
@@ -42,7 +42,12 @@ namespace MediaConvertGUI
 		mpeg,
 		ogg,
 		webm,
-		_3gp
+		_3gp,
+		mp3,
+		wav,
+		flac,
+		aac,
+		ac3				
 	}
 
 	#endregion
@@ -72,16 +77,16 @@ namespace MediaConvertGUI
 			{VideoCodecEnum.vp8,"http://en.wikipedia.org/wiki/vp8"}
 		};
 
-		public static Dictionary<VideoContainerEnum,string> WikiContainerCodecsLinks = new Dictionary<VideoContainerEnum, string>()
+		public static Dictionary<ContainerEnum,string> WikiContainerCodecsLinks = new Dictionary<ContainerEnum, string>()
 		{		
-			{VideoContainerEnum.avi ,"http://en.wikipedia.org/wiki/Audio_Video_Interleave"},
-			{VideoContainerEnum.flv ,"http://en.wikipedia.org/wiki/Flash_Video"},
-			{VideoContainerEnum.mkv ,"http://en.wikipedia.org/wiki/Mkv"},
-			{VideoContainerEnum.mp4 ,"http://en.wikipedia.org/wiki/Mp4"},
-			{VideoContainerEnum.mpeg ,"http://en.wikipedia.org/wiki/Mp4"},
-			{VideoContainerEnum.ogg ,"http://en.wikipedia.org/wiki/Ogg"},
-			{VideoContainerEnum.webm ,"http://en.wikipedia.org/wiki/Webm"},
-			{VideoContainerEnum._3gp ,"http://en.wikipedia.org/wiki/3gp"},
+			{ContainerEnum.avi ,"http://en.wikipedia.org/wiki/Audio_Video_Interleave"},
+			{ContainerEnum.flv ,"http://en.wikipedia.org/wiki/Flash_Video"},
+			{ContainerEnum.mkv ,"http://en.wikipedia.org/wiki/Mkv"},
+			{ContainerEnum.mp4 ,"http://en.wikipedia.org/wiki/Mp4"},
+			{ContainerEnum.mpeg ,"http://en.wikipedia.org/wiki/Mp4"},
+			{ContainerEnum.ogg ,"http://en.wikipedia.org/wiki/Ogg"},
+			{ContainerEnum.webm ,"http://en.wikipedia.org/wiki/Webm"},
+			{ContainerEnum._3gp ,"http://en.wikipedia.org/wiki/3gp"},
 		};
 
 		public static Dictionary<VideoCodecEnum,string> DefaultVideoCodecsDescriptions = new Dictionary<VideoCodecEnum, string>()
@@ -95,29 +100,29 @@ namespace MediaConvertGUI
 		};
 
 
-		public static Dictionary<VideoContainerEnum,string> VideoContainerToExtension = new Dictionary<VideoContainerEnum, string> () 
+		public static Dictionary<ContainerEnum,string> VideoContainerToExtension = new Dictionary<ContainerEnum, string> () 
 		{
-			{VideoContainerEnum.avi,".avi"},
-			{VideoContainerEnum.flv,".flv"},
-			{VideoContainerEnum.mp4,".mp4"},
-			{VideoContainerEnum.mpeg,".mpeg"},
-			{VideoContainerEnum.ogg,".ogv"},
-			{VideoContainerEnum.mkv,".mkv"},
-			{VideoContainerEnum.webm,".webm"},
-			{VideoContainerEnum._3gp,".3gp"},
+			{ContainerEnum.avi,".avi"},
+			{ContainerEnum.flv,".flv"},
+			{ContainerEnum.mp4,".mp4"},
+			{ContainerEnum.mpeg,".mpeg"},
+			{ContainerEnum.ogg,".ogv"},
+			{ContainerEnum.mkv,".mkv"},
+			{ContainerEnum.webm,".webm"},
+			{ContainerEnum._3gp,".3gp"},
 		};
 
-		public static Dictionary<VideoContainerEnum,string> VideoContainerToFFMpegContainer = new Dictionary<VideoContainerEnum, string> () 
+		public static Dictionary<ContainerEnum,string> VideoContainerToFFMpegContainer = new Dictionary<ContainerEnum, string> () 
 		{
-			{VideoContainerEnum.none,""},
-			{VideoContainerEnum.avi,"avi"},
-			{VideoContainerEnum.flv,"flv"},
-			{VideoContainerEnum.mp4,"mp4"},
-			{VideoContainerEnum.mpeg,"mpg"},
-			{VideoContainerEnum.ogg,"ogg"},
-			{VideoContainerEnum.mkv,"mkv"},
-			{VideoContainerEnum.webm,"webm"},
-			{VideoContainerEnum._3gp,"3gp"},
+			{ContainerEnum.none,""},
+			{ContainerEnum.avi,"avi"},
+			{ContainerEnum.flv,"flv"},
+			{ContainerEnum.mp4,"mp4"},
+			{ContainerEnum.mpeg,"mpg"},
+			{ContainerEnum.ogg,"ogg"},
+			{ContainerEnum.mkv,"mkv"},
+			{ContainerEnum.webm,"webm"},
+			{ContainerEnum._3gp,"3gp"},
 		};
 
 		public static Dictionary<decimal,string> DefaultVideoBitRates = new Dictionary<decimal, string>()
@@ -243,7 +248,7 @@ namespace MediaConvertGUI
 			    ( 	(targetMovie.FirstVideoTrack == null) || 
 			    	(targetMovie.TargetVideoCodec == VideoCodecEnum.none) || 
 			    	(targetMovie.TargetContainer == null) || 	
-			    	(targetMovie.TargetContainer == VideoContainerEnum.none)			    	
+			    	(targetMovie.TargetContainer == ContainerEnum.none)			    	
 			    ) &&
 			    (currentPass>1))
 			{
@@ -267,7 +272,7 @@ namespace MediaConvertGUI
 			var map = String.Empty;
 
 			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=VideoCodecEnum.none &&
-				targetMovie.TargetContainer != null && targetMovie.TargetContainer != VideoContainerEnum.none)
+				targetMovie.TargetContainer != null && targetMovie.TargetContainer != ContainerEnum.none)
 			{
 				var videoSettings= String.Empty;					
 				var container = String.Empty;														
@@ -349,7 +354,7 @@ namespace MediaConvertGUI
 
 				if ( (targetMovie.FirstVideoTrack == null) || 
 					 (targetMovie.TargetVideoCodec == VideoCodecEnum.none) ||					 
-					 (targetMovie.TargetContainer == VideoContainerEnum.none)
+					 (targetMovie.TargetContainer == ContainerEnum.none)
 					)									
 				{
 					// converting single audio
@@ -381,16 +386,16 @@ namespace MediaConvertGUI
 			return res;
 		}
 
-		public static VideoContainerEnum DetectContainerByExt(string fileName)
+		public static ContainerEnum DetectContainerByExt(string fileName)
 		{
-			var res = VideoContainerEnum.none;
+			var res = ContainerEnum.none;
 			var ext = System.IO.Path.GetExtension(fileName).ToLower();
 			if (!String.IsNullOrEmpty(ext) && ext.Length>1)
 			{
 				ext = ext.Substring(1);
 			}
 
-			foreach (var cont in Enum.GetNames(typeof(VideoContainerEnum)))
+			foreach (var cont in Enum.GetNames(typeof(ContainerEnum)))
 			{
 				if (cont == ext)
 				{

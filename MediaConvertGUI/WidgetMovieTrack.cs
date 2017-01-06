@@ -60,7 +60,7 @@ namespace MediaConvertGUI
 			Editable = false;
 			_movieInfo = new MediaInfo();
 
-			comboContainer.Changed+=delegate { OnAnyValueChanged(); };
+			
 			comboRotation.Changed += delegate { OnAnyValueChanged(); };
 			comboCodec.Changed += delegate { OnAnyValueChanged(); };
 			comboAspect.Changed += delegate { OnAnyValueChanged(); };
@@ -77,7 +77,6 @@ namespace MediaConvertGUI
 			chBoxRotation.Toggled += delegate { OnAnyValueChanged(); };
 			
 			eventBoxCodec.ButtonPressEvent+= OnCodecEventBoxButtonPressEvent;
-			eventBocContainer.ButtonPressEvent += OnContainerEventBoxButtonPressEvent;
 			
 			entryWidth.Changed += OnEntryWidthChanged;
 			entryHeight.Changed += OnEntryHeightChanged;
@@ -176,8 +175,6 @@ namespace MediaConvertGUI
 					checkAutorotate.Active = MovieInfo.AutoRotate;	
 					chBoxRotation.Active = MovieInfo.EditRotation;
 
-					SupportMethods.FillComboBox(comboContainer,typeof(VideoContainerEnum),Editable,(int)MovieInfo.TargetContainer);
-
 					if (Editable)
 					{
 						chBoxesVisible = true;
@@ -198,8 +195,7 @@ namespace MediaConvertGUI
 					entryPixelAspect.Text = String.Empty;
 
 
-					SupportMethods.ClearCombo(comboCodec);
-					SupportMethods.ClearCombo(comboContainer);
+					SupportMethods.ClearCombo(comboCodec);					
 					labelTrackSize.Text = String.Empty;
 
 					SupportMethods.ClearCombo(comboBitRate);
@@ -209,8 +205,7 @@ namespace MediaConvertGUI
 				}
 
 				imageCodec.Visible = comboCodec.Active>0;
-				imageContainer.Visible = comboContainer.Active>0;
-
+				
 				frameVideooptions.Visible = 
 					(MovieInfo != null) && 
 					(MovieInfo.FirstVideoTrack!=null) && 
@@ -345,7 +340,6 @@ namespace MediaConvertGUI
 					}
 
 					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;
-					MovieInfo.TargetContainer = (VideoContainerEnum)comboContainer.Active;
 
 					comboCodec.TooltipText = String.Empty;
 					if (comboCodec.Active > 0)
@@ -377,18 +371,6 @@ namespace MediaConvertGUI
 				}
 			}
 		}		
-
-		protected void OnContainerEventBoxButtonPressEvent (object o, ButtonPressEventArgs args)
-		{
-			if (Editable && MovieInfo!= null && comboContainer.Active>0)
-			{
-				var container = (VideoContainerEnum)comboContainer.Active;
-				if (MediaInfoBase.WikiContainerCodecsLinks.ContainsKey(container))
-				{
-					SupportMethods.ExecuteInShell(MediaInfoBase.WikiContainerCodecsLinks[container]);
-				}
-			}
-		}
 
 		#endregion
 	}

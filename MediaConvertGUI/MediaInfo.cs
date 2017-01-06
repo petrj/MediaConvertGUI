@@ -194,8 +194,8 @@ namespace MediaConvertGUI
 			}
 		}
 
-		private VideoContainerEnum _targetContainer = VideoContainerEnum.none;
-		public VideoContainerEnum TargetContainer
+		private ContainerEnum _targetContainer = ContainerEnum.none;
+		public ContainerEnum TargetContainer
 		{ 
 			get { return _targetContainer; }
 			set 
@@ -246,7 +246,7 @@ namespace MediaConvertGUI
 		public void Clear()
 		{
 			TargetVideoCodec = VideoCodecEnum.xvid;
-			TargetContainer = VideoContainerEnum.avi;
+			TargetContainer = ContainerEnum.avi;
 			AutoRotate = false;
 			Tracks.Clear();
 			FileSize = 0;
@@ -370,7 +370,7 @@ namespace MediaConvertGUI
 
 			foreach (XmlNode item in xmlRoot.SelectNodes(@"/MultimediaScheme"))
 			{
-				VideoContainerEnum container;
+				ContainerEnum container;
 
 				var node = item.SelectSingleNode("Container");
 				if ((node != null) &&

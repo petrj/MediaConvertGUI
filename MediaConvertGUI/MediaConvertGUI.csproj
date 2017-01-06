@@ -21,6 +21,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
+    <Commandlineparameters>/temp/music.mp3</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -90,6 +91,8 @@
     <Compile Include="gtk-gui\MediaConvertGUI.TextWin.cs" />
     <Compile Include="MediaConvertGUIConfiguration.cs" />
     <Compile Include="EnhancedXmlDocument.cs" />
+    <Compile Include="WidgetContainer.cs" />
+    <Compile Include="gtk-gui\MediaConvertGUI.WidgetContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
