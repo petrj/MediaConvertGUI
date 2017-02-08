@@ -32,7 +32,7 @@ namespace MediaConvertGUI
 			global::Stetic.Gui.Initialize (this);
 			// Widget MediaConvertGUI.ProgressWin
 			this.Name = "MediaConvertGUI.ProgressWin";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Progess");
+			this.Title = global::Mono.Unix.Catalog.GetString ("Progress");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child MediaConvertGUI.ProgressWin.Gtk.Container+ContainerChild
 			this.@fixed = new global::Gtk.Fixed ();

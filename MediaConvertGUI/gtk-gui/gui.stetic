@@ -1280,7 +1280,7 @@
   </widget>
   <widget class="Gtk.Window" id="MediaConvertGUI.ProgressWin" design-size="474 275">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Progess</property>
+    <property name="Title" translatable="yes">Progress</property>
     <property name="WindowPosition">CenterOnParent</property>
     <child>
       <widget class="Gtk.Fixed" id="fixed">

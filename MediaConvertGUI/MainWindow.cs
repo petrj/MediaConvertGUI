@@ -329,9 +329,9 @@ public partial class MainWindow: Gtk.Window
 
 	#endregion
 
-	#region progess
+	#region progress
 
-	public void ShowProgess()
+	public void ShowProgress()
     {
         _proressWindow.Show();
         _proressWindow.SetPercents(0,0,0,_processStartedAt);
@@ -571,7 +571,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnButtonGoConvertClicked (object sender, EventArgs e)
 	{
 		RunCommandList();
-		ShowProgess();
+		ShowProgress();
 	}	
 
 	protected void OnPreviwButtonClicked (object sender, EventArgs e)
