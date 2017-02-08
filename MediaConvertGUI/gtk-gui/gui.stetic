@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="1111 587">
+  <widget class="Gtk.Window" id="MainWindow" design-size="750 710">
     <action-group name="Default">
       <action id="FiAction">
         <property name="Type">Action</property>
@@ -119,13 +119,6 @@
         <property name="StockId">gtk-dialog-info</property>
         <signal name="Activated" handler="OnPreviwButtonClicked" />
       </action>
-      <action id="goForwardAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Go convert</property>
-        <property name="ShortLabel" translatable="yes">Go convert</property>
-        <property name="StockId">gtk-go-forward</property>
-        <signal name="Activated" handler="OnButtonGoConvertClicked" />
-      </action>
       <action id="floppyAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Save convert scheme to xml ...</property>
@@ -179,10 +172,114 @@
         <property name="ShortLabel" translatable="yes">Menu</property>
         <signal name="Activated" handler="OnMenuActionActivated" />
       </action>
+      <action id="addFileAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Add file</property>
+        <property name="ShortLabel" translatable="yes">Add file</property>
+        <property name="StockId">gtk-add</property>
+      </action>
+      <action id="applyAction3">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Apply</property>
+        <property name="ShortLabel" translatable="yes">Apply</property>
+        <property name="StockId">gtk-apply</property>
+      </action>
+      <action id="actionApply">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Apply</property>
+        <property name="ShortLabel" translatable="yes">Apply</property>
+        <property name="StockId">gtk-apply</property>
+        <signal name="Activated" handler="OnActionApplyActivated" />
+      </action>
+      <action id="closeAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Quit</property>
+        <property name="ShortLabel" translatable="yes">Quit</property>
+        <property name="StockId">gtk-close</property>
+        <property name="Tooltip" translatable="yes">Quit</property>
+        <signal name="Activated" handler="OnActionQuitActivated" />
+      </action>
+      <action id="actionAddFile">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Add file</property>
+        <property name="ShortLabel" translatable="yes">Add file</property>
+        <property name="StockId">gtk-add</property>
+        <signal name="Activated" handler="OnActionAddFileActivated" />
+      </action>
+      <action id="actionAddFolder">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Add folder</property>
+        <property name="ShortLabel" translatable="yes">Add folder</property>
+        <property name="StockId">gtk-add</property>
+        <signal name="Activated" handler="OnActionAddFolderActivated" />
+      </action>
+      <action id="actionPlay">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Play</property>
+        <property name="ShortLabel" translatable="yes">Play</property>
+        <property name="StockId">gtk-media-play</property>
+        <signal name="Activated" handler="OnActionPlayActivated" />
+      </action>
+      <action id="propertiesAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Menu</property>
+        <property name="ShortLabel" translatable="yes">Menu</property>
+        <property name="StockId">gtk-properties</property>
+        <signal name="Activated" handler="OnActionAdvancedActivated" />
+      </action>
+      <action id="actionGoConvert">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Go convert</property>
+        <property name="ShortLabel" translatable="yes">Go convert</property>
+        <property name="StockId">gtk-no</property>
+        <signal name="Activated" handler="OnActionGoConvertActivated" />
+      </action>
+      <action id="mediaPlayAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-media-play</property>
+      </action>
+      <action id="tAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">t</property>
+        <property name="ShortLabel" translatable="yes">t</property>
+      </action>
+      <action id="actionAdd">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Add</property>
+        <property name="ShortLabel" translatable="yes">Add</property>
+        <property name="StockId">gtk-add</property>
+        <signal name="Activated" handler="OnActionAddFileActivated" />
+      </action>
+      <action id="actionApply1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Apply</property>
+        <property name="ShortLabel" translatable="yes">Apply</property>
+        <property name="StockId">gtk-apply</property>
+        <signal name="Activated" handler="OnActionPlayActivated" />
+      </action>
+      <action id="actionGoConvert1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Go</property>
+        <property name="ShortLabel" translatable="yes">Go</property>
+        <property name="StockId">gtk-yes</property>
+        <signal name="Activated" handler="OnActionGoConvertActivated" />
+      </action>
+      <action id="actionMenui">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Menu</property>
+        <property name="ShortLabel" translatable="yes">Menu</property>
+        <property name="StockId">gtk-preferences</property>
+        <signal name="Activated" handler="OnActionAdvancedActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
+    <property name="WidthRequest">750</property>
+    <property name="HeightRequest">710</property>
     <property name="Title" translatable="yes">Media Convert</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.Fixed" id="fixed">
@@ -196,181 +293,10 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Frame" id="frameTargetVideo">
-            <property name="MemberName" />
-            <property name="WidthRequest">355</property>
-            <property name="HeightRequest">270</property>
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment8">
-                <property name="MemberName" />
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">5</property>
-                <child>
-                  <widget class="MediaConvertGUI.WidgetMovieTrack" id="widgetTargetMovieTrack">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="Editable">False</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabelTargetFrameLabel">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Video&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">750</property>
-            <property name="Y">50</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frameVideo">
-            <property name="MemberName" />
-            <property name="WidthRequest">355</property>
-            <property name="HeightRequest">270</property>
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment7">
-                <property name="MemberName" />
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">5</property>
-                <child>
-                  <widget class="MediaConvertGUI.WidgetMovieTrack" id="widgetSourceMovieTrack">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="Editable">False</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabelSourceVideoFrame">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Video&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">5</property>
-            <property name="Y">50</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frameSourceAudioTracks">
-            <property name="MemberName" />
-            <property name="WidthRequest">355</property>
-            <property name="HeightRequest">220</property>
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment6">
-                <property name="MemberName" />
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">5</property>
-                <child>
-                  <widget class="MediaConvertGUI.WidgetAudioTracks" id="widgetSourceAudioTracks">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="Editable">False</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabelAidoTracks">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Audio&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">5</property>
-            <property name="Y">325</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frameTargetAudio">
-            <property name="MemberName" />
-            <property name="WidthRequest">355</property>
-            <property name="HeightRequest">220</property>
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment14">
-                <property name="MemberName" />
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">5</property>
-                <child>
-                  <widget class="MediaConvertGUI.WidgetAudioTracks" id="widgetTargetAudioTracks">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="Editable">True</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabelTargetaudio">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Audio&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">750</property>
-            <property name="Y">325</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frameGeneral">
-            <property name="MemberName" />
-            <property name="WidthRequest">370</property>
-            <property name="HeightRequest">100</property>
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment16">
-                <property name="MemberName" />
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">5</property>
-                <property name="TopPadding">15</property>
-                <child>
-                  <widget class="MediaConvertGUI.WidgetGeneralMediaInfo" id="widgetGeneral">
-                    <property name="MemberName" />
-                    <property name="WidthRequest">350</property>
-                    <property name="Events">ButtonPressMask</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">370</property>
-            <property name="Y">415</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.Frame" id="frameFileList">
             <property name="MemberName" />
-            <property name="WidthRequest">370</property>
-            <property name="HeightRequest">380</property>
+            <property name="WidthRequest">740</property>
+            <property name="HeightRequest">105</property>
             <property name="ShadowType">None</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment10">
@@ -409,84 +335,7 @@
             </child>
           </widget>
           <packing>
-            <property name="X">370</property>
-            <property name="Y">30</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.MenuBar" id="menubarScheme">
-            <property name="MemberName" />
-            <node name="menubarScheme" type="Menubar">
-              <node type="Menu" action="SchemeAction">
-                <node type="Menuitem" action="floppyAction" />
-                <node type="Menuitem" action="copyAction" />
-              </node>
-              <node type="Menuitem" />
-            </node>
-          </widget>
-          <packing>
-            <property name="X">370</property>
-            <property name="Y">520</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.ComboBox" id="comboScheme1">
-            <property name="MemberName" />
-            <property name="IsTextCombo">True</property>
-            <property name="Items" translatable="yes" />
-          </widget>
-          <packing>
-            <property name="X">465</property>
-            <property name="Y">520</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="btnMenu">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Menu</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnBtnMenuClicked" />
-          </widget>
-          <packing>
-            <property name="X">373</property>
-            <property name="Y">10</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Frame" id="frameTargetContainer">
-            <property name="MemberName" />
-            <property name="WidthRequest">355</property>
-            <property name="HeightRequest">45</property>
-            <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment5">
-                <property name="MemberName" />
-                <property name="Xalign">0</property>
-                <property name="Yalign">0</property>
-                <property name="LeftPadding">5</property>
-                <child>
-                  <widget class="MediaConvertGUI.WidgetContainer" id="widgetTargetContainer">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <property name="Editable">False</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabelTargetContainer">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Target&lt;/b&gt;</property>
-                <property name="UseMarkup">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="X">750</property>
+            <property name="Y">40</property>
           </packing>
         </child>
         <child>
@@ -522,22 +371,205 @@
           </widget>
           <packing>
             <property name="X">5</property>
+            <property name="Y">150</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Button" id="buttonApply">
+          <widget class="Gtk.Frame" id="frameTargetContainer">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">25</property>
-            <property name="CanFocus">True</property>
-            <property name="Type">TextAndIcon</property>
-            <property name="Icon">stock:gtk-apply Menu</property>
-            <property name="Label" translatable="yes">Apply</property>
-            <property name="UseUnderline">True</property>
+            <property name="HeightRequest">45</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment5">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetContainer" id="widgetTargetContainer">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">False</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelTargetContainer">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Target&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
           </widget>
           <packing>
-            <property name="X">749</property>
-            <property name="Y">555</property>
+            <property name="X">380</property>
+            <property name="Y">150</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Frame" id="frameTargetVideo">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">270</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment8">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetMovieTrack" id="widgetTargetMovieTrack">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">False</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelTargetFrameLabel">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Video&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">380</property>
+            <property name="Y">200</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Frame" id="frameVideo">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">270</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment7">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetMovieTrack" id="widgetSourceMovieTrack">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">False</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelSourceVideoFrame">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Video&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">5</property>
+            <property name="Y">200</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Frame" id="frameTargetAudio">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">220</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment14">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetAudioTracks" id="widgetTargetAudioTracks">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">True</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelTargetaudio">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Audio&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">380</property>
+            <property name="Y">480</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Frame" id="frameSourceAudioTracks">
+            <property name="MemberName" />
+            <property name="WidthRequest">355</property>
+            <property name="HeightRequest">220</property>
+            <child>
+              <widget class="Gtk.Alignment" id="GtkAlignment6">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="Yalign">0</property>
+                <property name="LeftPadding">5</property>
+                <child>
+                  <widget class="MediaConvertGUI.WidgetAudioTracks" id="widgetSourceAudioTracks">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <property name="Editable">False</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="GtkLabelAidoTracks">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Audio&lt;/b&gt;</property>
+                <property name="UseMarkup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">5</property>
+            <property name="Y">480</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Toolbar" id="toolbar1">
+            <property name="MemberName" />
+            <property name="ShowArrow">False</property>
+            <node name="__gtksharp_84_Stetic_Editor_ActionToolbar" type="Toolbar">
+              <node type="Toolitem" action="actionMenui" />
+              <node type="Separator" />
+              <node type="Toolitem" action="actionAdd" />
+              <node type="Separator" />
+              <node type="Toolitem" action="actionApply1" />
+              <node type="Separator" />
+              <node type="Toolitem" action="actionGoConvert1" />
+            </node>
+          </widget>
+          <packing>
+            <property name="X">8</property>
           </packing>
         </child>
       </widget>

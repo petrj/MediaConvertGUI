@@ -46,8 +46,6 @@ public partial class MainWindow: Gtk.Window
 
 		TestPrerequisites();
 
-		ReloadSchemes();
-
 		_fileTreeViewData = new TreeViewData(tree); 
 		CreateGridColumns();
 		widgetTargetMovieTrack.Editable = true;
@@ -59,11 +57,8 @@ public partial class MainWindow: Gtk.Window
 
 		tree.Selection.Mode = SelectionMode.Multiple;
 
-		comboScheme1.Changed+= OnSchemeChanged;
-
 		tree.CursorChanged += OnTreeCursorChanged;
 
-		buttonApply.Clicked+=OnButtonApplyClicked;
 		tree.ButtonPressEvent+=OnTreeButtonPressEvent;
 
 		FillTree();
@@ -235,6 +230,11 @@ public partial class MainWindow: Gtk.Window
 		_fileTreeViewData.AppendStringColumn("Container", null, false);
 		_fileTreeViewData.AppendStringColumn("V.codec", null, false);
 		_fileTreeViewData.AppendStringColumn("A.codec", null, false);
+				
+		_fileTreeViewData.AppendStringColumn("Bitrate", null, false);
+		_fileTreeViewData.AppendStringColumn("Duration", null, false);
+		_fileTreeViewData.AppendStringColumn("Size", null, false);		
+		
 		_fileTreeViewData.CreateTreeViewColumns();
 		
 	}
@@ -244,14 +244,19 @@ public partial class MainWindow: Gtk.Window
 		_fileTreeViewData.Data.Clear();
 
 		// fill tree
-		foreach(var info in MoviesInfo.Keys)
-		{
-			var name = System.IO.Path.GetFileName (info.FileName);
-			var codec = MoviesInfo[info].TargetVideoCodec.ToString();
-			var cont = MoviesInfo[info].TargetContainer.ToString();
-			var audio = MoviesInfo[info].FirstAudioTrack != null ?MoviesInfo[info].FirstAudioTrack.TargetAudioCodec.ToString() : "none";
-				MoviesInfo[info].TargetContainer.ToString();
-			_fileTreeViewData.AppendData(new List<object>{name,cont,codec,audio});
+		foreach(var info in MoviesInfo)
+		{		
+			var name = System.IO.Path.GetFileName (info.Key.FileName);
+			var codec = info.Value.TargetVideoCodec.ToString();
+			var cont = info.Value.TargetContainer.ToString();
+			var audio = info.Value.FirstAudioTrack != null ? info.Value.FirstAudioTrack.TargetAudioCodec.ToString() : "none";
+				info.Value.TargetContainer.ToString();
+				
+			var duration = info.Value.HuamReadableDuration;
+			var size = info.Value.HumanReadableSize;
+			var bitrate = info.Value.HumanReadableOverAllBitRate;
+				
+			_fileTreeViewData.AppendData(new List<object>{name,cont,codec,audio,bitrate,duration,size});
 		}
   	   
 		tree.Model = _fileTreeViewData.CreateTreeViewListStore();
@@ -530,31 +535,6 @@ public partial class MainWindow: Gtk.Window
      
 	#region events
 
-	protected void OnSchemeChanged(object sender, EventArgs e)
-	{
-		var selectedMovies = GetSelectedMediaFiles();
-		if (selectedMovies.Count == 0)
-		{
-			return;
-		}
-
-		var selectedScheme = comboScheme1.ActiveText;
-
-		if (selectedScheme != "none")
-		{
-			var schemeFileName = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes"+System.IO.Path.DirectorySeparatorChar) + selectedScheme + ".xml";
-
-			widgetTargetMovieTrack.MovieInfo.OpenSchemeFromXML(schemeFileName);
-			widgetTargetMovieTrack.Fill();
-			
-			widgetTargetContainer.Info.OpenSchemeFromXML(schemeFileName);
-			widgetTargetContainer.Fill();
-
-			widgetTargetAudioTracks.Info.OpenSchemeFromXML(schemeFileName);
-			widgetTargetAudioTracks.Fill();
-		}
-	}
-
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();
@@ -585,8 +565,7 @@ public partial class MainWindow: Gtk.Window
 		widgetTargetContainer.Editable =  target != null;						
 		widgetTargetMovieTrack.FillFrom(target);
 		widgetTargetAudioTracks.FillFrom(target);		
-
-		widgetGeneral.FillFrom(source);
+		
 	}
 
 	protected void OnButtonGoConvertClicked (object sender, EventArgs e)
@@ -788,23 +767,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnFrameFileListButtonPressEvent (object o, ButtonPressEventArgs args)
 	{
-	}
-
-	public void ReloadSchemes(string selectedScheme = "none")
-	{
-		var schemesPath = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes/");
-		var schemes = Directory.GetFiles(schemesPath,"*.xml");
-
-		var schemeStrings = new List<string>();
-		schemeStrings.Add("none");
-
-		foreach (var sch in schemes)
-		{
-			schemeStrings.Add(System.IO.Path.GetFileNameWithoutExtension(sch));
-		}
-
-		SupportMethods.FillComboBox(comboScheme1,schemeStrings,true, selectedScheme);
-	}
+	}	
 
 	private void CreatePopupMenu()
 	{
@@ -849,14 +812,42 @@ public partial class MainWindow: Gtk.Window
 			Dialogs.AddImageMenuButton("Play...","play.png",popupMenu, OnPlaySelectedInShelButtonClicked);
 			Dialogs.AddImageMenuButton("Export movie screenshot","screenshot.png",popupMenu, OnScreenShotClicked);
 			Dialogs.AddImageMenuButton("Preview ffmpeg batch ...","preview.png",popupMenu, OnPreviwButtonClicked);
-
-			popupMenu.Append(new SeparatorMenuItem());
-
+			
+			Dialogs.AddImageMenuButton("Apply","apply.png",popupMenu, OnButtonApplyClicked);
+			
 			Dialogs.AddImageMenuButton("Go convert...","run.png",popupMenu, OnButtonGoConvertClicked);
 			Dialogs.AddImageMenuButton("Show ffmpeg log ...","log.png",popupMenu, OnShowLogActivated);
 		}
+		
+		
+		// scheme
 
-		// remove all
+		if (MoviesInfo.Count>0)
+		{
+			popupMenu.Append(new SeparatorMenuItem());
+
+			var schemeSubMenu = new Gtk.Menu();			
+			
+			var menuItemScheme = Dialogs.AddImageMenuButton("Scheme..",null,popupMenu, null);
+
+			menuItemScheme.Submenu = schemeSubMenu;
+			
+			// loading schemes:
+			var schemesPath = System.IO.Path.Combine(SupportMethods.AppPath,"Schemes/");
+			var schemes = Directory.GetFiles(schemesPath,"*.xml");	
+			
+			foreach (var sch in schemes)
+			{
+				Dialogs.AddImageMenuButton(System.IO.Path.GetFileNameWithoutExtension(sch),null,schemeSubMenu, OnSchemeChange, sch);
+			}			
+			
+			schemeSubMenu.Append(new SeparatorMenuItem());
+
+			Dialogs.AddImageMenuButton("Import scheme from xml",null,schemeSubMenu, OnImportShcemeActionActivated);
+			Dialogs.AddImageMenuButton("Save scheme to xml",null,schemeSubMenu, OnButtonSaveSchemeActivated);
+		}				
+
+		// remove 
 
 		if (MoviesInfo.Count>0)
 		{
@@ -875,8 +866,29 @@ public partial class MainWindow: Gtk.Window
 			Dialogs.AddImageMenuButton("All",null,removeSubMenu, OnButtonRemoveAllClicked);
 		}
 
+
 		popupMenu.ShowAll();
 		popupMenu.Popup();
+	}
+	
+	private int OnSchemeChange(string schemeFileName)
+	{
+		var selectedMovies = GetSelectedMediaFiles();
+		if (selectedMovies.Count == 0)
+		{
+			return 0;
+		}
+
+		widgetTargetMovieTrack.MovieInfo.OpenSchemeFromXML(schemeFileName);
+		widgetTargetMovieTrack.Fill();
+		
+		widgetTargetContainer.Info.OpenSchemeFromXML(schemeFileName);
+		widgetTargetContainer.Fill();
+
+		widgetTargetAudioTracks.Info.OpenSchemeFromXML(schemeFileName);
+		widgetTargetAudioTracks.Fill();		
+	
+		return 1;
 	}
 
 	[GLib.ConnectBefore]
@@ -901,6 +913,42 @@ public partial class MainWindow: Gtk.Window
 		CreatePopupMenu();
 	}
 
+
+	protected void OnActionApplyActivated (object sender, EventArgs e)
+	{
+		OnButtonApplyClicked(this,null);
+	}
+
+	protected void OnActionQuitActivated (object sender, EventArgs e)	
+	{
+		Application.Quit();
+	}
+	
+	protected void OnActionAddFileActivated (object sender, EventArgs e)
+	{
+		OnButtonAddClicked(this,null);
+	}
+	
+	protected void OnActionAddFolderActivated (object sender, EventArgs e)
+	{
+		OnButtonAddFolderClicked(this,null);
+	}	
+
+	protected void OnActionPlayActivated (object sender, EventArgs e)
+	{
+		OnButtonApplyClicked(this,null);
+	}
+
+
+	protected void OnActionGoConvertActivated (object sender, EventArgs e)
+	{
+		OnButtonGoConvertClicked(this,null);
+	}	
+	
+	protected void OnActionAdvancedActivated (object sender, EventArgs e)
+	{
+		CreatePopupMenu();
+	}
 	#endregion
 
 }

@@ -409,7 +409,7 @@ namespace MediaConvertGUI
 				var minutes = Math.Truncate( (totalSeconds - hours*60*60)/60);
 				var seconds = Math.Truncate( (totalSeconds - hours*60*60 -minutes*60 ));
 
-				res = minutes.ToString().PadLeft(2,'0') + ":"+ minutes.ToString().PadLeft(2,'0') + ":" + seconds.ToString().PadLeft(2,'0');
+				res = hours.ToString().PadLeft(2,'0') + ":"+ minutes.ToString().PadLeft(2,'0') + ":" + seconds.ToString().PadLeft(2,'0');
 
 				return res;
 		}
