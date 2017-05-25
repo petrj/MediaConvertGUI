@@ -247,7 +247,7 @@ public partial class MainWindow: Gtk.Window
 		foreach(var info in MoviesInfo)
 		{		
 			var name = System.IO.Path.GetFileName (info.Key.FileName);
-			var codec = info.Value.TargetVideoCodec.ToString();
+			var codec = info.Value.TargetVideoCodec.Name;
 			var cont = info.Value.TargetContainer.ToString();
 			var audio = info.Value.FirstAudioTrack != null ? info.Value.FirstAudioTrack.TargetAudioCodec.ToString() : "none";
 				info.Value.TargetContainer.ToString();
@@ -286,7 +286,7 @@ public partial class MainWindow: Gtk.Window
 				if (firstVideoTrack!=null)
 				{
 					targetMovie.TargetContainer = ContainerEnum.avi;
-					targetMovie.TargetVideoCodec = VideoCodecEnum.xvid;
+					targetMovie.TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName ("copy");
 				} 
 
 				// leaving only first audio track
@@ -484,7 +484,7 @@ public partial class MainWindow: Gtk.Window
 			ExecutFFMpegCommand(cmd1, kvp.Value.FFMPEGOutputFileName );
 
 			if (info!=null &&
-			    _currentConvertingMovie.TargetVideoCodec!=VideoCodecEnum.none)
+			    _currentConvertingMovie.TargetVideoCodec!=MediaConvertGUIConfiguration.GetVideoCodecByName("none"))
 			{
 				// converting 2 pass video
 				var cmd2 =  MediaInfoBase.MakeFFMpegCommand(kvp.Key,kvp.Value,2);

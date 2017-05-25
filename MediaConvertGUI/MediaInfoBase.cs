@@ -19,19 +19,6 @@ namespace MediaConvertGUI
 		ac3
 	}
 
-	public enum VideoCodecEnum
-	{
-		none,
-		copy,
-		xvid,
-		flv,
-		h263,
-		h264,
-		mpeg,
-		theora,
-		vp8
-	}
-
 	public enum ContainerEnum
 	{
 		none,
@@ -66,17 +53,6 @@ namespace MediaConvertGUI
 			{AudioCodecEnum.ac3,"http://en.wikipedia.org/wiki/Dolby_AC-3"}
 		};
 
-		public static Dictionary<VideoCodecEnum,string> WikiVideoCodecsLinks = new Dictionary<VideoCodecEnum, string>()
-		{		
-			{VideoCodecEnum.xvid ,"http://en.wikipedia.org/wiki/xvid"},
-			{VideoCodecEnum.flv,"http://en.wikipedia.org/wiki/Sorenson_Media#Sorenson_Spark"},
-			{VideoCodecEnum.h263,"http://en.wikipedia.org/wiki/h263"},
-			{VideoCodecEnum.h264,"http://en.wikipedia.org/wiki/h264"},
-			{VideoCodecEnum.mpeg,"http://en.wikipedia.org/wiki/MPEG-1"},
-			{VideoCodecEnum.theora,"http://en.wikipedia.org/wiki/theora"},
-			{VideoCodecEnum.vp8,"http://en.wikipedia.org/wiki/vp8"}
-		};
-
 		public static Dictionary<ContainerEnum,string> WikiContainerCodecsLinks = new Dictionary<ContainerEnum, string>()
 		{		
 			{ContainerEnum.avi ,"http://en.wikipedia.org/wiki/Audio_Video_Interleave"},
@@ -88,17 +64,6 @@ namespace MediaConvertGUI
 			{ContainerEnum.webm ,"http://en.wikipedia.org/wiki/Webm"},
 			{ContainerEnum._3gp ,"http://en.wikipedia.org/wiki/3gp"},
 		};
-
-		public static Dictionary<VideoCodecEnum,string> DefaultVideoCodecsDescriptions = new Dictionary<VideoCodecEnum, string>()
-		{
-			{VideoCodecEnum.xvid,"MPEG-4 ASP libxvid (MPEG-4 part 2)"},
-			{VideoCodecEnum.flv,"Sorenson Spark / Sorenson H.263 (Flash Video)"},
-			{VideoCodecEnum.h264,"MPEG-4 AVC libx264 (MPEG-4 part 10)"},
-			{VideoCodecEnum.mpeg,"MPEG-1 video"},
-			{VideoCodecEnum.theora,"Theora libtheora"},
-			{VideoCodecEnum.vp8,"VP8 libvpx"},
-		};
-
 
 		public static Dictionary<ContainerEnum,string> VideoContainerToExtension = new Dictionary<ContainerEnum, string> () 
 		{
@@ -246,7 +211,7 @@ namespace MediaConvertGUI
 			if ( (targetMovie.AudioTracks.Count > 0) && 
 			    (targetMovie.FirstAudioTrack.TargetAudioCodec!= AudioCodecEnum.none) &&
 			    ( 	(targetMovie.FirstVideoTrack == null) || 
-			    	(targetMovie.TargetVideoCodec == VideoCodecEnum.none) || 
+			 (targetMovie.TargetVideoCodec == MediaConvertGUIConfiguration.GetVideoCodecByName("none")) || 
 			    	(targetMovie.TargetContainer == null) || 	
 			    	(targetMovie.TargetContainer == ContainerEnum.none)			    	
 			    ) &&
@@ -256,7 +221,7 @@ namespace MediaConvertGUI
 			} 		
 
 			// codec copy  - single pass
-			if ( (targetMovie.FirstVideoTrack != null) && (targetMovie.TargetVideoCodec==VideoCodecEnum.copy) &&
+			if ( (targetMovie.FirstVideoTrack != null) && (targetMovie.TargetVideoCodec==MediaConvertGUIConfiguration.GetVideoCodecByName("copy")) &&
 			    (currentPass>1)) 
 			{
 				return res;
@@ -267,11 +232,13 @@ namespace MediaConvertGUI
 			var targetFile = sourceMovie.FileName+".converted" + ext;
 			var video = " -vn";  // disable video								
 
+			var hwaccel = String.Empty;
+
 			var audio = " -an "; // disable audio				
 
 			var map = String.Empty;
 
-			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=VideoCodecEnum.none &&
+			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=MediaConvertGUIConfiguration.GetVideoCodecByName("none") &&
 				targetMovie.TargetContainer != null && targetMovie.TargetContainer != ContainerEnum.none)
 			{
 				var videoSettings= String.Empty;					
@@ -310,23 +277,14 @@ namespace MediaConvertGUI
 				if (targetMovie.EditRotation) videoSettings += rotationAngle;
 				if (targetMovie.AutoRotate) videoSettings += autoRotate;
 
-				if (targetMovie.TargetVideoCodec!=VideoCodecEnum.copy)
+				if (targetMovie.TargetVideoCodec!=MediaConvertGUIConfiguration.GetVideoCodecByName("copy"))
 				{
 					var pass = String.Format(" -pass {0} -passlogfile \"{1}\"",currentPass,targetFile + ".passlog");
 					videoSettings += pass;
 				}
 
-				switch (targetMovie.TargetVideoCodec)
-				{
-					case VideoCodecEnum.copy: video = " -vcodec copy"+videoSettings; break;
-					case VideoCodecEnum.xvid: video = " -vcodec libxvid"+videoSettings; break;
-					case VideoCodecEnum.flv: video = " -vcodec flv"+videoSettings; break;
-					case VideoCodecEnum.h263: video = " -vcodec h263"+videoSettings; break;
-					case VideoCodecEnum.h264: video = " -vcodec h264"+videoSettings; break;
-					case VideoCodecEnum.mpeg: video = " -vcodec mpeg1video"+videoSettings; break;
-					case VideoCodecEnum.theora: video = " -vcodec theora"+videoSettings; break;
-					case VideoCodecEnum.vp8: video = " -vcodec libvpx"+videoSettings; break;
-				}
+				video = targetMovie.TargetVideoCodec.Command;
+				hwaccel = String.IsNullOrEmpty (targetMovie.TargetVideoCodec.HWAcceleration) ? "" : " -hwaccel " +targetMovie.TargetVideoCodec.HWAcceleration;
 			}
 
 			// only first Audio Track!
@@ -353,7 +311,7 @@ namespace MediaConvertGUI
 
 
 				if ( (targetMovie.FirstVideoTrack == null) || 
-					 (targetMovie.TargetVideoCodec == VideoCodecEnum.none) ||					 
+					 (targetMovie.TargetVideoCodec == MediaConvertGUIConfiguration.GetVideoCodecByName("none")) ||					 
 					 (targetMovie.TargetContainer == ContainerEnum.none)
 					)									
 				{
@@ -381,7 +339,8 @@ namespace MediaConvertGUI
 
 			targetFile = String.Format(" \"{0}\"",targetFile);
 
-			res = MediaConvertGUIConfiguration.FFMpegPath+" -y -dump " + sourceFile + map + video + audio + targetFile;
+
+			res = MediaConvertGUIConfiguration.FFMpegPath+" " + hwaccel + " -y -dump " + sourceFile + map + " " +video + audio + targetFile;
 
 			return res;
 		}

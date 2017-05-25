@@ -1,12 +1,26 @@
 <MediaConvertGUIConfiguration>
   <MediaInfoPath>mediainfo</MediaInfoPath>
-  <FFMpegPath>ffmpeg</FFMpegPath>
+  <FFMpegPath>/opt/ffmpeg-hw/ffmpeg</FFMpegPath>
   <Applications>
     <OpenWith>
       <!-- <Application>vlc</Application> -->
       <Application>vlc</Application>
-      <Application>avidemux</Application>
+      <Application>avidemux</Application> 
       <Application>mediainfo-gui</Application>
     </OpenWith>
-  </Applications>
-</MediaConvertGUIConfiguration>
+  </Applications> 
+  <AvailableCodecs>  
+  	<Video> 
+	  	<Codec name="none" title="none" />
+	  	<Codec name="copy" title="copy" cmd="-vcodec copy"/>
+	  	<Codec name="mpg"  title="MPEG 1" cmd="-vcodec mpeg1video" link="http://en.wikipedia.org/wiki/MPEG-1"/>  	
+	  	<Codec name="xvid" title="xvid" cmd="-vcodec libxvid" link="http://en.wikipedia.org/wiki/xvid"/>   	
+	  	<Codec name="flv"  title="flv" cmd="-vcodec flv" link="http://en.wikipedia.org/wiki/Sorenson_Media#Sorenson_Spark"/>  	
+	  	<Codec name="theora" title="theora" cmd="-vcodec theora" link="http://en.wikipedia.org/wiki/theora"/>  	
+	  	<Codec name="vp8"  title="VP8 libvpx" cmd="-vcodec libvpx" link="http://en.wikipedia.org/wiki/vp8"/>  	
+	  	<Codec name="x263" title="h263" cmd="-vcodec h263" link="http://en.wikipedia.org/wiki/h263"/>
+	  	<Codec name="h264" title="h264" cmd="-vcodec h264" link="http://en.wikipedia.org/wiki/h264"/>
+	  	<Codec name="h264_nvenc" title="h264 GPU" cmd="-vcodec h264_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h264"/>
+	</Video>
+  </AvailableCodecs>
+</MediaConvertGUIConfiguration> 

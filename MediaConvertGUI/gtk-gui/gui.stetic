@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="750 710">
+  <widget class="Gtk.Window" id="MainWindow" design-size="781 710">
     <action-group name="Default">
       <action id="FiAction">
         <property name="Type">Action</property>
@@ -558,7 +558,7 @@
           <widget class="Gtk.Toolbar" id="toolbar1">
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
-            <node name="__gtksharp_84_Stetic_Editor_ActionToolbar" type="Toolbar">
+            <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="actionMenui" />
               <node type="Separator" />
               <node type="Toolitem" action="actionAdd" />

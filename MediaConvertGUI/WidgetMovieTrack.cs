@@ -179,7 +179,7 @@ namespace MediaConvertGUI
 					{
 						chBoxesVisible = true;
 
-						SupportMethods.FillComboBox(comboCodec,typeof(VideoCodecEnum),Editable,(int)MovieInfo.TargetVideoCodec);
+						SupportMethods.FillComboBox(comboCodec,MediaConvertGUIConfiguration.VideoCodecsAsList(),Editable, MovieInfo.TargetVideoCodec.Name);
 					} else
 					{
 						SupportMethods.FillComboBox(comboCodec,new List<string>() {m.Codec}, Editable,m.Codec);
@@ -339,20 +339,8 @@ namespace MediaConvertGUI
 						m.RotatationAngle = 0;
 					}
 
-					MovieInfo.TargetVideoCodec = (VideoCodecEnum)comboCodec.Active;
-
-					comboCodec.TooltipText = String.Empty;
-					if (comboCodec.Active > 0)
-					{
-						VideoCodecEnum selcodec;
-						if (Enum.TryParse(comboCodec.ActiveText,out selcodec))
-						{
-							if (MediaInfo.DefaultVideoCodecsDescriptions.ContainsKey(selcodec))
-							{
-								comboCodec.TooltipText = MediaInfo.DefaultVideoCodecsDescriptions[selcodec];
-							}
-						}
-					}
+					MovieInfo.TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName (comboCodec.ActiveText);
+					comboCodec.TooltipText = MovieInfo.TargetVideoCodec.Title;
 
 					_eventLock.Unlock();
 					Fill();
@@ -364,10 +352,11 @@ namespace MediaConvertGUI
 		{
 			if (Editable && MovieInfo!= null && comboCodec.Active>0)
 			{
-				var codec = (VideoCodecEnum)comboCodec.Active;
-				if (MediaInfoBase.WikiVideoCodecsLinks.ContainsKey(codec))
+				var codec = MediaConvertGUIConfiguration.GetVideoCodecByName (comboCodec.ActiveText);
+
+				if (!string.IsNullOrEmpty(codec.Link))
 				{
-					SupportMethods.ExecuteInShell(MediaInfoBase.WikiVideoCodecsLinks[codec]);
+					SupportMethods.ExecuteInShell(codec.Link);
 				}
 			}
 		}		

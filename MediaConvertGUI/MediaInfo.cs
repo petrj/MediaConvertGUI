@@ -183,10 +183,10 @@ namespace MediaConvertGUI
 
 		public string RawMediaInfoOutput { get; set; }
 
-		private VideoCodecEnum _targetVideoCodec  = VideoCodecEnum.none;
-		public VideoCodecEnum TargetVideoCodec
+		private MediaCodec _targetVideoCodec=  MediaConvertGUIConfiguration.GetVideoCodecByName("none");
+		public MediaCodec TargetVideoCodec
 		{ 
-			get { return _targetVideoCodec; }
+			get { return _targetVideoCodec == null ? MediaConvertGUIConfiguration.GetVideoCodecByName("none") : _targetVideoCodec; }
 			set 
 			{ 
 				if (_targetVideoCodec != value) NotifyChange("TargetVideoCodec",value);
@@ -245,7 +245,7 @@ namespace MediaConvertGUI
 
 		public void Clear()
 		{
-			TargetVideoCodec = VideoCodecEnum.xvid;
+			TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName("copy");
 			TargetContainer = ContainerEnum.avi;
 			AutoRotate = false;
 			Tracks.Clear();
@@ -433,12 +433,10 @@ namespace MediaConvertGUI
 					var codecNode = item.SelectSingleNode("Codec");
 					if ((codecNode!= null) && (codecNode.FirstChild != null))
 					{
-						VideoCodecEnum codec;
-						if (Enum.TryParse<VideoCodecEnum>(codecNode.FirstChild.Value,out codec))
-						{
-							//firstVideoTrack.Codec = codec.ToString();
+						var codec = MediaConvertGUIConfiguration.GetVideoCodecByName (codecNode.FirstChild.Value);
+
+						if (codec != null)
 							this.TargetVideoCodec = codec;
-						}
 					}
 				}
 			}
@@ -516,7 +514,7 @@ namespace MediaConvertGUI
 
 				writer.WriteElementString("Codec", TargetVideoCodec.ToString());
 
-				if  (TargetVideoCodec != VideoCodecEnum.none)
+				if  (TargetVideoCodec != MediaConvertGUIConfiguration.GetVideoCodecByName("none"))
 				{
 					var firstVideoTrack =  FirstVideoTrack;
 
