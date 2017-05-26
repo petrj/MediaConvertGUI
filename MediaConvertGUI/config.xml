@@ -22,5 +22,15 @@
 	  	<Codec name="h264" title="h264" cmd="-vcodec h264" link="http://en.wikipedia.org/wiki/h264"/>
 	  	<Codec name="h264_nvenc" title="h264 GPU" cmd="-vcodec h264_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h264"/>
 	</Video>
+	<Audio>
+		<Codec name="none" title="none" cmd = "-an" />
+	  	<Codec name="copy" title="copy" cmd="-acodec copy"/>  	
+	  	<Codec name="mp2" title="copy" cmd="-acodec mp2" link="http://en.wikipedia.org/wiki/MP2" />
+	  	<Codec name="mp3" title="copy" cmd="-acodec libmp3lame" link="http://en.wikipedia.org/wiki/MP3" />
+	  	<Codec name="vorbis" title="copy" cmd="-acodec libvorbis"  link="http://en.wikipedia.org/wiki/Vorbis" />
+	  	<Codec name="aac" title="copy" cmd="-acodec libfaac"  link="http://en.wikipedia.org/wiki/Aac" />
+	  	<Codec name="flac" title="copy" cmd="-acodec flac "  link="http://en.wikipedia.org/wiki/flac" />
+	  	<Codec name="ac3" title="copy" cmd="-acodec ac3"  link="http://en.wikipedia.org/wiki/Dolby_AC-3" />
+	</Audio>
   </AvailableCodecs>
-</MediaConvertGUIConfiguration> 
+</MediaConvertGUIConfiguration> 	

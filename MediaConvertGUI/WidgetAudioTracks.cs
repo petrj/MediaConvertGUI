@@ -70,15 +70,15 @@ namespace MediaConvertGUI
 			}
 		}
 
-		public AudioCodecEnum SelectedAudioCodec
+		public MediaCodec SelectedAudioCodec
 		{
 			get
 			{
-				var res = AudioCodecEnum.none;
+				var res = MediaConvertGUIConfiguration.GetAudioCodecByName ("none");
 
-				if ( (comboCodec.Active > 0) && (comboCodec.Active < (Enum.GetNames((typeof(AudioCodecEnum))).Length)))
+				if (comboCodec.Active > 0)
 				{
-					return (AudioCodecEnum)comboCodec.Active;
+					return MediaConvertGUIConfiguration.GetAudioCodecByName (comboCodec.ActiveText);
 				}
 
 				return res;
@@ -160,9 +160,10 @@ namespace MediaConvertGUI
 					// codec
 					if (Editable)
 					{
-						frameAudioOptions.Visible = (activeTrack.TargetAudioCodec != AudioCodecEnum.none) && 
-													(activeTrack.TargetAudioCodec != AudioCodecEnum.copy);
-						SupportMethods.FillComboBox(comboCodec,typeof(AudioCodecEnum),true,(int)activeTrack.TargetAudioCodec);
+						frameAudioOptions.Visible = (activeTrack.TargetAudioCodec.Name != "none") && 
+													(activeTrack.TargetAudioCodec.Name != "copy");
+
+						SupportMethods.FillComboBox(comboCodec,MediaConvertGUIConfiguration.AudioCodecsAsList(),true,activeTrack.TargetAudioCodec.Name);
 					} else
 					{
 						frameAudioOptions.Visible = true;
@@ -260,9 +261,9 @@ namespace MediaConvertGUI
 			if (activeTrack!= null)
 			{
 				var codec = SelectedAudioCodec;
-				if (MediaInfoBase.WikiAudioCodecsLinks.ContainsKey(codec))
+				if (!String.IsNullOrEmpty(codec.Link))
 				{
-					SupportMethods.ExecuteInShell(MediaInfoBase.WikiAudioCodecsLinks[codec]);
+					SupportMethods.ExecuteInShell(codec.Link);
 				}
 			}
 		}

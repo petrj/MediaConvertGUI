@@ -7,18 +7,6 @@ namespace MediaConvertGUI
 {
 	#region audio && video enums
 
-	public enum AudioCodecEnum
-	{
-		none,
-		copy,
-		mp2,
-		mp3,
-		vorbis,
-		aac,
-		flac,
-		ac3
-	}
-
 	public enum ContainerEnum
 	{
 		none,
@@ -43,15 +31,6 @@ namespace MediaConvertGUI
 	{
 		#region static constants
 
-		public static Dictionary<AudioCodecEnum,string> WikiAudioCodecsLinks = new Dictionary<AudioCodecEnum, string>()
-		{
-			{AudioCodecEnum.mp2 ,"http://en.wikipedia.org/wiki/MP2"},
-			{AudioCodecEnum.mp3,"http://en.wikipedia.org/wiki/MP3"},
-			{AudioCodecEnum.vorbis,"http://en.wikipedia.org/wiki/Vorbis"},
-			{AudioCodecEnum.aac,"http://en.wikipedia.org/wiki/Aac"},
-			{AudioCodecEnum.flac,"http://en.wikipedia.org/wiki/flac"},
-			{AudioCodecEnum.ac3,"http://en.wikipedia.org/wiki/Dolby_AC-3"}
-		};
 
 		public static Dictionary<ContainerEnum,string> WikiContainerCodecsLinks = new Dictionary<ContainerEnum, string>()
 		{		
@@ -209,7 +188,7 @@ namespace MediaConvertGUI
 
 			// single audio convert? 
 			if ( (targetMovie.AudioTracks.Count > 0) && 
-			    (targetMovie.FirstAudioTrack.TargetAudioCodec!= AudioCodecEnum.none) &&
+			    (targetMovie.FirstAudioTrack.TargetAudioCodec.Name != "none") &&
 			    ( 	(targetMovie.FirstVideoTrack == null) || 
 			 (targetMovie.TargetVideoCodec == MediaConvertGUIConfiguration.GetVideoCodecByName("none")) || 
 			    	(targetMovie.TargetContainer == null) || 	
@@ -297,17 +276,9 @@ namespace MediaConvertGUI
 				                                 targetAudioTrack.SamplingRateHz,
 				                                 targetAudioTrack.Bitrate);
 
-
-				switch (targetAudioTrack.TargetAudioCodec)
-				{
-					case AudioCodecEnum.copy:audio = " -acodec copy "; break;
-					case AudioCodecEnum.mp3: audio = String.Format(" -acodec libmp3lame"+audioQuality); ext = ".mp3"; break;
-					case AudioCodecEnum.vorbis: audio = String.Format(" -acodec libvorbis "+audioQuality); ext = ".ogg"; break;
-					case AudioCodecEnum.aac: audio = String.Format(" -acodec libfaac "+audioQuality); ext = ".aac"; break;
-					case AudioCodecEnum.flac: audio = String.Format(" -acodec flac "+audioQuality); ext = ".flac"; break;
-					case AudioCodecEnum.ac3: audio = String.Format(" -acodec ac3 "+audioQuality); ext = ".ac3"; break;
-					default: audio = " -an "; break;
-				}
+				audio = " " + targetAudioTrack.TargetAudioCodec.Command + " ";
+				if (targetAudioTrack.TargetAudioCodec.Name != "copy")
+					audio += " " + audioQuality;
 
 
 				if ( (targetMovie.FirstVideoTrack == null) || 

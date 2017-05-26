@@ -7,8 +7,8 @@ namespace MediaConvertGUI
 	{
 		#region fileds && properties
 
-		private AudioCodecEnum _targetAudioCodec = AudioCodecEnum.mp3;
-		public AudioCodecEnum TargetAudioCodec
+		private MediaCodec _targetAudioCodec = MediaConvertGUIConfiguration.GetAudioCodecByName("copy");
+		public MediaCodec TargetAudioCodec
 		{ 
 			get { return _targetAudioCodec; }
 			set 
@@ -298,7 +298,7 @@ namespace MediaConvertGUI
 			Height = Height;
 			DurationMS = DurationMS;
 
-			TargetAudioCodec = AudioCodecEnum.none;
+			TargetAudioCodec = MediaConvertGUIConfiguration.GetAudioCodecByName("none");
 			RotatationAngle = 0;
 		}	
 

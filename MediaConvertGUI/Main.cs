@@ -12,7 +12,7 @@ namespace MediaConvertGUI
 			{
 				Application.Init ();
 				MainWindow win = new MainWindow ();
-
+				 
 				if (args.Length>0)
 				{
 					foreach (var arg in args)

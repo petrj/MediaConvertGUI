@@ -313,10 +313,10 @@ public partial class MainWindow: Gtk.Window
 				{
 					if (firstVideoTrack!=null)
 					{
-						targetMovie.FirstAudioTrack.TargetAudioCodec = AudioCodecEnum.copy;
+						targetMovie.FirstAudioTrack.TargetAudioCodec = MediaConvertGUIConfiguration.GetAudioCodecByName("copy");
 					} else
 					{
-						targetMovie.FirstAudioTrack.TargetAudioCodec = AudioCodecEnum.mp3;
+						targetMovie.FirstAudioTrack.TargetAudioCodec = MediaConvertGUIConfiguration.GetAudioCodecByName("mp3");
 					}
 				}
 

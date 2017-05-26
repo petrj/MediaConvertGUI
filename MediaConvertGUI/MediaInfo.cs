@@ -451,11 +451,9 @@ namespace MediaConvertGUI
 					var codecNode = trackNode.SelectSingleNode("Codec");
 					if ((codecNode!= null) && (codecNode.FirstChild != null))
 					{
-						AudioCodecEnum codec;
-						if (Enum.TryParse<AudioCodecEnum>(codecNode.FirstChild.Value,out codec))
-						{
-							AudioTracks[actualTrackIndex].TargetAudioCodec = codec;
-						}
+						var aCodec = MediaConvertGUIConfiguration.GetAudioCodecByName (codecNode.FirstChild.Value);
+						if (aCodec != null)
+							AudioTracks[actualTrackIndex].TargetAudioCodec = aCodec;
 					}
 
 					int channels;
@@ -546,7 +544,7 @@ namespace MediaConvertGUI
 
 							writer.WriteElementString("Codec", track.TargetAudioCodec.ToString());
 
-							if  ((track.TargetAudioCodec != AudioCodecEnum.none) && (track.TargetAudioCodec != AudioCodecEnum.copy) )
+							if  ((track.TargetAudioCodec.Name != "none") && (track.TargetAudioCodec.Name != "copy") )
 							{
 								writer.WriteElementString("Channels", track.Channels.ToString());
 								writer.WriteElementString("Bitrate", track.Bitrate.ToString());

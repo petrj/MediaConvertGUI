@@ -12,6 +12,7 @@ namespace MediaConvertGUI
 	{
 		public static List<string> OpenWithApplications{ get; set; }
 		public static List<MediaCodec> VideoCodecs { get; set; }
+		public static List<MediaCodec> AudioCodecs { get; set; }
 		public static string MediaInfoPath;
 		public static string FFMpegPath;
 
@@ -30,12 +31,41 @@ namespace MediaConvertGUI
 			return res;
 		}
 
+		public static List<string> AudioCodecsAsList()
+		{
+			var res = new List<string>();
+
+			if (AudioCodecs == null)
+				return res;
+
+			foreach (var codec in AudioCodecs) 
+			{
+				res.Add (codec.Name);
+			}
+
+			return res;
+		}
+
 		public static MediaCodec GetVideoCodecByName(string name)
 		{
 			if (VideoCodecs == null)
 				return null;
 
 			foreach (var codec in VideoCodecs) 
+			{
+				if (codec.Name == name)
+					return codec;
+			}
+
+			return null;
+		}
+
+		public static MediaCodec GetAudioCodecByName(string name)
+		{
+			if (AudioCodecs == null)
+				return null;
+
+			foreach (var codec in AudioCodecs) 
 			{
 				if (codec.Name == name)
 					return codec;
@@ -96,6 +126,7 @@ namespace MediaConvertGUI
 		{	
 			OpenWithApplications = new List<string>();
 			VideoCodecs = new List<MediaCodec> ();
+			AudioCodecs = new List<MediaCodec> ();
 
 			if (!Path.IsPathRooted(filename))
 			{
@@ -122,6 +153,12 @@ namespace MediaConvertGUI
 			foreach(XmlElement codecNode in codecNodes)
 			{			
 				VideoCodecs.Add( MediaCodec.CreateFromXmlnode(codecNode));
+			}
+
+			var audioCodecNodes = xmlDoc.SelectNodes("//MediaConvertGUIConfiguration/AvailableCodecs/Audio/Codec");
+			foreach(XmlElement codecNode in audioCodecNodes)
+			{			
+				AudioCodecs.Add( MediaCodec.CreateFromXmlnode(codecNode));
 			}
 
 			MediaInfoPath = xmlDoc.GetSingleNodeValue("//MediaConvertGUIConfiguration/MediaInfoPath","mediainfo");
