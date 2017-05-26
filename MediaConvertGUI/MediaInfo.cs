@@ -194,8 +194,8 @@ namespace MediaConvertGUI
 			}
 		}
 
-		private ContainerEnum _targetContainer = ContainerEnum.none;
-		public ContainerEnum TargetContainer
+		private MediaContainer _targetContainer = MediaConvertGUIConfiguration.GetContainerByName("none");
+		public MediaContainer TargetContainer
 		{ 
 			get { return _targetContainer; }
 			set 
@@ -246,7 +246,7 @@ namespace MediaConvertGUI
 		public void Clear()
 		{
 			TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName("copy");
-			TargetContainer = ContainerEnum.avi;
+			TargetContainer = MediaConvertGUIConfiguration.GetContainerByName ("avi");
 			AutoRotate = false;
 			Tracks.Clear();
 			FileSize = 0;
@@ -360,6 +360,8 @@ namespace MediaConvertGUI
 		}
 
 
+
+
 		public void OpenSchemeFromXML(string fileName)
 		{
 			// http://stackoverflow.com/questions/243022/parsing-through-xml-elements-in-xmlreader
@@ -370,16 +372,14 @@ namespace MediaConvertGUI
 
 			foreach (XmlNode item in xmlRoot.SelectNodes(@"/MultimediaScheme"))
 			{
-				ContainerEnum container;
+				MediaContainer container;
 
 				var node = item.SelectSingleNode("Container");
 				if ((node != null) &&
 				    (node.FirstChild != null)) 
 				{
-					if (Enum.TryParse(node.FirstChild.Value,out container))					
-						TargetContainer =  container;
-					if (Enum.TryParse("_" + node.FirstChild.Value,out container))
-						TargetContainer =  container;
+					container = MediaConvertGUIConfiguration.GetContainerByName (node.FirstChild.Value);
+					if (container != null) TargetContainer =  container;
 				}
 			}			
 
@@ -504,7 +504,7 @@ namespace MediaConvertGUI
 			writer.WriteStartDocument();
 			writer.WriteStartElement("MultimediaScheme");
 
-			writer.WriteElementString("Container", MediaInfoBase.VideoContainerToFFMpegContainer[TargetContainer]);				
+			writer.WriteElementString("Container", TargetContainer.Name);				
 
 			// Video
 

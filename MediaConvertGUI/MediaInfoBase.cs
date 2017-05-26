@@ -5,69 +5,10 @@ using System.Collections.Generic;
 
 namespace MediaConvertGUI
 {
-	#region audio && video enums
-
-	public enum ContainerEnum
-	{
-		none,
-		avi,
-		flv,
-		mp4,
-		mkv,
-		mpeg,
-		ogg,
-		webm,
-		_3gp,
-		mp3,
-		wav,
-		flac,
-		aac,
-		ac3				
-	}
-
-	#endregion
 
 	public abstract class MediaInfoBase
 	{
 		#region static constants
-
-
-		public static Dictionary<ContainerEnum,string> WikiContainerCodecsLinks = new Dictionary<ContainerEnum, string>()
-		{		
-			{ContainerEnum.avi ,"http://en.wikipedia.org/wiki/Audio_Video_Interleave"},
-			{ContainerEnum.flv ,"http://en.wikipedia.org/wiki/Flash_Video"},
-			{ContainerEnum.mkv ,"http://en.wikipedia.org/wiki/Mkv"},
-			{ContainerEnum.mp4 ,"http://en.wikipedia.org/wiki/Mp4"},
-			{ContainerEnum.mpeg ,"http://en.wikipedia.org/wiki/Mp4"},
-			{ContainerEnum.ogg ,"http://en.wikipedia.org/wiki/Ogg"},
-			{ContainerEnum.webm ,"http://en.wikipedia.org/wiki/Webm"},
-			{ContainerEnum._3gp ,"http://en.wikipedia.org/wiki/3gp"},
-		};
-
-		public static Dictionary<ContainerEnum,string> VideoContainerToExtension = new Dictionary<ContainerEnum, string> () 
-		{
-			{ContainerEnum.avi,".avi"},
-			{ContainerEnum.flv,".flv"},
-			{ContainerEnum.mp4,".mp4"},
-			{ContainerEnum.mpeg,".mpeg"},
-			{ContainerEnum.ogg,".ogv"},
-			{ContainerEnum.mkv,".mkv"},
-			{ContainerEnum.webm,".webm"},
-			{ContainerEnum._3gp,".3gp"},
-		};
-
-		public static Dictionary<ContainerEnum,string> VideoContainerToFFMpegContainer = new Dictionary<ContainerEnum, string> () 
-		{
-			{ContainerEnum.none,""},
-			{ContainerEnum.avi,"avi"},
-			{ContainerEnum.flv,"flv"},
-			{ContainerEnum.mp4,"mp4"},
-			{ContainerEnum.mpeg,"mpg"},
-			{ContainerEnum.ogg,"ogg"},
-			{ContainerEnum.mkv,"mkv"},
-			{ContainerEnum.webm,"webm"},
-			{ContainerEnum._3gp,"3gp"},
-		};
 
 		public static Dictionary<decimal,string> DefaultVideoBitRates = new Dictionary<decimal, string>()
 		{
@@ -192,7 +133,7 @@ namespace MediaConvertGUI
 			    ( 	(targetMovie.FirstVideoTrack == null) || 
 			 (targetMovie.TargetVideoCodec == MediaConvertGUIConfiguration.GetVideoCodecByName("none")) || 
 			    	(targetMovie.TargetContainer == null) || 	
-			    	(targetMovie.TargetContainer == ContainerEnum.none)			    	
+			 (targetMovie.TargetContainer.Name == "none")			    	
 			    ) &&
 			    (currentPass>1))
 			{
@@ -218,13 +159,13 @@ namespace MediaConvertGUI
 			var map = String.Empty;
 
 			if (targetMovie.FirstVideoTrack != null && targetMovie.TargetVideoCodec!=MediaConvertGUIConfiguration.GetVideoCodecByName("none") &&
-				targetMovie.TargetContainer != null && targetMovie.TargetContainer != ContainerEnum.none)
+				targetMovie.TargetContainer != null && targetMovie.TargetContainer.Name != "none")
 			{
 				var videoSettings= String.Empty;					
 				var container = String.Empty;														
 
-				container = " -f " + MediaInfoBase.VideoContainerToFFMpegContainer [targetMovie.TargetContainer];
-				ext = MediaInfoBase.VideoContainerToExtension[targetMovie.TargetContainer];
+				container = " -f " + targetMovie.TargetContainer.Name;
+				ext = targetMovie.TargetContainer.Extension;
 
 				targetFile = sourceMovie.FileName+".converted" + ext;
 
@@ -283,7 +224,7 @@ namespace MediaConvertGUI
 
 				if ( (targetMovie.FirstVideoTrack == null) || 
 					 (targetMovie.TargetVideoCodec == MediaConvertGUIConfiguration.GetVideoCodecByName("none")) ||					 
-					 (targetMovie.TargetContainer == ContainerEnum.none)
+					 (targetMovie.TargetContainer.Name == "none")
 					)									
 				{
 					// converting single audio
@@ -316,25 +257,19 @@ namespace MediaConvertGUI
 			return res;
 		}
 
-		public static ContainerEnum DetectContainerByExt(string fileName)
+		public static MediaContainer DetectContainerByExt(string fileName)
 		{
-			var res = ContainerEnum.none;
+			var res = MediaConvertGUIConfiguration.GetContainerByName ("none");
+
 			var ext = System.IO.Path.GetExtension(fileName).ToLower();
 			if (!String.IsNullOrEmpty(ext) && ext.Length>1)
 			{
 				ext = ext.Substring(1);
 			}
 
-			foreach (var cont in Enum.GetNames(typeof(ContainerEnum)))
-			{
-				if (cont == ext)
-				{
-					if (Enum.TryParse(cont,out res))
-					{
-						break;
-					} 					
-				}
-			}
+			var cont = MediaConvertGUIConfiguration.GetContainerByExt (ext);
+			if (cont != null) 
+				res = cont;
 
 			return res;
 		}

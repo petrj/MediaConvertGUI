@@ -13,8 +13,25 @@ namespace MediaConvertGUI
 		public static List<string> OpenWithApplications{ get; set; }
 		public static List<MediaCodec> VideoCodecs { get; set; }
 		public static List<MediaCodec> AudioCodecs { get; set; }
+		public static List<MediaContainer> Containers { get; set; }
 		public static string MediaInfoPath;
 		public static string FFMpegPath;
+
+
+		public static List<string> ContainersAsList()
+		{
+			var res = new List<string>();
+
+			if (Containers == null)
+				return res;
+
+			foreach (var c in Containers) 
+			{
+				res.Add (c.Name);
+			}
+
+			return res;
+		}
 
 		public static List<string> VideoCodecsAsList()
 		{
@@ -74,6 +91,34 @@ namespace MediaConvertGUI
 			return null;
 		}
 
+		public static MediaContainer GetContainerByName(string name)
+		{
+			if (Containers == null)
+				return null;
+
+			foreach (var c in Containers) 
+			{
+				if (c.Name == name)
+					return c;
+			}
+
+			return null;
+		}
+
+		public static MediaContainer GetContainerByExt(string ext)
+		{
+			if (Containers == null)
+				return null;
+
+			foreach (var c in Containers) 
+			{
+				if (c.Extension == ext)
+					return c;
+			}
+
+			return null;
+		}
+
 		public static void Save(string filename)
 		{
 			var xmlDoc = new EnhancedXmlDocument();
@@ -100,7 +145,12 @@ namespace MediaConvertGUI
 			}
 
 			var codecsNode = xmlDoc.CreateElement("AvailableCodecs");
+			var videoCodecsNode = xmlDoc.CreateElement("Video");
+			var audioCodecsNode = xmlDoc.CreateElement("Audio");
+
 			rootNode.AppendChild (codecsNode);
+			codecsNode.AppendChild (videoCodecsNode);
+			codecsNode.AppendChild (audioCodecsNode);
 
 			foreach (var codec in VideoCodecs)
 			{
@@ -110,7 +160,26 @@ namespace MediaConvertGUI
 				node.SetAttribute ("link", codec.Link);
 				node.SetAttribute ("cmd", codec.Command);
 				node.SetAttribute ("hwaccel", codec.HWAcceleration);
-				codecsNode.AppendChild(node);
+				videoCodecsNode.AppendChild(node);
+			}
+
+			foreach (var codec in AudioCodecs)
+			{
+				var node = xmlDoc.CreateElement("Codec");
+				node.SetAttribute ("name", codec.Name);
+				node.SetAttribute ("title", codec.Title);
+				node.SetAttribute ("link", codec.Link);
+				node.SetAttribute ("cmd", codec.Command);
+				node.SetAttribute ("hwaccel", codec.HWAcceleration);
+				audioCodecsNode.AppendChild(node);
+			}
+
+			var containersNode = xmlDoc.CreateElement("AvailableContainers");
+			rootNode.AppendChild (containersNode);
+
+			foreach (var container in Containers) 
+			{
+				container.SaveToXmlnode (xmlDoc, containersNode);
 			}
 
 			xmlDoc.Save(filename);
@@ -127,6 +196,7 @@ namespace MediaConvertGUI
 			OpenWithApplications = new List<string>();
 			VideoCodecs = new List<MediaCodec> ();
 			AudioCodecs = new List<MediaCodec> ();
+			Containers =  new List<MediaContainer> ();
 
 			if (!Path.IsPathRooted(filename))
 			{
@@ -159,6 +229,12 @@ namespace MediaConvertGUI
 			foreach(XmlElement codecNode in audioCodecNodes)
 			{			
 				AudioCodecs.Add( MediaCodec.CreateFromXmlnode(codecNode));
+			}
+
+			var contNodes = xmlDoc.SelectNodes("//MediaConvertGUIConfiguration/AvailableContainers/Container");
+			foreach(XmlElement cont in contNodes)
+			{			
+				Containers.Add( MediaContainer.CreateFromXmlnode(cont));
 			}
 
 			MediaInfoPath = xmlDoc.GetSingleNodeValue("//MediaConvertGUIConfiguration/MediaInfoPath","mediainfo");

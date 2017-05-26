@@ -33,4 +33,20 @@
 	  	<Codec name="ac3" title="copy" cmd="-acodec ac3"  link="http://en.wikipedia.org/wiki/Dolby_AC-3" />
 	</Audio>
   </AvailableCodecs>
+  <AvailableContainers>
+  	<Container name="none" title="" ext="" link="" />
+  	<Container name="avi" title="" ext=".avi" link="http://en.wikipedia.org/wiki/Audio_Video_Interleave" />
+  	<Container name="flv" title="" ext=".flv" link="http://en.wikipedia.org/wiki/Flash_Video" />
+  	<Container name="mp4" title="" ext=".mp4" link="http://en.wikipedia.org/wiki/Mp4" />
+  	<Container name="mkv" title="" ext=".mkv" link="http://en.wikipedia.org/wiki/Mkv" />
+  	<Container name="mpeg" title="" ext=".mpeg" link="http://en.wikipedia.org/wiki/Moving_Picture_Experts_Group" />
+  	<Container name="ogg" title="" ext=".ogv" link="http://en.wikipedia.org/wiki/Ogg" />
+  	<Container name="webm" title="" ext=".webm" link="http://en.wikipedia.org/wiki/Webm" />
+  	<Container name="3gp" title="" ext=".3gp" link="http://en.wikipedia.org/wiki/3gp" />
+  	<Container name="mp3" title="" ext=".mp3" link="" />
+  	<Container name="wav" title="" ext=".wav" link="" />
+  	<Container name="flac" title="" ext=".flac" link="" />
+  	<Container name="aac" title="" ext=".aac" link="" />
+  	<Container name="ac3" title="" ext=".ac3" link="" />
+  </AvailableContainers>
 </MediaConvertGUIConfiguration> 	

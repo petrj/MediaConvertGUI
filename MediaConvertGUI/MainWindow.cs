@@ -32,6 +32,10 @@ public partial class MainWindow: Gtk.Window
 
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
+		// Loading configuration
+		MediaConvertGUIConfiguration.Load("config.xml");
+
+
 		Build ();
 
 		// iapp icon
@@ -41,8 +45,6 @@ public partial class MainWindow: Gtk.Window
 		var pixbuf = new Gdk.Pixbuf (buffer);
 		Icon = pixbuf;
 
-		// Loading configuration
-		MediaConvertGUIConfiguration.Load("config.xml");
 
 		TestPrerequisites();
 
@@ -248,7 +250,7 @@ public partial class MainWindow: Gtk.Window
 		{		
 			var name = System.IO.Path.GetFileName (info.Key.FileName);
 			var codec = info.Value.TargetVideoCodec.Name;
-			var cont = info.Value.TargetContainer.ToString();
+			var cont = info.Value.TargetContainer.Name;
 			var audio = info.Value.FirstAudioTrack != null ? info.Value.FirstAudioTrack.TargetAudioCodec.ToString() : "none";
 				info.Value.TargetContainer.ToString();
 				
@@ -285,7 +287,7 @@ public partial class MainWindow: Gtk.Window
 
 				if (firstVideoTrack!=null)
 				{
-					targetMovie.TargetContainer = ContainerEnum.avi;
+					targetMovie.TargetContainer = MediaConvertGUIConfiguration.GetContainerByName("avi");
 					targetMovie.TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName ("copy");
 				} 
 
@@ -694,7 +696,7 @@ public partial class MainWindow: Gtk.Window
 			foreach (var kvp in MoviesInfo) 
 			{
 				var fName = kvp.Key.FileName;
-				var logFileName = kvp.Key.FileName + ".converted" + MediaInfoBase.VideoContainerToExtension [kvp.Value.TargetContainer] + ".log";
+				var logFileName = kvp.Key.FileName + ".converted" + kvp.Value.TargetContainer.Extension + ".log";
 
 				if (File.Exists (logFileName)) 
 				{

@@ -66,10 +66,10 @@ namespace MediaConvertGUI
 				{				
 					if (Editable)
 					{
-						SupportMethods.FillComboBox(comboContainer,typeof(ContainerEnum),Editable,(int)Info.TargetContainer);
+						SupportMethods.FillComboBox(comboContainer,MediaConvertGUIConfiguration.ContainersAsList(),Editable,Info.TargetContainer.Name);
 					} else
 					{
-						SupportMethods.FillComboBox(comboContainer,new List<string>() {Info.TargetContainer.ToString()}, Editable,Info.TargetContainer.ToString());
+						SupportMethods.FillComboBox(comboContainer,new List<string>() {Info.TargetContainer.Name}, Editable,Info.TargetContainer.Name);
 					}					
 					
 				} else
@@ -87,10 +87,10 @@ namespace MediaConvertGUI
 		{
 			if (Editable && Info!= null && comboContainer.Active>0)
 			{
-				var container = (ContainerEnum)comboContainer.Active;
-				if (MediaInfoBase.WikiContainerCodecsLinks.ContainsKey(container))
+				var container = MediaConvertGUIConfiguration.GetContainerByName (comboContainer.ActiveText);
+				if (!String.IsNullOrEmpty(container.Link))
 				{
-					SupportMethods.ExecuteInShell(MediaInfoBase.WikiContainerCodecsLinks[container]);
+					SupportMethods.ExecuteInShell(container.Link);
 				}
 			}
 		}
@@ -102,7 +102,7 @@ namespace MediaConvertGUI
 			{
 				if (_eventLock.Lock())
 				{						
-					Info.TargetContainer = (ContainerEnum)comboContainer.Active;
+					Info.TargetContainer = MediaConvertGUIConfiguration.GetContainerByName (comboContainer.ActiveText);
 										
 					_eventLock.Unlock();
 					

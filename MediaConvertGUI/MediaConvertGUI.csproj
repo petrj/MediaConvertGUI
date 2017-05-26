@@ -94,6 +94,7 @@
     <Compile Include="WidgetContainer.cs" />
     <Compile Include="gtk-gui\MediaConvertGUI.WidgetContainer.cs" />
     <Compile Include="MediaCodec.cs" />
+    <Compile Include="MediaContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -115,9 +116,6 @@
     </None>
     <None Include="Schemes\Webm-vorbis.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Icons\ico.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -152,6 +150,10 @@
     </None>
     <None Include="Icons\apply.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
     </None>
   </ItemGroup>
 </Project>
