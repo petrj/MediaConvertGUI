@@ -251,8 +251,8 @@ public partial class MainWindow: Gtk.Window
 			var name = System.IO.Path.GetFileName (info.Key.FileName);
 			var codec = info.Value.TargetVideoCodec.Name;
 			var cont = info.Value.TargetContainer.Name;
-			var audio = info.Value.FirstAudioTrack != null ? info.Value.FirstAudioTrack.TargetAudioCodec.ToString() : "none";
-				info.Value.TargetContainer.ToString();
+			var audio = info.Value.FirstAudioTrack != null ? info.Value.FirstAudioTrack.TargetAudioCodec.Name: "none";
+				
 				
 			var duration = info.Value.HuamReadableDuration;
 			var size = info.Value.HumanReadableSize;
