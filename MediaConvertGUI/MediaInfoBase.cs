@@ -5,50 +5,15 @@ using System.Collections.Generic;
 
 namespace MediaConvertGUI
 {
-
 	public abstract class MediaInfoBase
-	{
-		#region static constants
-
-		public static Dictionary<decimal,string> DefaultVideoBitRates = new Dictionary<decimal, string>()
-		{
-			{1500m,"VCD (1.5 Mb)"},
-			{2000m,"Standard (2 Mb)"},
-			{3500m,"TV  (3.5 Mb)"},	
-			{5000m,"High (5 Mb)"},
-			{9000m,"DVD (9 Mb)"},
-			{15000m,"HDTV (15 Mb)"},
-			{30000m,"HD DVD (30 Mb)"}
-		};
-		
+	{	
 		public static Dictionary<decimal,string> DefaultRotationAngles = new Dictionary<decimal, string>()
 		{
 			{0,"0"},
 			{90,"90"},
 			{180,"180"},	
 			{270,"270"}
-		};		
-
-		public static Dictionary<decimal,string> DefaultSamplingRates = new Dictionary<decimal, string>()
-		{
-
-			{08000m,"Telephone (8 kHz)"},
-			{11025m,"1/4 Audio-CD (11 kHz)"},
-			{22050m,"1/2 Audio-CD (22 kHz)"},
-			{44100m,"Audio-CD (44 kHz)"},
-			{48000m,"TV (48 kHz)"},		
-			{96000m,"DVD-Audio (96 kHz)"}
 		};
-
-		public static Dictionary<decimal,string> DefaultAudioBitRates = new Dictionary<decimal, string>()
-		{
-			{32m,"32"},
-			{64m,"64"},		
-			{128m,"128"},
-			{192m,"192"},
-		};
-
-		#endregion
 
 		#region static Methods
 
@@ -259,19 +224,30 @@ namespace MediaConvertGUI
 
 		public static MediaContainer DetectContainerByExt(string fileName)
 		{
-			var res = MediaConvertGUIConfiguration.GetContainerByName ("none");
-
 			var ext = System.IO.Path.GetExtension(fileName).ToLower();
-			if (!String.IsNullOrEmpty(ext) && ext.Length>1)
+			if (!String.IsNullOrEmpty (ext) && ext.Length > 1) 
 			{
-				ext = ext.Substring(1);
+				ext = ext.Substring (1);
+			}
+			 
+			// loop ExtensionList in each container
+			foreach (var cont in MediaConvertGUIConfiguration.Containers) 
+			{
+				foreach (var e in cont.ExtensionList)
+				{
+					if (e.ToLower () == ext.ToLower ()) 
+					{
+						return cont;
+					}
+				}			
 			}
 
-			var cont = MediaConvertGUIConfiguration.GetContainerByExt (ext);
-			if (cont != null) 
-				res = cont;
+			// default ext
+			var c = MediaConvertGUIConfiguration.GetContainerByExt (ext);
+			if (c != null) 
+				return c;
 
-			return res;
+			return MediaConvertGUIConfiguration.GetContainerByName ("none");
 		}
 
 		/// <summary>

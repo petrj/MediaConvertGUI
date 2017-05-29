@@ -97,7 +97,7 @@ namespace MediaConvertGUI
 					res = SupportMethods.ToDecimal(comboBitrate.Entry.Text);
 				} else
 				{
-					foreach (var  kvp in MediaInfo.DefaultAudioBitRates)
+					foreach (var  kvp in MediaConvertGUIConfiguration.DefaultAudioBitrates)
 					{
 						if (kvp.Value == comboBitrate.Entry.Text)
 						{
@@ -170,8 +170,8 @@ namespace MediaConvertGUI
 						SupportMethods.FillComboBox(comboCodec,new List<string>(){activeTrack.Codec},false,activeTrack.Codec);
 					}
 
-					SupportMethods.FillComboBoxEntry(comboSampleRate,MediaInfo.DefaultSamplingRates,activeTrack.SamplingRateHz,Editable);
-					SupportMethods.FillComboBoxEntry(comboBitrate,MediaInfo.DefaultAudioBitRates,activeTrack.BitrateKbps,Editable);
+					SupportMethods.FillComboBoxEntry(comboSampleRate,MediaConvertGUIConfiguration.DefaultSamplingRates,activeTrack.SamplingRateHz,Editable);
+					SupportMethods.FillComboBoxEntry(comboBitrate,MediaConvertGUIConfiguration.DefaultAudioBitrates,activeTrack.BitrateKbps,Editable);
 
 					labelTrackSze.Text = activeTrack.HumanReadableStreamSize;
 				} else
@@ -224,7 +224,7 @@ namespace MediaConvertGUI
 
 					activeTrack.Channels = Convert.ToInt32(comboChannels.ActiveText);
 
-					var samplingRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboSampleRate.ActiveText,MediaInfo.DefaultSamplingRates);
+					var samplingRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboSampleRate.ActiveText,MediaConvertGUIConfiguration.DefaultSamplingRates);
 					activeTrack.SamplingRateHz = samplingRateTypedValue;
 				}
 

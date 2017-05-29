@@ -156,7 +156,7 @@ namespace MediaConvertGUI
 
 					if (MovieInfo.EditBitRate) 
 					{
-						SupportMethods.FillComboBoxEntry(comboBitRate,MediaInfo.DefaultVideoBitRates,m.BitrateKbps,Editable);
+						SupportMethods.FillComboBoxEntry(comboBitRate, MediaConvertGUIConfiguration.DefaultVideoBitRates,m.BitrateKbps,Editable);
 					} else 
 					{
 						SupportMethods.ClearCombo(comboBitRate);
@@ -299,7 +299,7 @@ namespace MediaConvertGUI
 
 					if (chBoxBitRate.Active) 
 					{
-						var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue (comboBitRate.ActiveText, MediaInfo.DefaultVideoBitRates);
+						var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue (comboBitRate.ActiveText, MediaConvertGUIConfiguration.DefaultVideoBitRates);
 						m.Bitrate = bitRateTypedValue * 1000;
 					}
 

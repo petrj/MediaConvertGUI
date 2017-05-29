@@ -1,52 +1,83 @@
 <MediaConvertGUIConfiguration>
-  <MediaInfoPath>mediainfo</MediaInfoPath>
-  <FFMpegPath>/opt/ffmpeg-hw/ffmpeg</FFMpegPath>
-  <Applications>
-    <OpenWith>
+	<MediaInfoPath>mediainfo</MediaInfoPath>
+	<FFMpegPath>/opt/ffmpeg-hw/ffmpeg</FFMpegPath>
+	<Applications>
+	<OpenWith>
       <!-- <Application>vlc</Application> -->
       <Application>vlc</Application>
       <Application>avidemux</Application> 
       <Application>mediainfo-gui</Application>
-    </OpenWith>
-  </Applications> 
-  <AvailableCodecs>  
-  	<Video> 
-	  	<Codec name="none" title="none" />
-	  	<Codec name="copy" title="copy" cmd="-vcodec copy"/>
-	  	<Codec name="mpg"  title="MPEG 1" cmd="-vcodec mpeg1video" link="http://en.wikipedia.org/wiki/MPEG-1"/>  	
-	  	<Codec name="xvid" title="xvid" cmd="-vcodec libxvid" link="http://en.wikipedia.org/wiki/xvid"/>   	
-	  	<Codec name="flv"  title="flv" cmd="-vcodec flv" link="http://en.wikipedia.org/wiki/Sorenson_Media#Sorenson_Spark"/>  	
-	  	<Codec name="theora" title="theora" cmd="-vcodec theora" link="http://en.wikipedia.org/wiki/theora"/>  	
-	  	<Codec name="vp8"  title="VP8 libvpx" cmd="-vcodec libvpx" link="http://en.wikipedia.org/wiki/vp8"/>  	
-	  	<Codec name="x263" title="h263" cmd="-vcodec h263" link="http://en.wikipedia.org/wiki/h263"/>
-	  	<Codec name="h264" title="h264" cmd="-vcodec h264" link="http://en.wikipedia.org/wiki/h264"/>
-	  	<Codec name="h264_nvenc" title="h264 GPU" cmd="-vcodec h264_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h264"/>
-	</Video>
-	<Audio>
-		<Codec name="none" title="none" cmd = "-an" />
-	  	<Codec name="copy" title="copy" cmd="-acodec copy"/>  	
-	  	<Codec name="mp2" title="copy" cmd="-acodec mp2" link="http://en.wikipedia.org/wiki/MP2" />
-	  	<Codec name="mp3" title="copy" cmd="-acodec libmp3lame" link="http://en.wikipedia.org/wiki/MP3" />
-	  	<Codec name="vorbis" title="copy" cmd="-acodec libvorbis"  link="http://en.wikipedia.org/wiki/Vorbis" />
-	  	<Codec name="aac" title="copy" cmd="-acodec libfaac"  link="http://en.wikipedia.org/wiki/Aac" />
-	  	<Codec name="flac" title="copy" cmd="-acodec flac "  link="http://en.wikipedia.org/wiki/flac" />
-	  	<Codec name="ac3" title="copy" cmd="-acodec ac3"  link="http://en.wikipedia.org/wiki/Dolby_AC-3" />
-	</Audio>
-  </AvailableCodecs>
-  <AvailableContainers>
-  	<Container name="none" title="" ext="" link="" />
-  	<Container name="avi" title="" ext=".avi" link="http://en.wikipedia.org/wiki/Audio_Video_Interleave" />
-  	<Container name="flv" title="" ext=".flv" link="http://en.wikipedia.org/wiki/Flash_Video" />
-  	<Container name="mp4" title="" ext=".mp4" link="http://en.wikipedia.org/wiki/Mp4" />
-  	<Container name="mkv" title="" ext=".mkv" link="http://en.wikipedia.org/wiki/Mkv" />
-  	<Container name="mpeg" title="" ext=".mpeg" link="http://en.wikipedia.org/wiki/Moving_Picture_Experts_Group" />
-  	<Container name="ogg" title="" ext=".ogv" link="http://en.wikipedia.org/wiki/Ogg" />
-  	<Container name="webm" title="" ext=".webm" link="http://en.wikipedia.org/wiki/Webm" />
-  	<Container name="3gp" title="" ext=".3gp" link="http://en.wikipedia.org/wiki/3gp" />
-  	<Container name="mp3" title="" ext=".mp3" link="" />
-  	<Container name="wav" title="" ext=".wav" link="" />
-  	<Container name="flac" title="" ext=".flac" link="" />
-  	<Container name="aac" title="" ext=".aac" link="" />
-  	<Container name="ac3" title="" ext=".ac3" link="" />
-  </AvailableContainers>
+	</OpenWith>
+	</Applications> 
+	<AvailableCodecs>  
+	  	<Video> 
+		  	<Codec name="none" title="none" />
+		  	<Codec name="copy" title="copy" cmd="-vcodec copy"/>
+		  	<Codec name="mpg"  title="MPEG 1" cmd="-vcodec mpeg1video" link="http://en.wikipedia.org/wiki/MPEG-1"/>  	
+		  	<Codec name="xvid" title="xvid" cmd="-vcodec libxvid" link="http://en.wikipedia.org/wiki/xvid"/>   	
+		  	<Codec name="flv"  title="flv" cmd="-vcodec flv" link="http://en.wikipedia.org/wiki/Sorenson_Media#Sorenson_Spark"/>  	
+		  	<Codec name="theora" title="theora" cmd="-vcodec libtheora" link="http://en.wikipedia.org/wiki/theora"/>  	
+		  	<Codec name="vp8"  title="VP8 libvpx" cmd="-vcodec libvpx" link="http://en.wikipedia.org/wiki/vp8"/>  	
+		  	<Codec name="x263" title="h263" cmd="-vcodec h263" link="http://en.wikipedia.org/wiki/h263"/>
+		  	<Codec name="h264" title="h264" cmd="-vcodec h264" link="http://en.wikipedia.org/wiki/h264"/>
+		  	<Codec name="h264_nvenc" title="h264 GPU" cmd="-vcodec h264_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h264"/>
+		  	<Codec name="hevc_nvenc" title="h265 GPU" cmd="-vcodec hevc_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h265"/>
+		</Video>
+		<Audio>
+			<Codec name="none" title="none" cmd = "-an" />
+		  	<Codec name="copy" title="copy" cmd="-acodec copy"/>  	
+		  	<Codec name="mp2" title="copy" cmd="-acodec mp2" link="http://en.wikipedia.org/wiki/MP2" />
+		  	<Codec name="mp3" title="copy" cmd="-acodec libmp3lame" link="http://en.wikipedia.org/wiki/MP3" />
+		  	<Codec name="vorbis" title="copy" cmd="-acodec libvorbis"  link="http://en.wikipedia.org/wiki/Vorbis" />
+		  	<Codec name="aac" title="copy" cmd="-acodec libfaac"  link="http://en.wikipedia.org/wiki/Aac" />
+		  	<Codec name="flac" title="copy" cmd="-acodec flac "  link="http://en.wikipedia.org/wiki/flac" />
+		  	<Codec name="ac3" title="copy" cmd="-acodec ac3"  link="http://en.wikipedia.org/wiki/Dolby_AC-3" />
+		</Audio>
+  	</AvailableCodecs>
+  	<AvailableContainers>
+	  	<Container name="none" title="" ext="" link="" />
+	  	<Container name="avi" title="" ext=".avi" link="http://en.wikipedia.org/wiki/Audio_Video_Interleave" />
+	  	<Container name="flv" title="" ext=".flv" link="http://en.wikipedia.org/wiki/Flash_Video" />
+	  	<Container name="mp4" title="" ext=".mp4" link="http://en.wikipedia.org/wiki/Mp4" />
+	  	<Container name="mkv" title="" ext=".mkv" link="http://en.wikipedia.org/wiki/Mkv" />
+	  	<Container name="mpeg" title="" ext=".mpeg" extList="mpeg,mpg,m2t" link="http://en.wikipedia.org/wiki/Moving_Picture_Experts_Group" />
+	  	<Container name="ogg" title="" ext=".ogv" link="http://en.wikipedia.org/wiki/Ogg" />
+	  	<Container name="webm" title="" ext=".webm" link="http://en.wikipedia.org/wiki/Webm" />
+	  	<Container name="3gp" title="" ext=".3gp" link="http://en.wikipedia.org/wiki/3gp" />
+	  	<Container name="mp3" title="" ext=".mp3" link="" />
+	  	<Container name="wav" title="" ext=".wav" link="" />
+	  	<Container name="flac" title="" ext=".flac" link="" />
+	  	<Container name="aac" title="" ext=".aac" link="" />
+	  	<Container name="ac3" title="" ext=".ac3" link="" />
+  	</AvailableContainers>
+  	<DefaultVideoBitrates>
+		<Bitrate value="1500" title="VCD (1.5 Mb)" />
+		<Bitrate value="2000" title="Low (2 Mb)" />
+		<Bitrate value="3500" title="TV (3.5 Mb)" />
+		<Bitrate value="5000" title="High (5 Mb)" />
+		<Bitrate value="9000" title="DVD (9 Mb)" />
+		<Bitrate value="15000" title="HDTV (15 Mb)" />
+		<Bitrate value="30000" title="HD DVD (30 Mb)" />  
+	</DefaultVideoBitrates>
+  	<DefaultRotationAngles>
+		<Angle value="0"/>
+		<Angle value="90"/>
+		<Angle value="180"/>
+		<Angle value="270"/>
+	</DefaultRotationAngles>
+	<DefaultSamplingRates>
+		<Rate value="800" title="Telephone (8 kHz)" />
+		<Rate value="11025" title="1/4 Audio-CD (11 kHz)" />
+		<Rate value="22050" title="1/2 Audio-CD (22 kHz)" />
+		<Rate value="44100" title="Audio-CD (44 kHz)" />
+		<Rate value="48000" title="TV (48 kHz)" />
+		<Rate value="96000" title="DVD-Audio (96 kHz)" />
+	</DefaultSamplingRates>
+	<DefaultAudioBitrates>
+		<Bitrate value="32"/>
+		<Bitrate value="64"/>
+		<Bitrate value="128"/>
+		<Bitrate value="192"/>
+		<Bitrate value="256"/>
+	</DefaultAudioBitrates>  	
 </MediaConvertGUIConfiguration> 	

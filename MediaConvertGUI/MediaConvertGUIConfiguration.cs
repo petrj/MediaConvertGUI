@@ -17,6 +17,9 @@ namespace MediaConvertGUI
 		public static string MediaInfoPath;
 		public static string FFMpegPath;
 
+		public static Dictionary<decimal,string> DefaultVideoBitRates { get; set; }
+		public static Dictionary<decimal,string> DefaultSamplingRates { get; set; }
+		public static Dictionary<decimal,string> DefaultAudioBitrates { get; set; }
 
 		public static List<string> ContainersAsList()
 		{
@@ -119,6 +122,41 @@ namespace MediaConvertGUI
 			return null;
 		}
 
+		private static void SaveDictionaryToXmlNode(Dictionary<decimal, string> dict,EnhancedXmlDocument xmlDoc, XmlElement parentNode, string mainNodeName , string nodeName)
+		{
+			var mainNode = xmlDoc.CreateElement(mainNodeName);
+			parentNode.AppendChild(mainNode);
+
+			foreach (var keyAndValue in dict)
+			{
+				var node = xmlDoc.CreateElement(nodeName);
+				node.SetAttribute ("value", keyAndValue.Key.ToString());
+				node.SetAttribute ("title", keyAndValue.Value);
+				mainNode.AppendChild(node);
+			}
+		}
+
+		private static void LoadDictionaryFromXmlNode(Dictionary<decimal, string> dict,EnhancedXmlDocument xmlDoc, string xpath)
+		{
+			var nodes = xmlDoc.SelectNodes(xpath);
+			foreach (XmlElement nodeEl in nodes) 
+			{
+				decimal val = 0;
+				string title = "";
+
+				if (nodeEl.HasAttribute ("value")) 				
+					val = Convert.ToDecimal (nodeEl.GetAttribute ("value"));
+
+				if (nodeEl.HasAttribute ("title")) 				
+					title= nodeEl.GetAttribute("title");
+
+				if (title == "")
+					title = val.ToString ("N0");
+
+				dict.Add (val, title);
+			}
+		}
+
 		public static void Save(string filename)
 		{
 			var xmlDoc = new EnhancedXmlDocument();
@@ -182,6 +220,10 @@ namespace MediaConvertGUI
 				container.SaveToXmlnode (xmlDoc, containersNode);
 			}
 
+			SaveDictionaryToXmlNode (DefaultVideoBitRates, xmlDoc, rootNode, "DefaultVideoBitrates", "BitRate");
+			SaveDictionaryToXmlNode (DefaultSamplingRates, xmlDoc, rootNode, "DefaultSamplingRates", "Rate");
+			SaveDictionaryToXmlNode (DefaultAudioBitrates, xmlDoc, rootNode, "DefaultAudioBitrates", "Bitrate");
+
 			xmlDoc.Save(filename);
 		}
 
@@ -197,6 +239,10 @@ namespace MediaConvertGUI
 			VideoCodecs = new List<MediaCodec> ();
 			AudioCodecs = new List<MediaCodec> ();
 			Containers =  new List<MediaContainer> ();
+
+			DefaultVideoBitRates = new Dictionary<decimal, string> ();
+			DefaultSamplingRates = new Dictionary<decimal, string> ();
+			DefaultAudioBitrates = new Dictionary<decimal, string> ();
 
 			if (!Path.IsPathRooted(filename))
 			{
@@ -239,6 +285,11 @@ namespace MediaConvertGUI
 
 			MediaInfoPath = xmlDoc.GetSingleNodeValue("//MediaConvertGUIConfiguration/MediaInfoPath","mediainfo");
 			FFMpegPath = xmlDoc.GetSingleNodeValue("//MediaConvertGUIConfiguration/FFMpegPath","ffmpeg");
+
+
+			LoadDictionaryFromXmlNode (DefaultVideoBitRates, xmlDoc, "//MediaConvertGUIConfiguration/DefaultVideoBitrates/Bitrate");
+			LoadDictionaryFromXmlNode (DefaultSamplingRates, xmlDoc, "//MediaConvertGUIConfiguration/DefaultSamplingRates/Rate");
+			LoadDictionaryFromXmlNode (DefaultAudioBitrates, xmlDoc, "//MediaConvertGUIConfiguration/DefaultAudioBitrates/Bitrate");
 
 			// Saving 
 			Save(filename);

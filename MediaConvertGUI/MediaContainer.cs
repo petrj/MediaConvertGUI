@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Text;
 using System.Xml;
@@ -10,7 +11,13 @@ namespace MediaConvertGUI
 		public string Name { get; set; }
 		public string Title { get; set; }
 		public string Extension { get; set; }
+		public List<string> ExtensionList { get; set; }
 		public string Link { get; set; }
+
+		public MediaContainer()
+		{
+			ExtensionList = new List<string> ();
+		}
 
 		public void SaveToXmlnode(EnhancedXmlDocument xmlDoc, XmlElement parentNode)
 		{
@@ -18,6 +25,10 @@ namespace MediaConvertGUI
 			node.SetAttribute ("name", Name);
 			node.SetAttribute ("title", Title);
 			node.SetAttribute ("ext", Extension);
+
+			var exts = String.Join (",", ExtensionList);
+			node.SetAttribute ("extList", exts);
+
 			node.SetAttribute ("link", Link);
 
 			parentNode.AppendChild(node);
@@ -41,6 +52,13 @@ namespace MediaConvertGUI
 			if (element.HasAttribute ("ext")) 
 			{
 				container.Extension = element.GetAttribute ("ext");
+			}
+			if (element.HasAttribute ("extList")) 
+			{
+				foreach (var ext in element.GetAttribute ("extList").Split(',')) 
+				{
+					container.ExtensionList.Add (ext);
+				}
 			}
 
 			return container;
