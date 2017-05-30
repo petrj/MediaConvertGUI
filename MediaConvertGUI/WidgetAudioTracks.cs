@@ -163,7 +163,7 @@ namespace MediaConvertGUI
 						frameAudioOptions.Visible = (activeTrack.TargetAudioCodec.Name != "none") && 
 													(activeTrack.TargetAudioCodec.Name != "copy");
 
-						SupportMethods.FillComboBox(comboCodec,MediaConvertGUIConfiguration.AudioCodecsAsList(),true,activeTrack.TargetAudioCodec.Name);
+						SupportMethods.FillComboBox(comboCodec,MediaConvertGUIConfiguration.AudioCodecsAsList(true),true,activeTrack.TargetAudioCodec.Name);
 					} else
 					{
 						frameAudioOptions.Visible = true;

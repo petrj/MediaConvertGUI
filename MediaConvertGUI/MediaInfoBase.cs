@@ -168,7 +168,7 @@ namespace MediaConvertGUI
 					videoSettings += pass;
 				}
 
-				video = targetMovie.TargetVideoCodec.Command;
+				video = targetMovie.TargetVideoCodec.Command + videoSettings;
 				hwaccel = String.IsNullOrEmpty (targetMovie.TargetVideoCodec.HWAcceleration) ? "" : " -hwaccel " +targetMovie.TargetVideoCodec.HWAcceleration;
 			}
 

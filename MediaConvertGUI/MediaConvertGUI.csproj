@@ -154,5 +154,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
     </None>
+    <None Include="config-hw.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

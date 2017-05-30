@@ -20,8 +20,8 @@
 		  	<Codec name="vp8"  title="VP8 libvpx" cmd="-vcodec libvpx" link="http://en.wikipedia.org/wiki/vp8"/>  	
 		  	<Codec name="x263" title="h263" cmd="-vcodec h263" link="http://en.wikipedia.org/wiki/h263"/>
 		  	<Codec name="h264" title="h264" cmd="-vcodec h264" link="http://en.wikipedia.org/wiki/h264"/>
-		  	<Codec name="h264_nvenc" title="h264 GPU" cmd="-vcodec h264_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h264"/>
-		  	<Codec name="hevc_nvenc" title="h265 GPU" cmd="-vcodec hevc_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h265"/>
+		  	<Codec name="h264_nvenc" encode="false" title="h264 GPU" cmd="-vcodec h264_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h264"/>
+		  	<Codec name="hevc_nvenc" encode="false" title="h265 GPU" cmd="-vcodec hevc_nvenc" hwaccel="vdpau" link="http://en.wikipedia.org/wiki/h265"/>
 		</Video>
 		<Audio>
 			<Codec name="none" title="none" cmd = "-an" />
@@ -36,7 +36,7 @@
   	</AvailableCodecs>
   	<AvailableContainers>
 	  	<Container name="none" title="" ext="" link="" />
-	  	<Container name="avi" title="" ext=".avi" link="http://en.wikipedia.org/wiki/Audio_Video_Interleave" />
+	  	<Container name="avi" title="" ext=".avi" default="true" link="http://en.wikipedia.org/wiki/Audio_Video_Interleave" />
 	  	<Container name="flv" title="" ext=".flv" link="http://en.wikipedia.org/wiki/Flash_Video" />
 	  	<Container name="mp4" title="" ext=".mp4" link="http://en.wikipedia.org/wiki/Mp4" />
 	  	<Container name="mkv" title="" ext=".mkv" link="http://en.wikipedia.org/wiki/Mkv" />

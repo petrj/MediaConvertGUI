@@ -66,7 +66,7 @@ namespace MediaConvertGUI
 				{				
 					if (Editable)
 					{
-						SupportMethods.FillComboBox(comboContainer,MediaConvertGUIConfiguration.ContainersAsList(),Editable,Info.TargetContainer.Name);
+						SupportMethods.FillComboBox(comboContainer,MediaConvertGUIConfiguration.ContainersAsList(true),Editable,Info.TargetContainer.Name);
 					} else
 					{
 						SupportMethods.FillComboBox(comboContainer,new List<string>() {Info.TargetContainer.Name}, Editable,Info.TargetContainer.Name);

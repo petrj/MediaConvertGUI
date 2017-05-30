@@ -11,7 +11,29 @@ namespace MediaConvertGUI
 		public string Link { get; set; }
 		public string Command { get; set; }
 		public string HWAcceleration { get; set; }
+		public bool Encode { get; set; }
 
+		public MediaCodec()
+		{
+			Encode = true;
+		}
+
+		public void SaveToXmlnode(EnhancedXmlDocument xmlDoc, XmlElement parentNode)
+		{
+			var node = xmlDoc.CreateElement("Codec");
+			node.SetAttribute ("name", Name);
+			node.SetAttribute ("title", Title);
+			node.SetAttribute ("link", Link);
+			node.SetAttribute ("cmd", Command);
+
+			if (!string.IsNullOrEmpty(HWAcceleration))
+				node.SetAttribute ("hwaccel", HWAcceleration);
+
+			if (!Encode)
+				node.SetAttribute ("encode", "false");
+
+			parentNode.AppendChild(node);
+		}
 
 		public static MediaCodec CreateFromXmlnode(XmlElement element)
 		{
@@ -35,6 +57,10 @@ namespace MediaConvertGUI
 			if (element.HasAttribute ("hwaccel")) 
 			{
 				codec.HWAcceleration = element.GetAttribute ("hwaccel");
+			}
+			if (element.HasAttribute ("encode")) 
+			{
+				codec.Encode = Convert.ToBoolean(element.GetAttribute ("encode"));
 			}
 
 			return codec;

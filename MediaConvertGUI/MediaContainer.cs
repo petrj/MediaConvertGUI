@@ -13,10 +13,14 @@ namespace MediaConvertGUI
 		public string Extension { get; set; }
 		public List<string> ExtensionList { get; set; }
 		public string Link { get; set; }
+		public bool Default  { get; set; }
+		public bool Encode { get; set; }
 
 		public MediaContainer()
 		{
 			ExtensionList = new List<string> ();
+			Default = false;
+			Encode = true;
 		}
 
 		public void SaveToXmlnode(EnhancedXmlDocument xmlDoc, XmlElement parentNode)
@@ -28,6 +32,12 @@ namespace MediaConvertGUI
 
 			var exts = String.Join (",", ExtensionList);
 			node.SetAttribute ("extList", exts);
+
+			if (Default)			
+				node.SetAttribute ("default", "true");
+
+			if (!Encode)
+				node.SetAttribute ("encode", "false");
 
 			node.SetAttribute ("link", Link);
 
@@ -53,12 +63,20 @@ namespace MediaConvertGUI
 			{
 				container.Extension = element.GetAttribute ("ext");
 			}
+			if (element.HasAttribute ("default")) 
+			{
+				container.Default = Convert.ToBoolean(element.GetAttribute ("default"));
+			}
 			if (element.HasAttribute ("extList")) 
 			{
 				foreach (var ext in element.GetAttribute ("extList").Split(',')) 
 				{
 					container.ExtensionList.Add (ext);
 				}
+			}
+			if (element.HasAttribute ("encode")) 
+			{
+				container.Encode = Convert.ToBoolean(element.GetAttribute ("encode"));
 			}
 
 			return container;

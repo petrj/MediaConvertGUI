@@ -21,7 +21,24 @@ namespace MediaConvertGUI
 		public static Dictionary<decimal,string> DefaultSamplingRates { get; set; }
 		public static Dictionary<decimal,string> DefaultAudioBitrates { get; set; }
 
-		public static List<string> ContainersAsList()
+		public static MediaContainer DefaultContainer
+		{
+			get 
+			{				
+				if (Containers == null)
+					return null;
+
+				foreach (var c in Containers) 
+				{
+					if (c.Default)
+						return c;
+				}
+
+				return GetContainerByName ("none");
+			}
+		}
+
+		public static List<string> ContainersAsList(bool enabledForEncodeOnly = false)
 		{
 			var res = new List<string>();
 
@@ -30,13 +47,14 @@ namespace MediaConvertGUI
 
 			foreach (var c in Containers) 
 			{
+				if ((!enabledForEncodeOnly)  || (c.Encode))
 				res.Add (c.Name);
 			}
 
 			return res;
 		}
 
-		public static List<string> VideoCodecsAsList()
+		public static List<string> VideoCodecsAsList(bool enabledForEncodeOnly = false)
 		{
 			var res = new List<string>();
 
@@ -45,13 +63,14 @@ namespace MediaConvertGUI
 
 			foreach (var codec in VideoCodecs) 
 			{
-				res.Add (codec.Name);
+				if ((!enabledForEncodeOnly)  || (codec.Encode))
+					res.Add (codec.Name);
 			}
 
 			return res;
 		}
 
-		public static List<string> AudioCodecsAsList()
+		public static List<string> AudioCodecsAsList(bool enabledForEncodeOnly = false)
 		{
 			var res = new List<string>();
 
@@ -60,7 +79,8 @@ namespace MediaConvertGUI
 
 			foreach (var codec in AudioCodecs) 
 			{
-				res.Add (codec.Name);
+				if ((!enabledForEncodeOnly)  || (codec.Encode))
+					res.Add (codec.Name);
 			}
 
 			return res;
@@ -192,24 +212,12 @@ namespace MediaConvertGUI
 
 			foreach (var codec in VideoCodecs)
 			{
-				var node = xmlDoc.CreateElement("Codec");
-				node.SetAttribute ("name", codec.Name);
-				node.SetAttribute ("title", codec.Title);
-				node.SetAttribute ("link", codec.Link);
-				node.SetAttribute ("cmd", codec.Command);
-				node.SetAttribute ("hwaccel", codec.HWAcceleration);
-				videoCodecsNode.AppendChild(node);
+				codec.SaveToXmlnode (xmlDoc, videoCodecsNode);
 			}
 
 			foreach (var codec in AudioCodecs)
 			{
-				var node = xmlDoc.CreateElement("Codec");
-				node.SetAttribute ("name", codec.Name);
-				node.SetAttribute ("title", codec.Title);
-				node.SetAttribute ("link", codec.Link);
-				node.SetAttribute ("cmd", codec.Command);
-				node.SetAttribute ("hwaccel", codec.HWAcceleration);
-				audioCodecsNode.AppendChild(node);
+				codec.SaveToXmlnode (xmlDoc, audioCodecsNode);
 			}
 
 			var containersNode = xmlDoc.CreateElement("AvailableContainers");

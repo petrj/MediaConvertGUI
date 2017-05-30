@@ -246,7 +246,7 @@ namespace MediaConvertGUI
 		public void Clear()
 		{
 			TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName("copy");
-			TargetContainer = MediaConvertGUIConfiguration.GetContainerByName ("avi");
+			TargetContainer = MediaConvertGUIConfiguration.DefaultContainer;
 			AutoRotate = false;
 			Tracks.Clear();
 			FileSize = 0;

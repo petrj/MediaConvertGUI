@@ -30,11 +30,10 @@ public partial class MainWindow: Gtk.Window
 
 	#endregion
 
-	public MainWindow (): base (Gtk.WindowType.Toplevel)
+	public MainWindow (string configurationPath): base (Gtk.WindowType.Toplevel)
 	{
 		// Loading configuration
-		MediaConvertGUIConfiguration.Load("config.xml");
-
+		MediaConvertGUIConfiguration.Load(configurationPath);
 
 		Build ();
 
@@ -287,7 +286,7 @@ public partial class MainWindow: Gtk.Window
 
 				if (firstVideoTrack!=null)
 				{
-					targetMovie.TargetContainer = MediaConvertGUIConfiguration.GetContainerByName("avi");
+					targetMovie.TargetContainer = MediaConvertGUIConfiguration.DefaultContainer;
 					targetMovie.TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName ("copy");
 				} 
 

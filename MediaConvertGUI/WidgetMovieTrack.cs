@@ -179,7 +179,7 @@ namespace MediaConvertGUI
 					{
 						chBoxesVisible = true;
 
-						SupportMethods.FillComboBox(comboCodec,MediaConvertGUIConfiguration.VideoCodecsAsList(),Editable, MovieInfo.TargetVideoCodec.Name);
+						SupportMethods.FillComboBox(comboCodec,MediaConvertGUIConfiguration.VideoCodecsAsList(true),Editable, MovieInfo.TargetVideoCodec.Name);
 					} else
 					{
 						SupportMethods.FillComboBox(comboCodec,new List<string>() {m.Codec}, Editable,m.Codec);

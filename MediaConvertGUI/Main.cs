@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Gtk;
 using System.IO;
 
@@ -11,24 +12,49 @@ namespace MediaConvertGUI
 			try
 			{
 				Application.Init ();
-				MainWindow win = new MainWindow ();
+
+				var filesOrDirectoriesToAdd = new List<string>();
+				string configFileName = "config.xml";
 				 
 				if (args.Length>0)
 				{
+					var nextParamIsConfig = false;
 					foreach (var arg in args)
 					{
+						if (nextParamIsConfig)
+						{
+							configFileName = arg;
+							nextParamIsConfig = false;
+							continue;
+						} else
+						if (
+								(arg.ToLower() == "-c")  ||
+								(arg.ToLower() == "-config")  ||
+								(arg.ToLower() == "--config") 
+							)
+						{
+							nextParamIsConfig = true;
+							continue;
+						}
+
 						if (Directory.Exists(arg))
 						{
 							foreach (var fName in Directory.GetFiles(arg)) 
 							{
-								win.AddMediaInfo(fName);
+								filesOrDirectoriesToAdd.Add(fName);
 							}
 						} else
 						if (File.Exists(arg))
 						{
-							win.AddMediaInfo(arg);
+							filesOrDirectoriesToAdd.Add(arg);
 						};
 					}
+				}
+
+				MainWindow win = new MainWindow (configFileName);
+				foreach (var fName in filesOrDirectoriesToAdd) 
+				{
+					win.AddMediaInfo(fName);
 				}
 
 				win.Show ();
