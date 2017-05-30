@@ -15,12 +15,24 @@ namespace MediaConvertGUI
 
 				var filesOrDirectoriesToAdd = new List<string>();
 				string configFileName = "config.xml";
+				bool forceQuit = false;
 				 
 				if (args.Length>0)
 				{
 					var nextParamIsConfig = false;
 					foreach (var arg in args)
 					{
+						if (
+							(arg.ToLower() == "-h")  ||
+							(arg.ToLower() == "-help")  ||
+							(arg.ToLower() == "--help") 
+							)
+						{
+							ShowHelp();
+							forceQuit = true;
+							break;
+						}
+
 						if (nextParamIsConfig)
 						{
 							configFileName = arg;
@@ -51,20 +63,41 @@ namespace MediaConvertGUI
 					}
 				}
 
-				MainWindow win = new MainWindow (configFileName);
-				foreach (var fName in filesOrDirectoriesToAdd) 
+				if (!forceQuit)
 				{
-					win.AddMediaInfo(fName);
-				}
+					MainWindow win = new MainWindow (configFileName);
+					foreach (var fName in filesOrDirectoriesToAdd) 
+					{
+						win.AddMediaInfo(fName);
+					}
 
-				win.Show ();
-				Application.Run ();
+					win.Show ();
+					Application.Run ();
+				}
 
 			} catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
 				throw;
 			}
+		}
+
+		public static void ShowHelp()
+		{
+			Console.WriteLine ("MediaConvertGUI");
+			Console.WriteLine ("ffmpeg frontend");
+			Console.WriteLine ("");
+			Console.WriteLine ("usage: ");
+			Console.WriteLine ("");
+			Console.WriteLine("MediaConvertGUI.exe [-config file.xml] [movieOrVideoOrFolder]");	
+			Console.WriteLine("");
+			Console.WriteLine ("examples: ");
+			Console.WriteLine("");
+			Console.WriteLine("MediaConvertGUI.exe movie.mpg");
+			Console.WriteLine("MediaConvertGUI.exe audio.mp3");
+			Console.WriteLine ("MediaConvertGUI.exe /mnt/movies/");
+			Console.WriteLine ("MediaConvertGUI.exe -config alternativeConfig.xml");
+			Console.WriteLine ("MediaConvertGUI.exe -c alternativeConfig.xml movie.mpg");
 		}
 	}
 }
