@@ -157,5 +157,16 @@
     <None Include="config-hw.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="graphics\MediaConvertGUIIcon256x256.png" />
+    <None Include="graphics\MediaConvertGUIIconDraw.odg" />
+    <None Include="graphics\MediaConvertGUIIconDraw.png" />
+    <None Include="graphics\MediaConvertGUIIconDraw.xcf" />
+    <None Include="graphics\MediaConvertGUIIconHW256x256.png" />
+    <None Include="Icons\MediaConvertGUIIcon256x256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Icons\MediaConvertGUIIconHW256x256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
