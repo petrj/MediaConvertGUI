@@ -3,22 +3,26 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="MediaConvertGUI/Main.cs">
     <Files>
       <File FileName="MediaConvertGUI/MediaCodec.cs" Line="39" Column="4" />
-      <File FileName="MediaConvertGUI/MediaConvertGUIConfiguration.cs" Line="73" Column="47" />
-      <File FileName="MediaConvertGUI/MediaContainer.cs" Line="10" Column="5" />
-      <File FileName="MediaConvertGUI/config.xml" Line="39" Column="60" />
-      <File FileName="MediaConvertGUI/config-hw.xml" Line="27" Column="61" />
-      <File FileName="MediaConvertGUI/WidgetContainer.cs" Line="65" Column="22" />
-      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="243" Column="5" />
-      <File FileName="MediaConvertGUI/MainWindow.cs" Line="286" Column="5" />
-      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="182" Column="97" />
-      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="157" Column="8" />
+      <File FileName="MediaConvertGUI/MediaConvertGUIConfiguration.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/MediaContainer.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/config.xml" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/config-hw.xml" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetContainer.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/MediaInfo.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/MainWindow.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetMovieTrack.cs" Line="1" Column="1" />
+      <File FileName="MediaConvertGUI/WidgetAudioTracks.cs" Line="1" Column="1" />
       <File FileName="MediaConvertGUI/Main.cs" Line="68" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="MediaConvertGUI" expanded="True">
-            <Node name="Main.cs" selected="True" />
+            <Node name="graphics" expanded="True" />
+            <Node name="Icons" expanded="True">
+              <Node name="MediaConvertGUIIcon256x256.png" selected="True" />
+              <Node name="MediaConvertGUIIconHW256x256.png" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>

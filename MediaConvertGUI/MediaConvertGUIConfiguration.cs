@@ -228,7 +228,7 @@ namespace MediaConvertGUI
 				container.SaveToXmlnode (xmlDoc, containersNode);
 			}
 
-			SaveDictionaryToXmlNode (DefaultVideoBitRates, xmlDoc, rootNode, "DefaultVideoBitrates", "BitRate");
+			SaveDictionaryToXmlNode (DefaultVideoBitRates, xmlDoc, rootNode, "DefaultVideoBitrates", "Bitrate");
 			SaveDictionaryToXmlNode (DefaultSamplingRates, xmlDoc, rootNode, "DefaultSamplingRates", "Rate");
 			SaveDictionaryToXmlNode (DefaultAudioBitrates, xmlDoc, rootNode, "DefaultAudioBitrates", "Bitrate");
 

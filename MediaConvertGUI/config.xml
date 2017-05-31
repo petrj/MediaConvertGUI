@@ -1,6 +1,6 @@
 <MediaConvertGUIConfiguration>
 	<MediaInfoPath>mediainfo</MediaInfoPath>
-	<FFMpegPath>/opt/ffmpeg-hw/ffmpeg</FFMpegPath>
+	<FFMpegPath>ffmpeg</FFMpegPath>
 	<Applications>
 	<OpenWith>
       <!-- <Application>vlc</Application> -->
