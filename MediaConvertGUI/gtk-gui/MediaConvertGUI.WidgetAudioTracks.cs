@@ -5,25 +5,45 @@ namespace MediaConvertGUI
 	public partial class WidgetAudioTracks
 	{
 		private global::Gtk.Fixed @fixed;
+		
 		private global::Gtk.Label labelTrackInfo;
+		
 		private global::Gtk.ComboBox comboTracks;
+		
 		private global::Gtk.Label labelCodecInfo;
+		
 		private global::Gtk.ComboBox comboCodec;
+		
 		private global::Gtk.Frame frameAudioOptions;
+		
 		private global::Gtk.Alignment GtkAlignment;
+		
 		private global::Gtk.Fixed fixedAudioOptions;
+		
 		private global::Gtk.Label labelSampleRateInfo;
+		
 		private global::Gtk.Label labelTrackSizeInfo;
+		
 		private global::Gtk.ComboBox comboChannels;
+		
 		private global::Gtk.Label labelTrackSze;
+		
 		private global::Gtk.Label labelChannels;
+		
 		private global::Gtk.Label labelBitrate;
+		
 		private global::Gtk.Label labelKbps;
+		
 		private global::Gtk.ComboBoxEntry comboBitrate;
+		
 		private global::Gtk.Label labelKhz;
+		
 		private global::Gtk.ComboBoxEntry comboSampleRate;
+		
 		private global::Gtk.Label GtkLabel;
+		
 		private global::Gtk.EventBox eventBox;
+		
 		private global::Gtk.Image image;
 
 		protected virtual void Build ()
@@ -70,6 +90,7 @@ namespace MediaConvertGUI
 			this.frameAudioOptions = new global::Gtk.Frame ();
 			this.frameAudioOptions.Name = "frameAudioOptions";
 			this.frameAudioOptions.ShadowType = ((global::Gtk.ShadowType)(0));
+			this.frameAudioOptions.LabelYalign = 0F;
 			// Container child frameAudioOptions.Gtk.Container+ContainerChild
 			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.GtkAlignment.Name = "GtkAlignment";
@@ -142,7 +163,7 @@ namespace MediaConvertGUI
 			this.labelKhz.LabelProp = global::Mono.Unix.Catalog.GetString ("Hz");
 			this.fixedAudioOptions.Add (this.labelKhz);
 			global::Gtk.Fixed.FixedChild w13 = ((global::Gtk.Fixed.FixedChild)(this.fixedAudioOptions [this.labelKhz]));
-			w13.X = 300;
+			w13.X = 305;
 			w13.Y = 65;
 			// Container child fixedAudioOptions.Gtk.Fixed+FixedChild
 			this.comboSampleRate = global::Gtk.ComboBoxEntry.NewText ();
@@ -159,7 +180,7 @@ namespace MediaConvertGUI
 			this.frameAudioOptions.LabelWidget = this.GtkLabel;
 			this.@fixed.Add (this.frameAudioOptions);
 			global::Gtk.Fixed.FixedChild w17 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.frameAudioOptions]));
-			w17.X = 5;
+			w17.X = 8;
 			w17.Y = 70;
 			// Container child fixed.Gtk.Fixed+FixedChild
 			this.eventBox = new global::Gtk.EventBox ();

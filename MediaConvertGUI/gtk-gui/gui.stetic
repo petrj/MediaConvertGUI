@@ -8,7 +8,14 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="781 710">
+  <icon-factory>
+    <icon-set id="go">
+      <source>
+        <property name="Image">stock:gtk-apply Menu</property>
+      </source>
+    </icon-set>
+  </icon-factory>
+  <widget class="Gtk.Window" id="MainWindow" design-size="750 720">
     <action-group name="Default">
       <action id="FiAction">
         <property name="Type">Action</property>
@@ -244,11 +251,12 @@
         <property name="Label" translatable="yes">t</property>
         <property name="ShortLabel" translatable="yes">t</property>
       </action>
-      <action id="actionAdd">
+      <action id="addAction3">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Add</property>
         <property name="ShortLabel" translatable="yes">Add</property>
         <property name="StockId">gtk-add</property>
+        <property name="Tooltip" translatable="yes">Add file</property>
         <signal name="Activated" handler="OnActionAddFileActivated" />
       </action>
       <action id="actionApply1">
@@ -256,26 +264,28 @@
         <property name="Label" translatable="yes">Apply</property>
         <property name="ShortLabel" translatable="yes">Apply</property>
         <property name="StockId">gtk-apply</property>
+        <property name="Tooltip" translatable="yes">Apply</property>
         <signal name="Activated" handler="OnActionPlayActivated" />
       </action>
-      <action id="actionGoConvert1">
+      <action id="mediaPlayAction1">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Go</property>
         <property name="ShortLabel" translatable="yes">Go</property>
-        <property name="StockId">gtk-yes</property>
+        <property name="StockId">gtk-media-play</property>
+        <property name="Tooltip" translatable="yes">Go convert</property>
         <signal name="Activated" handler="OnActionGoConvertActivated" />
       </action>
-      <action id="actionMenui">
+      <action id="preferencesAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Menu</property>
         <property name="ShortLabel" translatable="yes">Menu</property>
         <property name="StockId">gtk-preferences</property>
+        <property name="Tooltip" translatable="yes">Options</property>
         <signal name="Activated" handler="OnActionAdvancedActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
-    <property name="WidthRequest">750</property>
-    <property name="HeightRequest">710</property>
+    <property name="HeightRequest">720</property>
     <property name="Title" translatable="yes">Media Convert</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Resizable">False</property>
@@ -284,7 +294,7 @@
     <child>
       <widget class="Gtk.Fixed" id="fixed">
         <property name="MemberName" />
-        <property name="WidthRequest">350</property>
+        <property name="WidthRequest">750</property>
         <property name="HasWindow">False</property>
         <child>
           <placeholder />
@@ -295,7 +305,7 @@
         <child>
           <widget class="Gtk.Frame" id="frameFileList">
             <property name="MemberName" />
-            <property name="WidthRequest">740</property>
+            <property name="WidthRequest">735</property>
             <property name="HeightRequest">105</property>
             <property name="ShadowType">None</property>
             <child>
@@ -342,7 +352,7 @@
           <widget class="Gtk.Frame" id="frameSourceContainer">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">45</property>
+            <property name="HeightRequest">55</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment9">
                 <property name="MemberName" />
@@ -371,14 +381,14 @@
           </widget>
           <packing>
             <property name="X">5</property>
-            <property name="Y">150</property>
+            <property name="Y">145</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Frame" id="frameTargetContainer">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">45</property>
+            <property name="HeightRequest">55</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment5">
                 <property name="MemberName" />
@@ -407,14 +417,14 @@
           </widget>
           <packing>
             <property name="X">380</property>
-            <property name="Y">150</property>
+            <property name="Y">145</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Frame" id="frameTargetVideo">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">270</property>
+            <property name="HeightRequest">280</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment8">
                 <property name="MemberName" />
@@ -450,7 +460,7 @@
           <widget class="Gtk.Frame" id="frameVideo">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">270</property>
+            <property name="HeightRequest">280</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment7">
                 <property name="MemberName" />
@@ -486,7 +496,7 @@
           <widget class="Gtk.Frame" id="frameTargetAudio">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">220</property>
+            <property name="HeightRequest">225</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment14">
                 <property name="MemberName" />
@@ -515,14 +525,14 @@
           </widget>
           <packing>
             <property name="X">380</property>
-            <property name="Y">480</property>
+            <property name="Y">485</property>
           </packing>
         </child>
         <child>
           <widget class="Gtk.Frame" id="frameSourceAudioTracks">
             <property name="MemberName" />
             <property name="WidthRequest">355</property>
-            <property name="HeightRequest">220</property>
+            <property name="HeightRequest">225</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment6">
                 <property name="MemberName" />
@@ -551,7 +561,7 @@
           </widget>
           <packing>
             <property name="X">5</property>
-            <property name="Y">480</property>
+            <property name="Y">485</property>
           </packing>
         </child>
         <child>
@@ -559,13 +569,13 @@
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
             <node name="toolbar1" type="Toolbar">
-              <node type="Toolitem" action="actionMenui" />
+              <node type="Toolitem" action="preferencesAction" />
               <node type="Separator" />
-              <node type="Toolitem" action="actionAdd" />
+              <node type="Toolitem" action="addAction3" />
               <node type="Separator" />
               <node type="Toolitem" action="actionApply1" />
               <node type="Separator" />
-              <node type="Toolitem" action="actionGoConvert1" />
+              <node type="Toolitem" action="mediaPlayAction1" />
             </node>
           </widget>
           <packing>
@@ -1128,6 +1138,7 @@
           <widget class="Gtk.Frame" id="frameAudioOptions">
             <property name="MemberName" />
             <property name="ShadowType">None</property>
+            <property name="LabelYalign">0</property>
             <child>
               <widget class="Gtk.Alignment" id="GtkAlignment">
                 <property name="MemberName" />
@@ -1222,7 +1233,7 @@
                         <property name="LabelProp" translatable="yes">Hz</property>
                       </widget>
                       <packing>
-                        <property name="X">300</property>
+                        <property name="X">305</property>
                         <property name="Y">65</property>
                       </packing>
                     </child>
@@ -1252,7 +1263,7 @@
             </child>
           </widget>
           <packing>
-            <property name="X">5</property>
+            <property name="X">8</property>
             <property name="Y">70</property>
           </packing>
         </child>
@@ -1278,7 +1289,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="MediaConvertGUI.ProgressWin" design-size="474 275">
+  <widget class="Gtk.Window" id="MediaConvertGUI.ProgressWin" design-size="451 223">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Progress</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1408,7 +1419,7 @@
           </widget>
           <packing>
             <property name="X">310</property>
-            <property name="Y">210</property>
+            <property name="Y">180</property>
           </packing>
         </child>
         <child>
@@ -1423,7 +1434,7 @@
           </widget>
           <packing>
             <property name="X">380</property>
-            <property name="Y">210</property>
+            <property name="Y">180</property>
           </packing>
         </child>
         <child>
@@ -1460,6 +1471,7 @@
           <widget class="Gtk.ProgressBar" id="progressTotal">
             <property name="MemberName" />
             <property name="WidthRequest">280</property>
+            <property name="HeightRequest">15</property>
           </widget>
           <packing>
             <property name="X">120</property>
@@ -1470,6 +1482,7 @@
           <widget class="Gtk.ProgressBar" id="progressCurrentFile">
             <property name="MemberName" />
             <property name="WidthRequest">280</property>
+            <property name="HeightRequest">15</property>
           </widget>
           <packing>
             <property name="X">120</property>
@@ -1480,6 +1493,7 @@
           <widget class="Gtk.ProgressBar" id="progressCurrentPass">
             <property name="MemberName" />
             <property name="WidthRequest">280</property>
+            <property name="HeightRequest">15</property>
           </widget>
           <packing>
             <property name="X">120</property>
