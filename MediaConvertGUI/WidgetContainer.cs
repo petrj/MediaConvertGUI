@@ -87,11 +87,16 @@ namespace MediaConvertGUI
 		{
 			if (Editable && Info!= null && comboContainer.Active>0)
 			{
-				var container = MediaConvertGUIConfiguration.GetContainerByName (comboContainer.ActiveText);
-				if (!String.IsNullOrEmpty(container.Link))
-				{
-					SupportMethods.ExecuteInShell(container.Link);
-				}
+                var selecteValue = SupportMethods.GetComboBoxSelectedValue(comboContainer);
+
+                if (selecteValue != null)
+                {
+                    var container = MediaConvertGUIConfiguration.GetContainerByName(selecteValue);
+                    if (!String.IsNullOrEmpty(container.Link))
+                    {
+                        SupportMethods.ExecuteInShell(container.Link);
+                    }
+                }
 			}
 		}
 		
@@ -101,12 +106,17 @@ namespace MediaConvertGUI
 			if (Editable && Info != null)
 			{
 				if (_eventLock.Lock())
-				{						
-					Info.TargetContainer = MediaConvertGUIConfiguration.GetContainerByName (comboContainer.ActiveText);
-										
-					_eventLock.Unlock();
-					
-					Fill();
+				{
+                    var selecteValue = SupportMethods.GetComboBoxSelectedValue(comboContainer);
+
+                    if (selecteValue != null)
+                    {
+                        Info.TargetContainer = MediaConvertGUIConfiguration.GetContainerByName(selecteValue);
+
+                        _eventLock.Unlock();
+
+                        Fill();
+                    }
 				}
 			}
 		}		

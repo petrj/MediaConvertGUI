@@ -299,7 +299,7 @@ namespace MediaConvertGUI
 
 					if (chBoxBitRate.Active) 
 					{
-						var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue (comboBitRate.ActiveText, MediaConvertGUIConfiguration.DefaultVideoBitRates);
+						var bitRateTypedValue = SupportMethods.ParseDecimalValueFromValue (SupportMethods.GetComboBoxValue<string>(comboBitRate,""), MediaConvertGUIConfiguration.DefaultVideoBitRates);
 						m.Bitrate = bitRateTypedValue * 1000;
 					}
 
@@ -314,20 +314,24 @@ namespace MediaConvertGUI
 
 					if (chBoxFrameRate.Active) 
 					{
-						if (SupportMethods.IsNumeric (comboFrameRate.ActiveText))					
-							m.FrameRate = SupportMethods.ToDecimal (comboFrameRate.ActiveText);
+                        var val1 = SupportMethods.GetComboBoxValue<string>(comboFrameRate, "");
+
+                        if (SupportMethods.IsNumeric (val1))					
+							m.FrameRate = SupportMethods.ToDecimal (val1);
 					}
 
 					if (chBoxAspect.Active) 
 					{
-						m.Aspect = comboAspect.ActiveText;
-					}
+						m.Aspect = SupportMethods.GetComboBoxValue<string>(comboAspect, "");
+                    }
 					
 					if (chBoxRotation.Active)
 					{
-						if (SupportMethods.IsNumeric(comboRotation.ActiveText))
+                        var val2 = SupportMethods.GetComboBoxValue<string>(comboRotation, "");
+
+                        if (SupportMethods.IsNumeric(val2))
 						{
-							m.RotatationAngle =  SupportMethods.ToDecimal (comboRotation.ActiveText);
+							m.RotatationAngle =  SupportMethods.ToDecimal (val2);
 						}
 					}	
 					MovieInfo.EditRotation = chBoxRotation.Active;				
@@ -339,7 +343,8 @@ namespace MediaConvertGUI
 						m.RotatationAngle = 0;
 					}
 
-					MovieInfo.TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName (comboCodec.ActiveText);
+                    var val = SupportMethods.GetComboBoxValue<string>(comboCodec, "");
+                    MovieInfo.TargetVideoCodec = MediaConvertGUIConfiguration.GetVideoCodecByName (val);
 					comboCodec.TooltipText = MovieInfo.TargetVideoCodec.Title;
 
 					_eventLock.Unlock();
@@ -352,7 +357,8 @@ namespace MediaConvertGUI
 		{
 			if (Editable && MovieInfo!= null && comboCodec.Active>0)
 			{
-				var codec = MediaConvertGUIConfiguration.GetVideoCodecByName (comboCodec.ActiveText);
+                var val = SupportMethods.GetComboBoxValue<string>(comboCodec, "");
+                var codec = MediaConvertGUIConfiguration.GetVideoCodecByName (val);
 
 				if (!string.IsNullOrEmpty(codec.Link))
 				{

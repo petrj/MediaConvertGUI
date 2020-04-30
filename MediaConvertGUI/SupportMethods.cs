@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Gtk;
 using System.Diagnostics;
-
+using System.ComponentModel;
 
 namespace MediaConvertGUI
 {
@@ -55,9 +55,9 @@ namespace MediaConvertGUI
 			combo.Model = new ListStore(typeof(string));
 			combo.Active = -1;
 
-			if (combo is ComboBoxEntry) 
+			if (combo is ComboBox) 
 			{
-				(combo as ComboBoxEntry).Entry.Text = String.Empty;
+				(combo as ComboBox).Entry.Text = String.Empty;
 			}
 		}
 			
@@ -78,16 +78,14 @@ namespace MediaConvertGUI
 		/// </param>
 		public static void FillComboBox(Gtk.ComboBox combo, List<string> items, bool editable, string currentValue)
 		{
-			// clear combo
-			combo.Model = new ListStore(typeof(string));
+            var data = new ListStore(typeof(string));
 
-			// adding all items
-			var index=0;
+            var index=0;
 			if (editable)
 			{
 				foreach (var item in items)
 				{					
-					combo.AppendText(item);
+					data.AppendValues(item);
 					if (item == currentValue)
 					combo.Active = index;
 
@@ -96,10 +94,12 @@ namespace MediaConvertGUI
 			}
 			else				
 			{
-				combo.AppendText(currentValue);
+                data.AppendValues(currentValue);
 				combo.Active = 0;
 			}
-		}
+
+            combo.Model = data;
+        }
 
 		/// <summary>
 		/// Fills the combo box.
@@ -118,8 +118,7 @@ namespace MediaConvertGUI
 		/// </param>
 		public static void FillComboBox(Gtk.ComboBox combo, Type enumType, bool editable, int currentValue)
 		{
-			// clear combo
-			combo.Model = new ListStore(typeof(string));
+            var data = new ListStore(typeof(string));
 
 			// adding all items
 			var index=0;
@@ -127,7 +126,7 @@ namespace MediaConvertGUI
 				{	
 					if (editable || (index == currentValue))
 					{
-						combo.AppendText(item);
+						data.AppendValues(item);
 
 						if (!editable) combo.Active = 0; 
 						else
@@ -137,7 +136,9 @@ namespace MediaConvertGUI
 					index++;
 
 				}
-		}
+
+            combo.Model = data;
+        }
 
 		/// <summary>
 		/// Fills the combo box entry.
@@ -154,9 +155,9 @@ namespace MediaConvertGUI
 		/// <param name='editable'>
 		/// Editable.
 		/// </param>
-		public static void FillComboBoxEntry(Gtk.ComboBoxEntry combo, List<string> items, string currentValue,bool isDecimal,bool editable)
+		public static void FillComboBoxEntry(Gtk.ComboBox combo, List<string> items, string currentValue,bool isDecimal,bool editable)
 		{
-			combo.Model = new ListStore(typeof(string));
+            var data = new ListStore(typeof(string));
 
 			var resultItems = new List<string>();
 			if (editable)				
@@ -192,7 +193,7 @@ namespace MediaConvertGUI
 			var index = 0;
 			foreach (var value in resultItems)
 			{
-				combo.AppendText(value);
+				data.AppendValues(value);
 
 				if (
 								(isDecimal && (SupportMethods.ToDecimal(value) == SupportMethods.ToDecimal(currentValue))) 
@@ -203,13 +204,14 @@ namespace MediaConvertGUI
 					combo.Active = index;
 				}
 				index++;
-			}	
+			}
 
-		}
+            combo.Model = data;
+        }
 
-		public static void FillComboBoxEntry(Gtk.ComboBoxEntry combo, Dictionary<decimal,string> items, decimal currentValue,bool editable)
+		public static void FillComboBoxEntry(Gtk.ComboBox combo, Dictionary<decimal,string> items, decimal currentValue,bool editable)
 		{
-			combo.Model = new ListStore(typeof(string));
+            var data = new ListStore(typeof(string));
 
 			var resultItems = new Dictionary<decimal,string>();
 
@@ -231,18 +233,49 @@ namespace MediaConvertGUI
 			var index = 0;
 			foreach (var kvp in resultItems)
 			{
-				combo.AppendText(kvp.Value);
+				data.AppendValues(kvp.Value);
 
 				if (kvp.Key == currentValue)
 				{
 					combo.Active = index;
 				}
 				index++;
-			}			
-				
-		}
+			}
 
-		public static void SetAvailability(Gtk.Widget widget, bool editable = false)
+            combo.Model = data;
+
+        }
+
+        public static string GetComboBoxSelectedValue(Gtk.ComboBox combo)
+        {
+            string res = null;
+
+            if (combo.Active > 0)
+            {
+                TreeIter iter;
+                if (combo.GetActiveIter(out iter))
+                {
+                    res = combo.Model.GetValue(iter, 0) as string;
+                }
+            }
+            return res;
+        }
+
+        public static T GetComboBoxValue<T>(Gtk.ComboBox combo, T defaultValue)
+        {
+            T res = defaultValue;
+
+            var resAsString = GetComboBoxSelectedValue(combo);
+
+            if (resAsString != null)
+            {
+                var converter = TypeDescriptor.GetConverter(typeof(T));
+                res = (T)converter.ConvertFromString(resAsString);
+            }
+            return res;
+        }
+
+        public static void SetAvailability(Gtk.Widget widget, bool editable = false)
 		{
 			var entryBackgroundColor = editable ? new Gdk.Color(255,255,255) : new Gdk.Color(214,210,208);
 			if (widget is Gtk.Entry)
@@ -251,10 +284,10 @@ namespace MediaConvertGUI
 				(widget as Gtk.Entry).ModifyBase(StateType.Normal, entryBackgroundColor);
 			}
 
-			if (widget is Gtk.ComboBoxEntry)
+			if (widget is Gtk.ComboBox)
 			{
-				(widget as Gtk.ComboBoxEntry).Entry.IsEditable = editable;
-				(widget as Gtk.ComboBoxEntry).Entry.ModifyBase(StateType.Normal, entryBackgroundColor);
+				(widget as Gtk.ComboBox).Entry.IsEditable = editable;
+				(widget as Gtk.ComboBox).Entry.ModifyBase(StateType.Normal, entryBackgroundColor);
 			}
 		}
 

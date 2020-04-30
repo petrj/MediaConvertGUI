@@ -2,10 +2,9 @@
 <stetic-interface>
   <configuration>
     <images-root-path>..</images-root-path>
-    <target-gtk-version>2.12</target-gtk-version>
+    <target-gtk-version>3.0</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/MediaConvertGUI.exe" internal="true" />
   </import>
   <icon-factory>
@@ -704,7 +703,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBoxEntry" id="comboBitRate">
+                      <widget class="Gtk.ComboBox" id="comboBitRate">
                         <property name="MemberName" />
                         <property name="WidthRequest">140</property>
                         <property name="IsTextCombo">True</property>
@@ -716,7 +715,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBoxEntry" id="comboAspect">
+                      <widget class="Gtk.ComboBox" id="comboAspect">
                         <property name="MemberName" />
                         <property name="WidthRequest">100</property>
                         <property name="IsTextCombo">True</property>
@@ -812,7 +811,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBoxEntry" id="comboFrameRate">
+                      <widget class="Gtk.ComboBox" id="comboFrameRate">
                         <property name="MemberName" />
                         <property name="WidthRequest">100</property>
                         <property name="IsTextCombo">True</property>
@@ -910,7 +909,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBoxEntry" id="comboRotation">
+                      <widget class="Gtk.ComboBox" id="comboRotation">
                         <property name="MemberName" />
                         <property name="WidthRequest">70</property>
                         <property name="IsTextCombo">True</property>
@@ -1216,7 +1215,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBoxEntry" id="comboBitrate">
+                      <widget class="Gtk.ComboBox" id="comboBitrate">
                         <property name="MemberName" />
                         <property name="WidthRequest">100</property>
                         <property name="IsTextCombo">True</property>
@@ -1238,7 +1237,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBoxEntry" id="comboSampleRate">
+                      <widget class="Gtk.ComboBox" id="comboSampleRate">
                         <property name="MemberName" />
                         <property name="IsTextCombo">True</property>
                         <property name="Items" translatable="yes" />
@@ -1542,7 +1541,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetContainer" design-size="323 31">
+  <widget class="Gtk.Bin" id="MediaConvertGUI.WidgetContainer" design-size="323 32">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

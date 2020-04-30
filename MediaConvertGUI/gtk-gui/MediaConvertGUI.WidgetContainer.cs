@@ -5,54 +5,59 @@ namespace MediaConvertGUI
 	public partial class WidgetContainer
 	{
 		private global::Gtk.Fixed @fixed;
+
 		private global::Gtk.Label labelContainer;
+
 		private global::Gtk.EventBox eventBoxContainer;
+
 		private global::Gtk.Image imageContainer;
+
 		private global::Gtk.ComboBox comboContainer;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget MediaConvertGUI.WidgetContainer
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.Name = "MediaConvertGUI.WidgetContainer";
 			// Container child MediaConvertGUI.WidgetContainer.Gtk.Container+ContainerChild
-			this.@fixed = new global::Gtk.Fixed ();
+			this.@fixed = new global::Gtk.Fixed();
 			this.@fixed.Name = "fixed";
 			this.@fixed.HasWindow = false;
 			// Container child fixed.Gtk.Fixed+FixedChild
-			this.labelContainer = new global::Gtk.Label ();
+			this.labelContainer = new global::Gtk.Label();
 			this.labelContainer.Name = "labelContainer";
-			this.labelContainer.LabelProp = global::Mono.Unix.Catalog.GetString ("Container");
-			this.@fixed.Add (this.labelContainer);
-			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.labelContainer]));
+			this.labelContainer.LabelProp = global::Mono.Unix.Catalog.GetString("Container");
+			this.@fixed.Add(this.labelContainer);
+			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.@fixed[this.labelContainer]));
 			w1.X = 35;
 			w1.Y = 7;
 			// Container child fixed.Gtk.Fixed+FixedChild
-			this.eventBoxContainer = new global::Gtk.EventBox ();
+			this.eventBoxContainer = new global::Gtk.EventBox();
 			this.eventBoxContainer.Name = "eventBoxContainer";
 			// Container child eventBoxContainer.Gtk.Container+ContainerChild
-			this.imageContainer = new global::Gtk.Image ();
+			this.imageContainer = new global::Gtk.Image();
 			this.imageContainer.WidthRequest = 16;
 			this.imageContainer.HeightRequest = 16;
 			this.imageContainer.Name = "imageContainer";
-			this.imageContainer.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
-			this.eventBoxContainer.Add (this.imageContainer);
-			this.@fixed.Add (this.eventBoxContainer);
-			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.eventBoxContainer]));
+			this.imageContainer.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-dialog-info", global::Gtk.IconSize.Menu);
+			this.eventBoxContainer.Add(this.imageContainer);
+			this.@fixed.Add(this.eventBoxContainer);
+			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.@fixed[this.eventBoxContainer]));
 			w3.X = 115;
 			w3.Y = 7;
 			// Container child fixed.Gtk.Fixed+FixedChild
-			this.comboContainer = global::Gtk.ComboBox.NewText ();
+			this.comboContainer = global::Gtk.ComboBox.NewText();
 			this.comboContainer.Name = "comboContainer";
-			this.@fixed.Add (this.comboContainer);
-			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed [this.comboContainer]));
+			this.@fixed.Add(this.comboContainer);
+			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.@fixed[this.comboContainer]));
 			w4.X = 145;
-			this.Add (this.@fixed);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.Add(this.@fixed);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

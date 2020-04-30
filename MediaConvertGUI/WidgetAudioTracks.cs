@@ -76,11 +76,12 @@ namespace MediaConvertGUI
 			{
 				var res = MediaConvertGUIConfiguration.GetAudioCodecByName ("none");
 
-				if (comboCodec.Active > 0)
-				{
-					return MediaConvertGUIConfiguration.GetAudioCodecByName (comboCodec.ActiveText);
-				}
+                var comboSelectedValue = SupportMethods.GetComboBoxSelectedValue(comboCodec);
 
+                if (comboSelectedValue != null)
+				{
+                    res = MediaConvertGUIConfiguration.GetAudioCodecByName(comboSelectedValue);
+				}
 				return res;
 			}
 
@@ -222,9 +223,9 @@ namespace MediaConvertGUI
 					activeTrack.Bitrate = BitRateTypedValue*1000;
 					activeTrack.ReComputeStreamSizeByBitrate();
 
-					activeTrack.Channels = Convert.ToInt32(comboChannels.ActiveText);
+                    activeTrack.Channels = SupportMethods.GetComboBoxValue<int>(comboChannels,1);
 
-					var samplingRateTypedValue = SupportMethods.ParseDecimalValueFromValue(comboSampleRate.ActiveText,MediaConvertGUIConfiguration.DefaultSamplingRates);
+					var samplingRateTypedValue = SupportMethods.ParseDecimalValueFromValue(SupportMethods.GetComboBoxValue<string>(comboSampleRate,""),MediaConvertGUIConfiguration.DefaultSamplingRates);
 					activeTrack.SamplingRateHz = samplingRateTypedValue;
 				}
 
