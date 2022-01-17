@@ -1,0 +1,77 @@
+<MediaConvertGUIConfiguration>
+  <MediaInfoPath>mediainfo</MediaInfoPath>
+  <FFMpegPath>/opt/ffmpeg-hw/ffmpeg</FFMpegPath>
+  <Applications>
+    <OpenWith>
+      <!-- <Application>vlc</Application> -->
+      <Application>vlc</Application>
+      <Application>avidemux</Application>
+      <Application>mediainfo-gui</Application>
+    </OpenWith>
+  </Applications>
+  <AvailableCodecs>
+    <Video>
+      <Codec name="none" title="none" link="" cmd="" />
+      <Codec name="copy" title="copy" link="" cmd="-vcodec copy" />
+      <Codec name="mpg" title="MPEG 1" link="http://en.wikipedia.org/wiki/MPEG-1" cmd="-vcodec mpeg1video" encode="false" />
+      <Codec name="xvid" title="xvid" link="http://en.wikipedia.org/wiki/xvid" cmd="-vcodec libxvid" encode="false" />
+      <Codec name="flv" title="flv" link="http://en.wikipedia.org/wiki/Sorenson_Media#Sorenson_Spark" cmd="-vcodec flv" encode="false" />
+      <Codec name="theora" title="theora" link="http://en.wikipedia.org/wiki/theora" cmd="-vcodec libtheora" encode="false" />
+      <Codec name="vp8" title="VP8 libvpx" link="http://en.wikipedia.org/wiki/vp8" cmd="-vcodec libvpx" encode="false" />
+      <Codec name="x263" title="h263" link="http://en.wikipedia.org/wiki/h263" cmd="-vcodec h263" encode="false" />
+      <Codec name="h264" title="h264" link="http://en.wikipedia.org/wiki/h264" cmd="-vcodec h264" encode="false" />
+      <Codec name="h264_nvenc" title="h264 GPU" link="http://en.wikipedia.org/wiki/h264" cmd="-vcodec h264_nvenc" hwaccel="vdpau" />
+      <Codec name="hevc_nvenc" title="h265 GPU" link="http://en.wikipedia.org/wiki/h265" cmd="-vcodec hevc_nvenc" hwaccel="vdpau" />
+    </Video>
+    <Audio>
+      <Codec name="none" title="none" link="" cmd="-an" />
+      <Codec name="copy" title="copy" link="" cmd="-acodec copy" />
+      <Codec name="mp2" title="copy" link="http://en.wikipedia.org/wiki/MP2" cmd="-acodec mp2" encode="false" />
+      <Codec name="mp3" title="copy" link="http://en.wikipedia.org/wiki/MP3" cmd="-acodec libmp3lame" />
+      <Codec name="vorbis" title="copy" link="http://en.wikipedia.org/wiki/Vorbis" cmd="-acodec libvorbis" />
+      <Codec name="aac" title="copy" link="http://en.wikipedia.org/wiki/Aac" cmd="-acodec libfaac" />
+      <Codec name="flac" title="copy" link="http://en.wikipedia.org/wiki/flac" cmd="-acodec flac " />
+      <Codec name="ac3" title="copy" link="http://en.wikipedia.org/wiki/Dolby_AC-3" cmd="-acodec ac3" />
+    </Audio>
+  </AvailableCodecs>
+  <AvailableContainers>
+    <Container name="none" title="" ext="" extList="" link="" />
+    <Container name="avi" title="" ext=".avi" extList="" encode="false" link="http://en.wikipedia.org/wiki/Audio_Video_Interleave" />
+    <Container name="flv" title="" ext=".flv" extList="" encode="false" link="http://en.wikipedia.org/wiki/Flash_Video" />
+    <Container name="mp4" title="" ext=".mp4" extList="" default="true" link="http://en.wikipedia.org/wiki/Mp4" />
+    <Container name="mkv" title="" ext=".mkv" extList="" link="http://en.wikipedia.org/wiki/Mkv" />
+    <Container name="mpeg" title="" ext=".mpeg" extList="mpeg,mpg,m2t" encode="false" link="http://en.wikipedia.org/wiki/Moving_Picture_Experts_Group" />
+    <Container name="ogg" title="" ext=".ogv" extList="" encode="false" link="http://en.wikipedia.org/wiki/Ogg" />
+    <Container name="webm" title="" ext=".webm" extList="" encode="false" link="http://en.wikipedia.org/wiki/Webm" />
+    <Container name="3gp" title="" ext=".3gp" extList="" encode="false" link="http://en.wikipedia.org/wiki/3gp" />
+    <Container name="mp3" title="" ext=".mp3" extList="" link="" />
+    <Container name="wav" title="" ext=".wav" extList="" link="" />
+    <Container name="flac" title="" ext=".flac" extList="" link="" />
+    <Container name="aac" title="" ext=".aac" extList="" link="" />
+    <Container name="ac3" title="" ext=".ac3" extList="" link="" />
+  </AvailableContainers>
+  <DefaultVideoBitrates>
+    <Bitrate value="1500" title="VCD (1.5 Mb)" />
+    <Bitrate value="2000" title="Low (2 Mb)" />
+    <Bitrate value="3500" title="TV (3.5 Mb)" />
+    <Bitrate value="5000" title="High (5 Mb)" />
+    <Bitrate value="9000" title="DVD (9 Mb)" />
+    <Bitrate value="15000" title="HDTV (15 Mb)" />
+    <Bitrate value="30000" title="HD DVD (30 Mb)" />
+  </DefaultVideoBitrates>
+  <DefaultSamplingRates>
+    <Rate value="800" title="Telephone (8 kHz)" />
+    <Rate value="11025" title="1/4 Audio-CD (11 kHz)" />
+    <Rate value="22050" title="1/2 Audio-CD (22 kHz)" />
+    <Rate value="44100" title="Audio-CD (44 kHz)" />
+    <Rate value="48000" title="TV (48 kHz)" />
+    <Rate value="96000" title="DVD-Audio (96 kHz)" />
+  </DefaultSamplingRates>
+  <DefaultAudioBitrates>
+    <Bitrate value="32" title="32" />
+    <Bitrate value="64" title="64" />
+    <Bitrate value="128" title="128" />
+    <Bitrate value="192" title="192" />
+    <Bitrate value="256" title="256" />
+  </DefaultAudioBitrates>
+</MediaConvertGUIConfiguration>

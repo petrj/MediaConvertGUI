@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaConvertGUI
 {
@@ -336,21 +337,25 @@ namespace MediaConvertGUI
 
 				TargetContainer = MediaInfoBase.DetectContainerByExt(fileName);
 
-				var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput(MediaConvertGUIConfiguration.MediaInfoPath,"-f --Output=XML \"" + fileName + "\"");
+				var mediaInfoXML = SupportMethods.ExecuteAndReturnOutput(MediaConvertGUIConfiguration.MediaInfoPath,"-f --Output=OLDXML \"" + fileName + "\"");
 				RawMediaInfoOutput = mediaInfoXML;			
 
 				var xmlDoc = new System.Xml.XmlDocument();
-				xmlDoc.LoadXml(mediaInfoXML);			        		
-	       		 
-				 var nodes =  xmlDoc.SelectNodes("Mediainfo/File/track");
-				foreach (XmlNode node in nodes)
+				xmlDoc.LoadXml(mediaInfoXML);
+
+                var nodes1 = xmlDoc.SelectNodes("Mediainfo/File/track");
+                var nodes2 = xmlDoc.SelectNodes("MediaInfo/media/track");
+
+                var list = nodes1.Cast<XmlNode>().Concat<XmlNode>(nodes2.Cast<XmlNode>());
+
+                foreach (XmlNode node in list)
 				{
 					var track = new TrackInfo();
 					track.ParseFromXmlNode(node);
 					Tracks.Add(track);
 				}
 
-				return true;
+                return true;
 
 			} catch (Exception ex)
 			{

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MediaInfo xmlns="https://mediaarea.net/mediainfo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mediaarea.net/mediainfo https://mediaarea.net/mediainfo/mediainfo_2_0.xsd" version="2.0">
+    <creatingLibrary version="20.09" url="https://mediaarea.net/MediaInfo">MediaInfoLib</creatingLibrary>
+    <media ref="/temp/001_20210207_143840.mp4">
+        <track type="General">
+            <Count>333</Count>
+            <StreamCount>1</StreamCount>
+            <StreamKind>General</StreamKind>
+            <StreamKind_String>General</StreamKind_String>
+            <StreamKindID>0</StreamKindID>
+            <VideoCount>1</VideoCount>
+            <AudioCount>1</AudioCount>
+            <Video_Format_List>AVC</Video_Format_List>
+            <Video_Format_WithHint_List>AVC</Video_Format_WithHint_List>
+            <Video_Codec_List>AVC</Video_Codec_List>
+            <Video_Language_List>English</Video_Language_List>
+            <Audio_Format_List>AAC LC</Audio_Format_List>
+            <Audio_Format_WithHint_List>AAC LC</Audio_Format_WithHint_List>
+            <Audio_Codec_List>AAC LC</Audio_Codec_List>
+            <Audio_Language_List>English</Audio_Language_List>
+            <CompleteName>/temp/001_20210207_143840.mp4</CompleteName>
+            <FolderName>/temp</FolderName>
+            <FileNameExtension>001_20210207_143840.mp4</FileNameExtension>
+            <FileName>001_20210207_143840</FileName>
+            <FileExtension>mp4</FileExtension>
+            <Format>MPEG-4</Format>
+            <Format_String>MPEG-4</Format_String>
+            <Format_Extensions>braw mov mp4 m4v m4a m4b m4p m4r 3ga 3gpa 3gpp 3gp 3gpp2 3g2 k3g jpm jpx mqv ismv isma ismt f4a f4b f4v</Format_Extensions>
+            <Format_Commercial>MPEG-4</Format_Commercial>
+            <Format_Profile>Base Media</Format_Profile>
+            <InternetMediaType>video/mp4</InternetMediaType>
+            <CodecID>mp42</CodecID>
+            <CodecID_String>mp42 (isom/mp42)</CodecID_String>
+            <CodecID_Url>http://www.apple.com/quicktime/download/standalone.html</CodecID_Url>
+            <CodecID_Compatible>isom/mp42</CodecID_Compatible>
+            <FileSize>22443523</FileSize>
+            <FileSize_String>21.4 MiB</FileSize_String>
+            <FileSize_String1>21 MiB</FileSize_String1>
+            <FileSize_String2>21 MiB</FileSize_String2>
+            <FileSize_String3>21.4 MiB</FileSize_String3>
+            <FileSize_String4>21.40 MiB</FileSize_String4>
+            <Duration>10.346</Duration>
+            <Duration_String>10 s 346 ms</Duration_String>
+            <Duration_String1>10 s 346 ms</Duration_String1>
+            <Duration_String2>10 s 346 ms</Duration_String2>
+            <Duration_String3>00:00:10.346</Duration_String3>
+            <Duration_String4>00:00:10;10</Duration_String4>
+            <Duration_String5>00:00:10.346 (00:00:10;10)</Duration_String5>
+            <OverallBitRate>17354358</OverallBitRate>
+            <OverallBitRate_String>17.4 Mb/s</OverallBitRate_String>
+            <FrameRate>29.970</FrameRate>
+            <FrameRate_String>29.970 FPS</FrameRate_String>
+            <FrameCount>310</FrameCount>
+            <StreamSize>6335</StreamSize>
+            <StreamSize_String>6.19 KiB (0%)</StreamSize_String>
+            <StreamSize_String1>6 KiB</StreamSize_String1>
+            <StreamSize_String2>6.2 KiB</StreamSize_String2>
+            <StreamSize_String3>6.19 KiB</StreamSize_String3>
+            <StreamSize_String4>6.187 KiB</StreamSize_String4>
+            <StreamSize_String5>6.19 KiB (0%)</StreamSize_String5>
+            <StreamSize_Proportion>0.00028</StreamSize_Proportion>
+            <HeaderSize>24</HeaderSize>
+            <DataSize>22437204</DataSize>
+            <FooterSize>6295</FooterSize>
+            <IsStreamable>No</IsStreamable>
+            <Encoded_Date>UTC 2021-02-07 13:38:52</Encoded_Date>
+            <Tagged_Date>UTC 2021-02-07 13:38:52</Tagged_Date>
+            <File_Modified_Date>UTC 2021-02-07 12:38:52</File_Modified_Date>
+            <File_Modified_Date_Local>2021-02-07 13:38:52</File_Modified_Date_Local>
+            <extra>
+                <xyz>+49.7869+014.6829/</xyz>
+                <com_android_version>10</com_android_version>
+            </extra>
+        </track>
+        <track type="Video">
+            <Count>378</Count>
+            <StreamCount>1</StreamCount>
+            <StreamKind>Video</StreamKind>
+            <StreamKind_String>Video</StreamKind_String>
+            <StreamKindID>0</StreamKindID>
+            <StreamOrder>0</StreamOrder>
+            <ID>1</ID>
+            <ID_String>1</ID_String>
+            <Format>AVC</Format>
+            <Format_String>AVC</Format_String>
+            <Format_Info>Advanced Video Codec</Format_Info>
+            <Format_Url>http://developers.videolan.org/x264.html</Format_Url>
+            <Format_Commercial>AVC</Format_Commercial>
+            <Format_Profile>High</Format_Profile>
+            <Format_Level>4</Format_Level>
+            <Format_Settings>CABAC / 1 Ref Frames</Format_Settings>
+            <Format_Settings_CABAC>Yes</Format_Settings_CABAC>
+            <Format_Settings_CABAC_String>Yes</Format_Settings_CABAC_String>
+            <Format_Settings_RefFrames>1</Format_Settings_RefFrames>
+            <Format_Settings_RefFrames_String>1 frame</Format_Settings_RefFrames_String>
+            <Format_Settings_GOP>M=1, N=30</Format_Settings_GOP>
+            <InternetMediaType>video/H264</InternetMediaType>
+            <CodecID>avc1</CodecID>
+            <CodecID_Info>Advanced Video Coding</CodecID_Info>
+            <Duration>10.346</Duration>
+            <Duration_String>10 s 346 ms</Duration_String>
+            <Duration_String1>10 s 346 ms</Duration_String1>
+            <Duration_String2>10 s 346 ms</Duration_String2>
+            <Duration_String3>00:00:10.346</Duration_String3>
+            <Duration_String4>00:00:10;10</Duration_String4>
+            <Duration_String5>00:00:10.346 (00:00:10;10)</Duration_String5>
+            <BitRate>17098237</BitRate>
+            <BitRate_String>17.1 Mb/s</BitRate_String>
+            <Width>1920</Width>
+            <Width_String>1 920 pixels</Width_String>
+            <Height>1080</Height>
+            <Height_String>1 080 pixels</Height_String>
+            <Stored_Height>1088</Stored_Height>
+            <Sampled_Width>1920</Sampled_Width>
+            <Sampled_Height>1080</Sampled_Height>
+            <PixelAspectRatio>1.000</PixelAspectRatio>
+            <DisplayAspectRatio>1.778</DisplayAspectRatio>
+            <DisplayAspectRatio_String>16:9</DisplayAspectRatio_String>
+            <Rotation>0.000</Rotation>
+            <FrameRate_Mode>VFR</FrameRate_Mode>
+            <FrameRate_Mode_String>Variable</FrameRate_Mode_String>
+            <FrameRate>29.970</FrameRate>
+            <FrameRate_String>29.970 (29970/1000) FPS</FrameRate_String>
+            <FrameRate_Num>29970</FrameRate_Num>
+            <FrameRate_Den>1000</FrameRate_Den>
+            <FrameRate_Minimum>25.077</FrameRate_Minimum>
+            <FrameRate_Minimum_String>25.077 FPS</FrameRate_Minimum_String>
+            <FrameRate_Maximum>30.020</FrameRate_Maximum>
+            <FrameRate_Maximum_String>30.020 FPS</FrameRate_Maximum_String>
+            <FrameCount>310</FrameCount>
+            <ColorSpace>YUV</ColorSpace>
+            <ChromaSubsampling>4:2:0</ChromaSubsampling>
+            <ChromaSubsampling_String>4:2:0</ChromaSubsampling_String>
+            <BitDepth>8</BitDepth>
+            <BitDepth_String>8 bits</BitDepth_String>
+            <ScanType>Progressive</ScanType>
+            <ScanType_String>Progressive</ScanType_String>
+            <BitsPixel_Frame>0.275</BitsPixel_Frame>
+            <StreamSize>22107330</StreamSize>
+            <StreamSize_String>21.1 MiB (99%)</StreamSize_String>
+            <StreamSize_String1>21 MiB</StreamSize_String1>
+            <StreamSize_String2>21 MiB</StreamSize_String2>
+            <StreamSize_String3>21.1 MiB</StreamSize_String3>
+            <StreamSize_String4>21.08 MiB</StreamSize_String4>
+            <StreamSize_String5>21.1 MiB (99%)</StreamSize_String5>
+            <StreamSize_Proportion>0.98502</StreamSize_Proportion>
+            <Title>VideoHandle</Title>
+            <Language>en</Language>
+            <Language_String>English</Language_String>
+            <Language_String1>English</Language_String1>
+            <Language_String2>en</Language_String2>
+            <Language_String3>eng</Language_String3>
+            <Language_String4>en</Language_String4>
+            <Encoded_Date>UTC 2021-02-07 13:38:52</Encoded_Date>
+            <Tagged_Date>UTC 2021-02-07 13:38:52</Tagged_Date>
+            <colour_description_present>Yes</colour_description_present>
+            <colour_description_present_Source>Container / Stream</colour_description_present_Source>
+            <colour_range>Limited</colour_range>
+            <colour_range_Source>Container / Stream</colour_range_Source>
+            <colour_primaries>BT.709</colour_primaries>
+            <colour_primaries_Source>Container / Stream</colour_primaries_Source>
+            <transfer_characteristics>BT.709</transfer_characteristics>
+            <transfer_characteristics_Source>Container</transfer_characteristics_Source>
+            <transfer_characteristics_Original>BT.601</transfer_characteristics_Original>
+            <transfer_characteristics_Original_Source>Stream</transfer_characteristics_Original_Source>
+            <matrix_coefficients>BT.709</matrix_coefficients>
+            <matrix_coefficients_Source>Container / Stream</matrix_coefficients_Source>
+            <extra>
+                <CodecConfigurationBox>avcC</CodecConfigurationBox>
+            </extra>
+        </track>
+        <track type="Audio">
+            <Count>280</Count>
+            <StreamCount>1</StreamCount>
+            <StreamKind>Audio</StreamKind>
+            <StreamKind_String>Audio</StreamKind_String>
+            <StreamKindID>0</StreamKindID>
+            <StreamOrder>1</StreamOrder>
+            <ID>2</ID>
+            <ID_String>2</ID_String>
+            <Format>AAC</Format>
+            <Format_String>AAC LC</Format_String>
+            <Format_Info>Advanced Audio Codec Low Complexity</Format_Info>
+            <Format_Commercial>AAC</Format_Commercial>
+            <Format_AdditionalFeatures>LC</Format_AdditionalFeatures>
+            <CodecID>mp4a-40-2</CodecID>
+            <Duration>10.304</Duration>
+            <Duration_String>10 s 304 ms</Duration_String>
+            <Duration_String1>10 s 304 ms</Duration_String1>
+            <Duration_String2>10 s 304 ms</Duration_String2>
+            <Duration_String3>00:00:10.304</Duration_String3>
+            <Duration_String4>00:00:10:13</Duration_String4>
+            <Duration_String5>00:00:10.304 (00:00:10:13)</Duration_String5>
+            <BitRate_Mode>CBR</BitRate_Mode>
+            <BitRate_Mode_String>Constant</BitRate_Mode_String>
+            <BitRate>256000</BitRate>
+            <BitRate_String>256 kb/s</BitRate_String>
+            <Channels>2</Channels>
+            <Channels_String>2 channels</Channels_String>
+            <ChannelPositions>Front: L R</ChannelPositions>
+            <ChannelPositions_String2>2/0/0</ChannelPositions_String2>
+            <ChannelLayout>L R</ChannelLayout>
+            <SamplesPerFrame>1024</SamplesPerFrame>
+            <SamplingRate>48000</SamplingRate>
+            <SamplingRate_String>48.0 kHz</SamplingRate_String>
+            <SamplingCount>494592</SamplingCount>
+            <FrameRate>46.875</FrameRate>
+            <FrameRate_String>46.875 FPS (1024 SPF)</FrameRate_String>
+            <FrameCount>483</FrameCount>
+            <Compression_Mode>Lossy</Compression_Mode>
+            <Compression_Mode_String>Lossy</Compression_Mode_String>
+            <StreamSize>329858</StreamSize>
+            <StreamSize_String>322 KiB (1%)</StreamSize_String>
+            <StreamSize_String1>322 KiB</StreamSize_String1>
+            <StreamSize_String2>322 KiB</StreamSize_String2>
+            <StreamSize_String3>322 KiB</StreamSize_String3>
+            <StreamSize_String4>322.1 KiB</StreamSize_String4>
+            <StreamSize_String5>322 KiB (1%)</StreamSize_String5>
+            <StreamSize_Proportion>0.01470</StreamSize_Proportion>
+            <Title>SoundHandle</Title>
+            <Language>en</Language>
+            <Language_String>English</Language_String>
+            <Language_String1>English</Language_String1>
+            <Language_String2>en</Language_String2>
+            <Language_String3>eng</Language_String3>
+            <Language_String4>en</Language_String4>
+            <Encoded_Date>UTC 2021-02-07 13:38:52</Encoded_Date>
+            <Tagged_Date>UTC 2021-02-07 13:38:52</Tagged_Date>
+        </track>
+    </media>
+</MediaInfo>

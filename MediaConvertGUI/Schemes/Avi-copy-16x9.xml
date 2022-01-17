@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MultimediaScheme>
+    <Container>avi</Container>
+    <Video>
+        <Codec>copy</Codec>
+    </Video>
+    <Audio>
+        <Track>
+            <Codec>copy</Codec>
+        </Track>
+    </Audio>
+</MultimediaScheme>

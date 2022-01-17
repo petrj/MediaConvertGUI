@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MultimediaScheme>
-    <Container>avi</Container>
+    <Container>flv</Container>
     <Video>
-        <Codec>xvid</Codec>
-        <Width>1024</Width>
-        <Height>576</Height>
+        <Codec>flv</Codec>
+        <Width>1280</Width>
+        <Height>720</Height>
         <Aspect>16:9</Aspect>
-        <Bitrate>5000000</Bitrate>
+        <Bitrate>3500</Bitrate>
         <Framerate>25</Framerate>
     </Video>
     <Audio>
         <Track>
             <Codec>mp3</Codec>
             <Channels>2</Channels>
-            <Bitrate>192000</Bitrate>
-            <SamplingRate>44100</SamplingRate>
+            <Bitrate>64</Bitrate>
+            <SamplingRate>22</SamplingRate>
         </Track>
     </Audio>
 </MultimediaScheme>
